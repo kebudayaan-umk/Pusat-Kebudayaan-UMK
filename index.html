@@ -2,137 +2,132 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<title>Pusat Kebudayaan UMK</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tempahan Studio | Pusat Kebudayaan UMK</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* RESET */
+* { box-sizing: border-box; }
+body { margin:0; font-family:Arial,sans-serif; background:#f2f2f2; line-height:1.6; }
 
-.header-pkumk {
-  text-align: center;
-  color: #ffffff;
-  padding: 60px 20px;
-
+/* HEADER */
+.header {
+  text-align:center;
+  color:#fff;
+  padding:40px 20px;
   background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.55),
-      rgba(0, 0, 0, 0.55)
-    ),
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     url("assets/bg-kebudayaan.jpg");
-
-  background-size: cover;
-  background-position: center;
+  background-size:cover;
+  background-position:center;
 }
+.header img { width:120px; margin-bottom:10px; }
+.header h2 { margin:5px 0; font-size:26px; }
+.header h3 { margin:5px 0; font-size:20px; font-weight:normal; }
+.header p { font-size:14px; margin-top:8px; }
 
-.header-pkumk img {
-  width: 130px;
-  margin-bottom: 15px;
-}
+/* CONTAINER */
+.container { max-width:900px; background:#fff; margin:25px auto; padding:25px; border-radius:6px; }
 
-.header-pkumk h2 {
-  margin: 5px 0;
-  font-size: 28px;
-  font-weight: bold;
-}
+/* FORM */
+form { display:flex; flex-direction:column; gap:15px; }
 
-.header-pkumk h3 {
-  margin: 5px 0;
-  font-size: 22px;
-  font-weight: normal;
-}
+.form-row { display:flex; gap:20px; }
+.form-group { flex:1; display:flex; flex-direction:column; }
+label { font-weight:bold; margin-bottom:6px; }
+input, select, textarea { width:100%; padding:10px; border:1px solid #ccc; border-radius:4px; }
 
-.header-pkumk p {
-  margin-top: 10px;
-  font-size: 14px;
+/* CHECKBOX */
+.checkbox-group { display:flex; align-items:flex-start; gap:10px; }
+.checkbox-group input { margin-top:4px; }
+
+/* BUTTON */
+button { padding:14px; font-size:16px; background:#0a7a4b; color:#fff; border:none; border-radius:4px; cursor:pointer; }
+button:hover { background:#08623c; }
+
+/* SYARAT */
+.rules { background:#f9f9f9; padding:15px; border:1px solid #ddd; border-radius:4px; margin-top:20px; }
+.rules ul { margin:0; padding-left:20px; }
+.rules li { margin-bottom:8px; }
+.rules .bold { font-weight:bold; color:#c00; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .form-row { flex-direction:column; }
+  .container { margin:15px; padding:20px; }
+  .header h2 { font-size:22px; }
+  .header h3 { font-size:18px; }
 }
 </style>
-
 </head>
+
 <body>
 
-<!-- BAHAGIAN LOGO + BACKGROUND -->
-<div class="header-pkumk">
-  <img src="assets/logo-umk.png" alt="Logo Universiti Malaysia Kelantan">
-
+<!-- HEADER -->
+<div class="header">
+  <img src="assets/logo-umk.png" alt="Logo UMK">
   <h2>Pusat Kebudayaan</h2>
   <h3>Universiti Malaysia Kelantan</h3>
-
-  <p>
-    Email: kebudayaan@umk.edu.my<br>
-    No. Telefon: +6097797436
-  </p>
+  <p>Email: kebudayaan@umk.edu.my<br>Tel: +6097797436</p>
 </div>
 
-</body>
-</html>
-
+<!-- FORM -->
 <div class="container">
-<h2>Borang Tempahan Studio</h2>
-<form action="../backend/submit.php" method="POST">
-<label>Nama Penuh<input type="text" name="nama" required></label>
-<label>No. Matrik / No. Staf / Kad Pengenalan<input type="text" name="id" required></label>
+<h3>Borang Tempahan Studio</h3>
+<form>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Nama</label>
+      <input type="text" required>
+    </div>
+    <div class="form-group">
+      <label>No Matrik / No Staf / IC</label>
+      <input type="text" required>
+    </div>
+  </div>
 
-<label>Jawatan
-<select name="jawatan" required>
-<option>Pelajar</option>
-<option>Staf Akademik</option>
-<option>Staf Pentadbiran</option>
-<option>Orang Awam</option>
-</select>
-</label>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" required>
+    </div>
+    <div class="form-group">
+      <label>Kampus</label>
+      <select required>
+        <option value="">-- Pilih Kampus --</option>
+        <option>Bachok</option>
+        <option>Kampus Kota</option>
+        <option>Kampus Jeli</option>
+      </select>
+    </div>
+  </div>
 
-<label>Email<input type="email" name="email" required></label>
+  <div class="form-group">
+    <label>Studio</label>
+    <input type="text" required>
+  </div>
 
-<label>Kampus
-<select id="kampus" name="kampus" required>
-<option value="">-- Pilih Kampus --</option>
-<option value="bachok">Bachok</option>
-<option value="kota">Kampus Kota</option>
-<option value="jeli">Kampus Jeli</option>
-</select>
-</label>
+  <div class="checkbox-group">
+    <input type="checkbox" required>
+    <label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan permohonan yang ditetapkan oleh Pusat Kebudayaan Universiti Malaysia Kelantan.</label>
+  </div>
 
-<label>Studio
-<select id="studio" name="studio" required>
-<option>-- Pilih Kampus Dahulu --</option>
-</select>
-</label>
-
-<label>Tarikh<input type="date" name="tarikh" required></label>
-<label>Masa Mula<input type="time" name="masa_mula" required></label>
-<label>Masa Tamat<input type="time" name="masa_tamat" required></label>
-
-<div class="syarat">
-<p>1. Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</p>
-<p>2. Pemohon hendaklah memahami dan mematuhi syarat, garis panduan dan etika penggunaan Universiti.</p>
-<p>3. Pemohon hendaklah bertanggungjawab terhadap keselamatan dan kerosakan kemudahan.</p>
-<p>4. Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan.</p>
-<p><strong>PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.</strong></p>
-</div>
-
-<div class="persetujuan">
-<input type="checkbox" name="setuju" required>
-<label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan di atas</label>
-</div>
-
-<br>
-<button type="submit">Hantar Permohonan</button>
+  <button type="submit">Hantar Permohonan</button>
 </form>
+
+<!-- SYARAT & PERATURAN -->
+<div class="rules">
+  <ul>
+    <li>Borang permohonan perlu dipohon <strong>3 hari</strong> sebelum tarikh penggunaan.</li>
+    <li>Pemohon hendaklah memahami dan mematuhi syarat-syarat, garis panduan dan etika penggunaan kemudahan yang telah ditetapkan oleh Universiti.</li>
+    <li>Pemohon hendaklah bertanggungjawab terhadap keadaan, keselamatan, kerosakan kemudahan yang digunakan.</li>
+    <li>Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan di dalam tempat yang digunakan.</li>
+  </ul>
+  <p class="bold">PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN YANG DIGUNAKAN.</p>
 </div>
 
-<script>
-const studioList={bachok:["Teniat 3","Teniat 4"],kota:["Studio Tari","Studio Band","Studio Gamelan"],jeli:["Surau Lama","Dewan Utama"]};
-const kampus=document.getElementById("kampus");
-const studio=document.getElementById("studio");
-kampus.addEventListener("change",()=>{
-  studio.innerHTML="";
-  studioList[kampus.value].forEach(s=>{
-    let o=document.createElement("option");o.text=s;studio.add(o);
-  });
-});
-</script>
+</div>
+
 </body>
 </html>
-
