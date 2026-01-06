@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>Tempahan Studio PKUMK</title>
+<style>
+body{margin:0;font-family:Arial;background:#f4f4f4}
+.header{padding:40px 20px;text-align:center;color:#fff;
+background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url('assets/bg-kebudayaan.jpg');
+background-size:cover;background-position:center}
+.header img{width:120px}
+.container{max-width:900px;background:#fff;margin:30px auto;padding:20px;border-radius:8px}
+label{display:block;margin-top:12px;font-weight:bold}
+input,select{width:100%;padding:8px;margin-top:6px}
+button{margin-top:20px;padding:12px;width:100%;background:#0a7a4b;color:#fff;border:none}
+</style>
+</head>
+<body>
+<div class="header">
+<img src="assets/logo-umk.png" alt="Logo UMK">
+<h2>Pusat Kebudayaan</h2>
+<h3>Universiti Malaysia Kelantan</h3>
+<p>Email: kebudayaan@umk.edu.my | Tel: +6097797436</p>
+</div>
+<div class="container">
+<h3>Borang Tempahan Studio</h3>
+<form>
+<label>Nama</label><input required>
+<label>No Matrik / No Staf / IC</label><input required>
+<label>Email</label><input type="email" required>
+<label>Kampus</label>
+<select><option>Bachok</option><option>Kampus Kota</option><option>Jeli</option></select>
+<label>Studio</label><input>
+<label><input type="checkbox" required> Saya bersetuju dengan syarat dan peraturan</label>
+<button type="submit">Hantar</button>
+</form>
+</div>
+</body>
+</html>
