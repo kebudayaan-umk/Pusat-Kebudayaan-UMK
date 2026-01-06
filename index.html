@@ -2,137 +2,228 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<title>Pusat Kebudayaan UMK</title>
+<title>Tempahan Studio | Pusat Kebudayaan UMK</title>
 
 <style>
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
 }
 
+/* ===== STICKY HEADER ===== */
 .header-pkumk {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   text-align: center;
   color: #ffffff;
-  padding: 60px 20px;
+  padding: 40px 20px;
 
   background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.55),
-      rgba(0, 0, 0, 0.55)
-    ),
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
     url("assets/bg-kebudayaan.jpg");
 
   background-size: cover;
   background-position: center;
+
+  animation: fadeIn 1s ease-in-out;
 }
 
 .header-pkumk img {
-  width: 130px;
-  margin-bottom: 15px;
+  width: 120px;
+  margin-bottom: 10px;
 }
 
 .header-pkumk h2 {
   margin: 5px 0;
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 26px;
 }
 
 .header-pkumk h3 {
   margin: 5px 0;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: normal;
 }
 
 .header-pkumk p {
-  margin-top: 10px;
   font-size: 14px;
+  margin-top: 8px;
+}
+
+/* ===== FORM CONTAINER ===== */
+.container {
+  max-width: 900px;
+  background: #ffffff;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 10px;
+  animation: slideUp 0.8s ease;
+}
+
+.container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ===== FORM ===== */
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* CHECKBOX */
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.checkbox-group input {
+  margin-top: 4px;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 14px;
+  background: #0a7a4b;
+  color: #ffffff;
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #08623c;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .header-pkumk h2 {
+    font-size: 22px;
+  }
+
+  .header-pkumk h3 {
+    font-size: 18px;
+  }
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
 
 </head>
 <body>
 
-<!-- BAHAGIAN LOGO + BACKGROUND -->
+<!-- ===== HEADER ===== -->
 <div class="header-pkumk">
   <img src="assets/logo-umk.png" alt="Logo Universiti Malaysia Kelantan">
-
   <h2>Pusat Kebudayaan</h2>
   <h3>Universiti Malaysia Kelantan</h3>
-
   <p>
     Email: kebudayaan@umk.edu.my<br>
     No. Telefon: +6097797436
   </p>
 </div>
 
-</body>
-</html>
-
+<!-- ===== FORM ===== -->
 <div class="container">
-<h2>Borang Tempahan Studio</h2>
-<form action="../backend/submit.php" method="POST">
-<label>Nama Penuh<input type="text" name="nama" required></label>
-<label>No. Matrik / No. Staf / Kad Pengenalan<input type="text" name="id" required></label>
+<h3>Borang Tempahan Studio</h3>
 
-<label>Jawatan
-<select name="jawatan" required>
-<option>Pelajar</option>
-<option>Staf Akademik</option>
-<option>Staf Pentadbiran</option>
-<option>Orang Awam</option>
-</select>
-</label>
+<form>
 
-<label>Email<input type="email" name="email" required></label>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Nama</label>
+      <input type="text" required>
+    </div>
 
-<label>Kampus
-<select id="kampus" name="kampus" required>
-<option value="">-- Pilih Kampus --</option>
-<option value="bachok">Bachok</option>
-<option value="kota">Kampus Kota</option>
-<option value="jeli">Jeli</option>
-</select>
-</label>
+    <div class="form-group">
+      <label>No Matrik / No Staf / IC</label>
+      <input type="text" required>
+    </div>
+  </div>
 
-<label>Studio
-<select id="studio" name="studio" required>
-<option>-- Pilih Kampus Dahulu --</option>
-</select>
-</label>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" required>
+    </div>
 
-<label>Tarikh<input type="date" name="tarikh" required></label>
-<label>Masa Mula<input type="time" name="masa_mula" required></label>
-<label>Masa Tamat<input type="time" name="masa_tamat" required></label>
+    <div class="form-group">
+      <label>Kampus</label>
+      <select>
+        <option>Bachok</option>
+        <option>Kampus Kota</option>
+        <option>Jeli</option>
+      </select>
+    </div>
+  </div>
 
-<div class="syarat">
-<p>1. Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</p>
-<p>2. Pemohon hendaklah memahami dan mematuhi syarat, garis panduan dan etika penggunaan Universiti.</p>
-<p>3. Pemohon hendaklah bertanggungjawab terhadap keselamatan dan kerosakan kemudahan.</p>
-<p>4. Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan.</p>
-<p><strong>PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.</strong></p>
-</div>
+  <div class="form-group">
+    <label>Studio</label>
+    <input type="text">
+  </div>
 
-<div class="persetujuan">
-<input type="checkbox" name="setuju" required>
-<label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan di atas</label>
-</div>
+  <div class="checkbox-group">
+    <input type="checkbox" required>
+    <label>
+      Saya telah membaca dan bersetuju dengan semua syarat dan peraturan
+      permohonan yang ditetapkan oleh Pusat Kebudayaan Universiti Malaysia Kelantan.
+    </label>
+  </div>
 
-<br>
-<button type="submit">Hantar Permohonan</button>
+  <button type="submit">Hantar Permohonan</button>
+
 </form>
 </div>
 
-<script>
-const studioList={bachok:["Teniat 3","Teniat 4"],kota:["Studio Tari","Studio Band","Studio Gamelan"],jeli:["Surau Lama","Dewan Utama"]};
-const kampus=document.getElementById("kampus");
-const studio=document.getElementById("studio");
-kampus.addEventListener("change",()=>{
-  studio.innerHTML="";
-  studioList[kampus.value].forEach(s=>{
-    let o=document.createElement("option");o.text=s;studio.add(o);
-  });
-});
-</script>
 </body>
 </html>
-
