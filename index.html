@@ -2,32 +2,71 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistem Tempahan Studio PKUMK</title>
+<title>Pusat Kebudayaan UMK</title>
+
 <style>
-body{font-family:Arial, sans-serif;margin:0;background:#f4f4f4;}
-.header{position:relative;background:url("assets/bg-kebudayaan.jpg") center/cover no-repeat;padding:50px 20px;}
-.header::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,0.75);}
-.header-content{position:relative;text-align:center;}
-.logo-umk{height:60px;margin-bottom:10px;}
-.container{background:#fff;padding:20px;border-radius:8px;margin:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);}
-label{display:block;margin-top:10px;}
-input,select,button{width:100%;padding:8px;margin-top:4px;}
-button{background:#003366;color:#fff;border:none;cursor:pointer;}
-.syarat{background:#f9f9f9;padding:10px;border:1px solid #ccc;margin-top:10px;}
-.persetujuan{display:flex;gap:6px;align-items:flex-start;margin-top:12px;}
-.persetujuan input{width:auto;margin:3px 0 0 0;}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header-pkumk {
+  text-align: center;
+  color: #ffffff;
+  padding: 60px 20px;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url("assets/bg-kebudayaan.jpg");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.header-pkumk img {
+  width: 130px;
+  margin-bottom: 15px;
+}
+
+.header-pkumk h2 {
+  margin: 5px 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.header-pkumk h3 {
+  margin: 5px 0;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.header-pkumk p {
+  margin-top: 10px;
+  font-size: 14px;
+}
 </style>
+
 </head>
 <body>
 
-<div class="header">
-  <div class="header-content">
-    <img src="assets/logo-umk.png" class="logo-umk">
-    <h1>Pusat Kebudayaan<br>Universiti Malaysia Kelantan</h1>
-    <p>Email: kebudayaan@umk.edu.my<br>No. Telefon: +6097797436</p>
-  </div>
+<!-- BAHAGIAN LOGO + BACKGROUND -->
+<div class="header-pkumk">
+  <img src="assets/logo-umk.png" alt="Logo Universiti Malaysia Kelantan">
+
+  <h2>Pusat Kebudayaan</h2>
+  <h3>Universiti Malaysia Kelantan</h3>
+
+  <p>
+    Email: kebudayaan@umk.edu.my<br>
+    No. Telefon: +6097797436
+  </p>
 </div>
+
+</body>
+</html>
 
 <div class="container">
 <h2>Borang Tempahan Studio</h2>
@@ -96,3 +135,4 @@ kampus.addEventListener("change",()=>{
 </script>
 </body>
 </html>
+
