@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ms">
 <head>
@@ -7,18 +6,19 @@
   <title>Tempahan Studio | Pusat Kebudayaan UMK</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f2f2f2;
-      line-height: 1.6;
+      background: #f2f2f2;
     }
 
     .header {
       text-align: center;
-      color: #ffffff;
+      color: white;
       padding: 50px 20px;
       background:
         linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
@@ -27,77 +27,63 @@
       background-position: center;
     }
 
-    .header img { width: 120px; margin-bottom: 15px; }
-    .header h2 { margin: 5px 0; font-size: 28px; }
-    .header h3 { margin: 5px 0; font-size: 22px; font-weight: normal; }
-    .header p { margin-top: 10px; font-size: 15px; }
+    .header img {
+      width: 110px;
+      margin-bottom: 10px;
+    }
 
     .container {
-      max-width: 900px;
-      background-color: #ffffff;
+      max-width: 800px;
+      background: white;
       margin: 30px auto;
       padding: 30px;
       border-radius: 8px;
     }
 
-    form { display: flex; flex-direction: column; gap: 22px; }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 25px;
+    h3 {
+      margin-bottom: 20px;
     }
 
-    .form-group { display: flex; flex-direction: column; }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
     label {
       font-weight: bold;
-      margin-bottom: 8px;
-      font-size: 15px;
+      margin-bottom: 6px;
+      display: block;
     }
 
     input, select {
+      width: 100%;
       padding: 12px;
-      font-size: 14px;
-      border: 1px solid #cccccc;
       border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
     }
 
-    .checkbox-group {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-top: 10px;
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
-
-    .checkbox-group input { margin-top: 4px; }
 
     button {
-      margin-top: 15px;
-      padding: 16px;
+      padding: 15px;
       font-size: 16px;
-      background-color: #0a7a4b;
-      color: #ffffff;
+      background: #0a7a4b;
+      color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
 
-    .rules {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border: 1px solid #dddddd;
-      border-radius: 6px;
-    }
-
-    .rules ul { padding-left: 20px; margin: 0 0 10px 0; }
-    .rules li { margin-bottom: 10px; }
-    .rules .bold { font-weight: bold; color: #c00000; }
-
     @media (max-width: 768px) {
-      .form-row { grid-template-columns: 1fr; }
-      .container { margin: 15px; padding: 20px; }
+      .row {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -108,30 +94,24 @@
   <img src="assets/logo-umk.png" alt="Logo UMK">
   <h2>Pusat Kebudayaan</h2>
   <h3>Universiti Malaysia Kelantan</h3>
-  <p>Email: kebudayaan@umk.edu.my<br>No. Telefon: +6097797436</p>
 </div>
 
 <div class="container">
   <h3>Borang Tempahan Studio</h3>
 
   <form>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Nama</label>
-        <input type="text" required>
-      </div>
-      <div class="form-group">
-        <label>No Matrik / No Staf / IC</label>
-        <input type="text" required>
-      </div>
+    <div>
+      <label>Nama</label>
+      <input type="text" required>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" required>
-      </div>
-      <div class="form-group">
+    <div>
+      <label>No Kad Pengenalan (IC)</label>
+      <input type="text" required>
+    </div>
+
+    <div class="row">
+      <div>
         <label>Kampus</label>
         <select required>
           <option value="">-- Pilih Kampus --</option>
@@ -140,46 +120,38 @@
           <option>Kampus Jeli</option>
         </select>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label>Tarikh Penggunaan</label>
-        <input type="date" required>
-      </div>
-      <div class="form-group">
-        <label>Masa Penggunaan</label>
+      <div>
+        <label>Studio</label>
         <select required>
-          <option value="">-- Pilih Masa --</option>
-          <option>8.00 pagi - 12.00 tengah hari</option>
-          <option>12.00 tengah hari - 4.00 petang</option>
-          <option>4.00 petang - 8.00 malam</option>
+          <option value="">-- Pilih Studio --</option>
+          <option>Bachok - Teniat 3</option>
+          <option>Bachok - Teniat 4</option>
+          <option>Kampus Kota - Studio Tari</option>
+          <option>Kampus Kota - Studio Band</option>
+          <option>Kampus Kota - Studio Gamelan</option>
+          <option>Jeli - Surau Lama</option>
+          <option>Jeli - Dewan Utama</option>
         </select>
       </div>
     </div>
 
-    <div class="form-group">
-      <label>Studio</label>
-      <input type="text" required>
-    </div>
+    <div class="row">
+      <div>
+        <label>Tarikh Penggunaan</label>
+        <input type="date" required>
+      </div>
 
-    <div class="checkbox-group">
-      <input type="checkbox" required>
-      <label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan permohonan yang ditetapkan.</label>
+      <div>
+        <label>Masa Permohonan</label>
+        <select required>
+          <option value="">-- Pilih Masa --</option>
+          <input type="time" required>
+      </div>
     </div>
 
     <button type="submit">Hantar Permohonan</button>
   </form>
-
-  <div class="rules">
-    <ul>
-      <li>Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
-      <li>Pemohon hendaklah mematuhi semua syarat dan etika penggunaan kemudahan Universiti.</li>
-      <li>Pemohon bertanggungjawab terhadap keselamatan dan kerosakan kemudahan.</li>
-      <li>Tidak dibenarkan mengubah kedudukan peralatan.</li>
-    </ul>
-    <p class="bold">PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN.</p>
-  </div>
 </div>
 
 </body>
