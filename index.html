@@ -136,27 +136,55 @@ button{
 
 <div>
   <label>Kampus</label>
-  <select required>
+  <select id="kampus" required>
     <option value="">-- Pilih Kampus --</option>
-    <option>Bachok</option>
-    <option>Kampus Kota</option>
-    <option>Kampus Jeli</option>
+    <option value="bachok">Bachok</option>
+    <option value="kota">Kampus Kota</option>
+    <option value="jeli">Kampus Jeli</option>
   </select>
 </div>
 
 <div>
   <label>Studio</label>
-  <select required>
-    <option value="">-- Pilih Studio --</option>
-    <option>Bachok - Teniat 3</option>
-    <option>Bachok - Teniat 4</option>
-    <option>Kampus Kota - Studio Tari</option>
-    <option>Kampus Kota - Studio Band</option>
-    <option>Kampus Kota - Studio Gamelan</option>
-    <option>Kampus Jeli - Surau Lama</option>
-    <option>Kampus Jeli - Dewan Utama</option>
+  <select id="studio" required>
+    <option value="">-- Pilih Kampus Dahulu --</option>
   </select>
 </div>
+<script>
+const studioData = {
+  bachok: [
+    "Teniat 3",
+    "Teniat 4"
+  ],
+  kota: [
+    "Studio Tari",
+    "Studio Band",
+    "Studio Gamelan"
+  ],
+  jeli: [
+    "Surau Lama",
+    "Dewan Utama"
+  ]
+};
+
+const kampusSelect = document.getElementById("kampus");
+const studioSelect = document.getElementById("studio");
+
+kampusSelect.addEventListener("change", function () {
+  const kampus = this.value;
+  studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
+
+  if (studioData[kampus]) {
+    studioData[kampus].forEach(function (studio) {
+      const option = document.createElement("option");
+      option.textContent = studio;
+      option.value = studio;
+      studioSelect.appendChild(option);
+    });
+  }
+});
+</script>
+
 
 <div>
   <label>Tarikh Penggunaan</label>
