@@ -33,7 +33,7 @@ body{
 
 /* FORM CONTAINER */
 .container{
-  max-width:900px;
+  max-width:700px;
   margin:30px auto;
   background:#fff;
   padding:30px;
@@ -47,11 +47,6 @@ h3{
 form{
   display:flex;
   flex-direction:column;
-  gap:22px;
-}
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
   gap:20px;
 }
 label{
@@ -64,13 +59,6 @@ input,select{
   padding:12px;
   border-radius:5px;
   border:1px solid #ccc;
-}
-
-/* CHECKBOX */
-.checkbox{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
 }
 
 /* RULES */
@@ -92,6 +80,13 @@ input,select{
   color:#b00000;
 }
 
+/* CHECKBOX */
+.checkbox{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+}
+
 /* BUTTON */
 button{
   padding:15px;
@@ -101,16 +96,6 @@ button{
   border-radius:5px;
   font-size:16px;
   cursor:pointer;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .row{
-    grid-template-columns:1fr;
-  }
-  .container{
-    margin:15px;
-  }
 }
 </style>
 </head>
@@ -129,107 +114,99 @@ button{
 
 <form>
 
-<div class="row">
-  <div>
-    <label>Nama</label>
-    <input type="text" required>
-  </div>
-  <div>
-    <label>No Matrik / Staff / IC</label>
-    <input type="text" required>
-  </div>
-</div>
-  <div class="row">
-  <div>
-    <label>Jawatan</label>
-    <select required>
-      <option value="">-- Pilih Jawatan --</option>
-      <option>Pelajar</option>
-      <option>Staf UMK</option>
-      <option>Orang Awam</option>
-    </select>
-  </div>
+<div>
+  <label>Nama</label>
+  <input type="text" required>
 </div>
 
-
-<div class="row">
-  <div>
-    <label>Kampus</label>
-    <select required>
-      <option value="">-- Pilih Kampus --</option>
-      <option>Bachok</option>
-      <option>Kampus Kota</option>
-      <option>Kampus Jeli</option>
-    </select>
-  </div>
-  <div>
-    <label>Studio</label>
-    <select required>
-      <option value="">-- Pilih Studio --</option>
-      <option>Bachok - Teniat 3</option>
-      <option>Bachok - Teniat 4</option>
-      <option>Kampus Kota - Studio Tari</option>
-      <option>Kampus Kota - Studio Band</option>
-      <option>Kampus Kota - Studio Gamelan</option>
-      <option>Kampus Jeli - Surau Lama</option>
-      <option>Kampus Jeli - Dewan Utama</option>
-    </select>
-  </div>
+<div>
+  <label>No Matrik / Staff / IC</label>
+  <input type="text" required>
 </div>
 
-<div class="row">
-  <div>
-    <label>Tarikh Penggunaan</label>
-    <input type="date" required>
-  </div>
-  <div>
-    <div class="row">
-  <div>
-    <label>Masa Mula</label>
-    <select required>
-      <option value="">-- Pilih Masa Mula --</option>
-      <option>8:00 pagi</option>
-      <option>9:00 pagi</option>
-      <option>10:00 pagi</option>
-      <option>11:00 pagi</option>
-      <option>12:00 tengah hari</option>
-      <option>2:00 petang</option>
-      <option>3:00 petang</option>
-      <option>5:00 petang</option>
-      <option>6:00 petang</option>
-      <option>8:00 malam</option>
-      <option>9:00 malam</option>
-      <option>10.00 malam</option>
-    </select>
-  </div>
-
-  <div>
-    <label>Masa Tamat</label>
-    <select required>
-      <option value="">-- Pilih Masa Tamat --</option>
-      <option>9:00 pagi</option>
-      <option>10:00 pagi</option>
-      <option>11:00 pagi</option>
-      <option>12:00 tengah hari</option>
-      <option>1:00 petang</option>
-      <option>3:00 petang</option>
-      <option>4:00 petang</option>
-      <option>6:00 petang</option>
-      <option>7:00 malam</option>
-      <option>9:00 malam</option>
-      <option>10.00 malam</option>
-      <option>11.00 malam</option>
-    </select>
-  </div>
+<div>
+  <label>Jawatan</label>
+  <select required>
+    <option value="">-- Pilih Jawatan --</option>
+    <option>Pelajar</option>
+    <option>Staf UMK</option>
+    <option>Orang Awam</option>
+  </select>
 </div>
 
+<div>
+  <label>Kampus</label>
+  <select required>
+    <option value="">-- Pilih Kampus --</option>
+    <option>Bachok</option>
+    <option>Kampus Kota</option>
+    <option>Kampus Jeli</option>
+  </select>
+</div>
+
+<div>
+  <label>Studio</label>
+  <select required>
+    <option value="">-- Pilih Studio --</option>
+    <option>Bachok - Teniat 3</option>
+    <option>Bachok - Teniat 4</option>
+    <option>Kampus Kota - Studio Tari</option>
+    <option>Kampus Kota - Studio Band</option>
+    <option>Kampus Kota - Studio Gamelan</option>
+    <option>Kampus Jeli - Surau Lama</option>
+    <option>Kampus Jeli - Dewan Utama</option>
+  </select>
+</div>
+
+<div>
+  <label>Tarikh Penggunaan</label>
+  <input type="date" required>
+</div>
+
+<div>
+  <label>Masa Mula</label>
+  <select required>
+    <option value="">-- Pilih Masa Mula --</option>
+    <option>8:00 pagi</option>
+    <option>9:00 pagi</option>
+    <option>10:00 pagi</option>
+    <option>11:00 pagi</option>
+    <option>12:00 tengah hari</option>
+    <option>2:00 petang</option>
+    <option>3:00 petang</option>
+    <option>5:00 petang</option>
+    <option>6:00 petang</option>
+    <option>8:00 malam</option>
+    <option>9:00 malam</option>
+    <option>10:00 malam</option>
+  </select>
+</div>
+
+<div>
+  <label>Masa Tamat</label>
+  <select required>
+    <option value="">-- Pilih Masa Tamat --</option>
+    <option>9:00 pagi</option>
+    <option>10:00 pagi</option>
+    <option>11:00 pagi</option>
+    <option>12:00 tengah hari</option>
+    <option>1:00 petang</option>
+    <option>3:00 petang</option>
+    <option>4:00 petang</option>
+    <option>6:00 petang</option>
+    <option>7:00 malam</option>
+    <option>9:00 malam</option>
+    <option>10:00 malam</option>
+    <option>11:00 malam</option>
+  </select>
+</div>
 
 <div class="rules">
 <ul>
   <li>Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
-  <li>Pemohon hendaklah memahami dan mematuhi syarat-syarat, garis panduan dan etika penggunaan kemudahan Universiti.</li>
-  <li>Pemohon bertanggungjawab terhadap keselamatan dan kerosakan kemudahan yang digunakan.</li>
-  <li>Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan.</li>
+  <li>Pemohon hendaklah mematuhi syarat dan etika penggunaan kemudahan.</li>
+  <li>Pemohon bertanggungjawab terhadap keselamatan dan kerosakan.</li>
+  <li>Pemohon tidak dibenarkan mengubahsuai peralatan.</li>
 </ul>
 <p class="bold">
 PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.
@@ -238,7 +215,7 @@ PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN K
 
 <div class="checkbox">
   <input type="checkbox" required>
-  <label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan permohonan.</label>
+  <label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan.</label>
 </div>
 
 <button type="submit">Hantar Permohonan</button>
