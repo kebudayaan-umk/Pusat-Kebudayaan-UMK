@@ -251,5 +251,48 @@ PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN K
 </form>
 </div>
 
+<script>
+document.querySelector("form").addEventListener("submit", function (e) {
+  const inputs = this.querySelectorAll("input, select");
+  const checkbox = this.querySelector("input[type=checkbox]");
+  const tarikhField = document.getElementById("tarikh");
+
+  let lengkap = true;
+
+  // Semak semua input & select
+  inputs.forEach(function (field) {
+    if (field.type !== "checkbox" && field.value.trim() === "") {
+      lengkap = false;
+    }
+  });
+
+  // Semak checkbox
+  if (!checkbox.checked) {
+    lengkap = false;
+  }
+
+  // Semak tarikh ≥ 3 hari dari hari ini
+  if (tarikhField.value) {
+    const today = new Date();
+    const pilihanTarikh = new Date(tarikhField.value);
+    const diffTime = pilihanTarikh - today;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+    if (diffDays < 3) {
+      lengkap = false;
+      alert("Permohonan perlu dibuat sekurang-kurangnya 3 hari sebelum tarikh penggunaan.");
+      e.preventDefault();
+      return;
+    }
+  }
+
+  // Jika ada field kosong
+  if (!lengkap) {
+    e.preventDefault();
+    alert("Sila lengkapkan SEMUA maklumat dan tandakan persetujuan sebelum menghantar permohonan.");
+  }
+});
+</script>
+
 </body>
 </html>
