@@ -3,20 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Kelulusan Permohonan</title>
+    <title>Admin - Kelulusan Permohonan | UMK</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f0f2f5; }
-        .container { max-width: 800px; margin: auto; }
-        .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #ccc; }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            padding: 20px; 
+            background-color: #f0f2f5; 
+            color: #333;
+        }
+        .container { max-width: 900px; margin: auto; }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #0a7a4b;
+            padding: 20px;
+            color: white;
+            border-radius: 10px;
+        }
+        .card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            border-left: 8px solid #ccc; 
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-2px); }
+        
+        /* Warna Status */
         .card.pending { border-left-color: #ffc107; }
         .card.approved { border-left-color: #28a745; }
         .card.denied { border-left-color: #dc3545; }
-        .actions { margin-top: 15px; }
-        button { padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-right: 10px; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .info-item { font-size: 0.9em; }
+        .info-item strong { color: #555; }
+
+        .actions { 
+            margin-top: 20px; 
+            padding-top: 15px; 
+            border-top: 1px solid #eee;
+        }
+        
+        button { 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-right: 10px; 
+            transition: opacity 0.2s;
+        }
+        button:hover { opacity: 0.8; }
+        
         .btn-approve { background-color: #28a745; color: white; }
         .btn-deny { background-color: #dc3545; color: white; }
-        .status-badge { padding: 3px 8px; border-radius: 4px; font-size: 0.8em; text-transform: uppercase; }
+        .btn-refresh { background-color: #fff; color: #0a7a4b; border: 1px solid #fff; }
+
+        .status-badge { 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-size: 0.75em; 
+            text-transform: uppercase; 
+            font-weight: bold;
+        }
         .badge-pending { background: #fff3cd; color: #856404; }
         .badge-approved { background: #d4edda; color: #155724; }
         .badge-denied { background: #f8d7da; color: #721c24; }
@@ -25,18 +84,28 @@
 <body>
 
 <div class="container">
-    <h2>Dashboard Admin: Permohonan Kemudahan</h2>
+    <header>
+        <div>
+            <h1 style="margin:0;">Dashboard Admin</h1>
+            <p style="margin:5px 0 0 0;">Pengurusan Permohonan Studio</p>
+        </div>
+        <button class="btn-refresh" onclick="dapatkanData()">Refresh Data</button>
+    </header>
+
     <div id="senarai">Memuatkan permohonan...</div>
 </div>
 
 <script>
-    // MASUKKAN MAKLUMAT ANDA DI SINI
-    const _supabaseUrl = 'https://gwiuqthmmkkvbopapixwk.supabase.co'; 
+    // KONFIGURASI SUPABASE (Sama seperti borang tempahan)
+    const _supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co'; 
     const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg'; 
     const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
 
     // Fungsi Ambil Data
     async function dapatkanData() {
+        const senaraiDiv = document.getElementById('senarai');
+        senaraiDiv.innerHTML = '<p>Sedang memuatkan...</p>';
+
         const { data, error } = await supabaseClient
             .from('permohonan')
             .select('*')
@@ -44,31 +113,45 @@
 
         if (error) {
             console.error(error);
-            document.getElementById('senarai').innerText = "Ralat memuatkan data.";
+            senaraiDiv.innerHTML = `<div class="card" style="border-color:red">Ralat: ${error.message}</div>`;
             return;
         }
 
-        const senaraiDiv = document.getElementById('senarai');
         senaraiDiv.innerHTML = '';
 
         if (data.length === 0) {
-            senaraiDiv.innerHTML = '<p>Tiada permohonan dijumpai.</p>';
+            senaraiDiv.innerHTML = '<p>Tiada permohonan dijumpai dalam pangkalan data.</p>';
             return;
         }
 
         data.forEach(p => {
             const card = document.createElement('div');
-            card.className = card ${p.status};
+            // Menambah class status (pending/approved/denied)
+            card.className = `card ${p.status}`;
+            
             card.innerHTML = `
-                <h3>${p.nama}</h3>
-                <p><strong>Tarikh:</strong> ${p.tarikh}</p>
-                <p><strong>Masa:</strong> ${p.masa_mula} - ${p.masa_tamat}</p>
-                <p><strong>Status:</strong> <span class="status-badge badge-${p.status}">${p.status}</span></p>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <h2 style="margin:0; color:#0a7a4b;">${p.nama}</h2>
+                    <span class="status-badge badge-${p.status}">${p.status}</span>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item"><strong>No. ID:</strong> ${p.no_id || '-'}</div>
+                    <div class="info-item"><strong>Email:</strong> ${p.email || '-'}</div>
+                    <div class="info-item"><strong>Kampus:</strong> ${p.kampus || '-'}</div>
+                    <div class="info-item"><strong>Studio:</strong> ${p.studio || '-'}</div>
+                    <div class="info-item"><strong>Tarikh Guna:</strong> ${p.tarikh}</div>
+                    <div class="info-item"><strong>Masa:</strong> ${p.masa_mula} - ${p.masa_tamat}</div>
+                </div>
+
                 <div class="actions">
                     ${p.status === 'pending' ? `
-                        <button class="btn-approve" onclick="tukarStatus(${p.id}, 'approved')">Approve</button>
-                        <button class="btn-deny" onclick="tukarStatus(${p.id}, 'denied')">Deny</button>
-                    ` : `<small>Tindakan telah diambil.</small>`}
+                        <button class="btn-approve" onclick="tukarStatus(${p.id}, 'approved')">Luluskan</button>
+                        <button class="btn-deny" onclick="tukarStatus(${p.id}, 'denied')">Tolak</button>
+                    ` : `
+                        <small style="color:#888;">Tindakan selesai pada rekod ini.</small>
+                        <button style="font-size:0.7em; background:none; color:blue; text-decoration:underline; padding:0;" onclick="tukarStatus(${p.id}, 'pending')">Reset ke Pending</button>
+                    `}
                 </div>
             `;
             senaraiDiv.appendChild(card);
@@ -77,8 +160,8 @@
 
     // Fungsi Kemaskini Status
     async function tukarStatus(id, statusBaru) {
-        const sahkan = confirm(`Adakah anda pasti mahu ${statusBaru} permohonan ini?`);
-        if (!sahkan) return;
+        const mesej = statusBaru === 'pending' ? "Reset status?" : `Adakah anda pasti mahu ${statusBaru} permohonan ini?`;
+        if (!confirm(mesej)) return;
 
         const { error } = await supabaseClient
             .from('permohonan')
@@ -88,8 +171,7 @@
         if (error) {
             alert("Gagal mengemaskini: " + error.message);
         } else {
-            alert("Berjaya dikemaskini!");
-            dapatkanData(); // Refresh senarai
+            dapatkanData(); // Refresh senarai selepas berjaya
         }
     }
 
@@ -97,5 +179,4 @@
     dapatkanData();
 </script>
 </body>
-
 </html>
