@@ -302,3 +302,81 @@ document.querySelector("form").addEventListener("submit", function (e) {
 
 </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// 1. SETUP CONNECTION (Ganti maklumat dalam ' ' ini)
+const _supabaseUrl = 'MASUKKAN_URL_SUPABASE_ANDA_DI_SINI';
+const _supabaseKey = 'MASUKKAN_ANON_KEY_ANDA_DI_SINI';
+const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
+
+document.querySelector("form").addEventListener("submit", async function (e) {
+  e.preventDefault(); // Halang page dari refresh
+
+  // Ambil element
+  const tarikhField = document.getElementById("tarikh");
+  const checkbox = this.querySelector("input[type=checkbox]");
+  
+  // Ambil nilai dari input (Pastikan ID ini wujud di HTML anda)
+  const namaVal = document.getElementById("nama").value;
+  const tarikhVal = tarikhField.value;
+  const masaMulaVal = document.getElementById("masaMula").value;
+  const masaTamatVal = document.getElementById("masaTamat").value;
+
+  // --- LOGIK VALIDASI ---
+  
+  // 1. Semak tarikh >= 3 hari
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Reset masa untuk perbandingan tarikh yang tepat
+  const pilihanTarikh = new Date(tarikhVal);
+  const diffTime = pilihanTarikh - today;
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+  if (diffDays < 3) {
+    alert("Permohonan perlu dibuat sekurang-kurangnya 3 hari sebelum tarikh penggunaan.");
+    return; // Berhenti di sini, jangan hantar ke database
+  }
+
+  // 2. Semak Checkbox
+  if (!checkbox.checked) {
+    alert("Sila tandakan persetujuan syarat.");
+    return;
+  }
+
+  // --- PROSES HANTAR KE SUPABASE ---
+  
+  // Tunjukkan status loading pada butang
+  const btn = this.querySelector("button[type=submit]");
+  const originalBtnText = btn.innerText;
+  btn.innerText = "Menghantar...";
+  btn.disabled = true;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('permohonan') // Pastikan nama table di Supabase anda ialah 'permohonan'
+      .insert([
+        { 
+          nama: namaVal, 
+          tarikh: tarikhVal, 
+          masa_mula: masaMulaVal, 
+          masa_tamat: masaTamatVal,
+          status: 'pending' 
+        }
+      ]);
+
+    if (error) throw error;
+
+    alert("✅ Berjaya! Permohonan anda telah dihantar dan sedang diproses.");
+    this.reset(); // Kosongkan borang
+
+  } catch (err) {
+    console.error("Ralat Supabase:", err.message);
+    alert("❌ Gagal: " + err.message);
+  } finally {
+    // Kembalikan butang ke asal
+    btn.innerText = originalBtnText;
+    btn.disabled = false;
+  }
+});
+</script>
