@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Kelulusan Permohonan</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f0f2f5; }
+        .container { max-width: 800px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #ccc; }
+        .card.pending { border-left-color: #ffc107; }
+        .card.approved { border-left-color: #28a745; }
+        .card.denied { border-left-color: #dc3545; }
+        .actions { margin-top: 15px; }
+        button { padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-right: 10px; }
+        .btn-approve { background-color: #28a745; color: white; }
+        .btn-deny { background-color: #dc3545; color: white; }
+        .status-badge { padding: 3px 8px; border-radius: 4px; font-size: 0.8em; text-transform: uppercase; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-approved { background: #d4edda; color: #155724; }
+        .badge-denied { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Dashboard Admin: Permohonan Kemudahan</h2>
+    <div id="senarai">Memuatkan permohonan...</div>
+</div>
+
+<script>
+    // MASUKKAN MAKLUMAT ANDA DI SINI
+    const _supabaseUrl = 'https://gwiuqthmmkkvbopapixwk.supabase.co'; 
+    const _supabaseKey = 'MASUKKAN_ANON_KEY_ANDA'; 
+    const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
+
+    // Fungsi Ambil Data
+    async function dapatkanData() {
+        const { data, error } = await supabaseClient
+            .from('permohonan')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error(error);
+            document.getElementById('senarai').innerText = "Ralat memuatkan data.";
+            return;
+        }
+
+        const senaraiDiv = document.getElementById('senarai');
+        senaraiDiv.innerHTML = '';
+
+        if (data.length === 0) {
+            senaraiDiv.innerHTML = '<p>Tiada permohonan dijumpai.</p>';
+            return;
+        }
+
+        data.forEach(p => {
+            const card = document.createElement('div');
+            card.className = card ${p.status};
+            card.innerHTML = `
+                <h3>${p.nama}</h3>
+                <p><strong>Tarikh:</strong> ${p.tarikh}</p>
+                <p><strong>Masa:</strong> ${p.masa_mula} - ${p.masa_tamat}</p>
+                <p><strong>Status:</strong> <span class="status-badge badge-${p.status}">${p.status}</span></p>
+                <div class="actions">
+                    ${p.status === 'pending' ? `
+                        <button class="btn-approve" onclick="tukarStatus(${p.id}, 'approved')">Approve</button>
+                        <button class="btn-deny" onclick="tukarStatus(${p.id}, 'denied')">Deny</button>
+                    ` : `<small>Tindakan telah diambil.</small>`}
+                </div>
+            `;
+            senaraiDiv.appendChild(card);
+        });
+    }
+
+    // Fungsi Kemaskini Status
+    async function tukarStatus(id, statusBaru) {
+        const sahkan = confirm(`Adakah anda pasti mahu ${statusBaru} permohonan ini?`);
+        if (!sahkan) return;
+
+        const { error } = await supabaseClient
+            .from('permohonan')
+            .update({ status: statusBaru })
+            .eq('id', id);
+
+        if (error) {
+            alert("Gagal mengemaskini: " + error.message);
+        } else {
+            alert("Berjaya dikemaskini!");
+            dapatkanData(); // Refresh senarai
+        }
+    }
+
+    // Panggil data bila page dibuka
+    dapatkanData();
+</script>
+</body>
+</html>
