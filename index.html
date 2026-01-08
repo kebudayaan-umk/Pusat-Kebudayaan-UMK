@@ -1,386 +1,353 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tempahan Studio | Pusat Kebudayaan UMK</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tempahan Studio | Pusat Kebudayaan UMK</title>
 
-<style>
-*{
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
-body{
-  margin:0;
-  background:#f2f2f2;
-  line-height:1.6;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            margin: 0;
+            background: #f2f2f2;
+            line-height: 1.6;
+        }
 
-/* HEADER */
-.header{
-  text-align:center;
-  color:#fff;
-  padding:50px 20px;
-  background:
-    linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),
-    url("assets/bg-kebudayaan.jpg");
-  background-size:cover;
-}
-.header img{
-  width:120px;
-  margin-bottom:10px;
-}
+        /* HEADER */
+        .header {
+            text-align: center;
+            color: #fff;
+            padding: 50px 20px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("assets/bg-kebudayaan.jpg");
+            background-size: cover;
+            background-color: #222; /* Fallback */
+        }
+        .header img {
+            width: 120px;
+            margin-bottom: 10px;
+        }
 
-/* FORM CONTAINER */
-.container{
-  max-width:700px;
-  margin:30px auto;
-  background:#fff;
-  padding:30px;
-  border-radius:8px;
-}
-h3{
-  margin-bottom:20px;
-}
+        /* FORM CONTAINER */
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h3 {
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #0a7a4b;
+            padding-bottom: 10px;
+        }
 
-/* FORM */
-form{
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-}
-label{
-  font-weight:bold;
-  margin-bottom:6px;
-  display:block;
-}
-input,select{
-  width:100%;
-  padding:12px;
-  border-radius:5px;
-  border:1px solid #ccc;
-}
+        /* FORM */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 6px;
+            display: block;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
 
-/* RULES */
-.rules{
-  margin-top:20px;
-  padding:20px;
-  background:#f9f9f9;
-  border:1px solid #ddd;
-  border-radius:6px;
-}
-.rules ul{
-  padding-left:20px;
-}
-.rules li{
-  margin-bottom:10px;
-}
-.rules .bold{
-  font-weight:bold;
-  color:#b00000;
-}
+        /* RULES */
+        .rules {
+            margin-top: 10px;
+            padding: 20px;
+            background: #fff9f9;
+            border: 1px solid #ffcccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .rules ul {
+            padding-left: 20px;
+        }
+        .rules li {
+            margin-bottom: 8px;
+        }
+        .rules .bold {
+            font-weight: bold;
+            color: #b00000;
+            text-transform: uppercase;
+        }
 
-/* CHECKBOX */
-.checkbox{
-  display:flex;
-  align-items:center;  /* label sejajar tengah dengan kotak */
-  gap:8px;              /* jarak sedikit antara kotak dan label */
-  margin-top:10px;
-}
-.checkbox label{
-  margin:0;             /* hilangkan margin bawah default */
-  font-weight:normal;
-}
+        /* CHECKBOX */
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .checkbox-container input {
+            width: auto;
+            margin-top: 5px;
+        }
+        .checkbox-container label {
+            font-weight: normal;
+            font-size: 14px;
+        }
 
-
-/* BUTTON */
-button{
-  padding:15px;
-  background:#0a7a4b;
-  color:#fff;
-  border:none;
-  border-radius:5px;
-  font-size:16px;
-  cursor:pointer;
-}
-</style>
+        /* BUTTON */
+        button {
+            padding: 15px;
+            background: #0a7a4b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #08633d;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="header">
-  <img src="assets/logo-umk.png" alt="Logo UMK">
-  <h2>PUSAT KEBUDAYAAN</h2>
-  <h2>UNIVERSITI MALAYSIA KELANTAN</h2>
-  <p>Email: kebudayaan@umk.edu.my<br>No. Telefon: +6097797436</p>
+    <img src="assets/logo-umk.png" alt="Logo UMK">
+    <h2>PUSAT KEBUDAYAAN</h2>
+    <h2>UNIVERSITI MALAYSIA KELANTAN</h2>
+    <p>Email: kebudayaan@umk.edu.my<br>No. Telefon: +6097797436</p>
 </div>
 
 <div class="container">
-<h3>Borang Tempahan Studio</h3>
+    <h3>Borang Tempahan Studio</h3>
 
-<form>
+    <form id="bookingForm">
+        <div>
+            <label>Nama Penuh</label>
+            <input type="text" id="nama" placeholder="Contoh: Ahmad Bin Ali" required>
+        </div>
 
-<div>
-  <label>Nama</label>
-  <input type="text" required>
+        <div>
+            <label>No. Matrik / Staf / IC</label>
+            <input type="text" id="no_id" placeholder="Contoh: A21A1234" required>
+        </div>
+
+        <div>
+            <label>Jawatan</label>
+            <select id="jawatan" required>
+                <option value="">-- Pilih Jawatan --</option>
+                <option>Pelajar</option>
+                <option>Staf UMK</option>
+                <option>Orang Awam</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Email</label>
+            <input type="email" id="email" placeholder="email@example.com" required>
+        </div>
+          
+        <div>
+            <label>Kampus</label>
+            <select id="kampus" required>
+                <option value="">-- Pilih Kampus --</option>
+                <option value="bachok">Bachok</option>
+                <option value="kota">Kampus Kota</option>
+                <option value="jeli">Kampus Jeli</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Studio</label>
+            <select id="studio" required>
+                <option value="">-- Pilih Kampus Dahulu --</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Tarikh Penggunaan</label>
+            <input type="date" id="tarikh" required>
+        </div>
+
+        <div>
+            <label>Masa Mula</label>
+            <select id="masaMula" required>
+                <option value="">-- Pilih Masa Mula --</option>
+                <option>8:00 pagi</option>
+                <option>9:00 pagi</option>
+                <option>10:00 pagi</option>
+                <option>11:00 pagi</option>
+                <option>12:00 tengah hari</option>
+                <option>2:00 petang</option>
+                <option>3:00 petang</option>
+                <option>5:00 petang</option>
+                <option>6:00 petang</option>
+                <option>8:00 malam</option>
+                <option>9:00 malam</option>
+                <option>10:00 malam</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Masa Tamat</label>
+            <select id="masaTamat" required>
+                <option value="">-- Pilih Masa Tamat --</option>
+                <option>9:00 pagi</option>
+                <option>10:00 pagi</option>
+                <option>11:00 pagi</option>
+                <option>12:00 tengah hari</option>
+                <option>1:00 petang</option>
+                <option>3:00 petang</option>
+                <option>4:00 petang</option>
+                <option>6:00 petang</option>
+                <option>7:00 malam</option>
+                <option>9:00 malam</option>
+                <option>10:00 malam</option>
+                <option>11:00 malam</option>
+            </select>
+        </div>
+
+        <div class="rules">
+            <ul>
+                <li>Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
+                <li>Pemohon hendaklah mematuhi syarat dan etika penggunaan kemudahan.</li>
+                <li>Pemohon bertanggungjawab terhadap keselamatan dan kerosakan.</li>
+                <li>Pemohon tidak dibenarkan mengubahsuai peralatan.</li>
+            </ul>
+            <p class="bold">
+                PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.
+            </p>
+        </div>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="setuju" required>
+            <label for="setuju">Saya telah membaca dan bersetuju dengan semua syarat dan peraturan yang ditetapkan.</label>
+        </div>
+
+        <button type="submit" id="submitBtn">Hantar Permohonan</button>
+    </form>
 </div>
-
-<div>
-  <label>No Matrik / Staf / IC</label>
-  <input type="text" required>
-</div>
-
-<div>
-  <label>Jawatan</label>
-  <select required>
-    <option value="">-- Pilih Jawatan --</option>
-    <option>Pelajar</option>
-    <option>Staf UMK</option>
-    <option>Orang Awam</option>
-  </select>
-</div
-
-<div>
-  <label>Email</label>
-  <input type="text" required>
-</div>
-  
-  <label>Kampus</label>
-  <select id="kampus" required>
-    <option value="">-- Pilih Kampus --</option>
-    <option value="bachok">Bachok</option>
-    <option value="kota">Kampus Kota</option>
-    <option value="jeli">Kampus Jeli</option>
-  </select>
-</div>
-
-<div>
-  <label>Studio</label>
-  <select id="studio" required>
-    <option value="">-- Pilih Kampus Dahulu --</option>
-  </select>
-</div>
-<script>
-const studioData = {
-  bachok: [
-    "Teniat 3",
-    "Teniat 4"
-  ],
-  kota: [
-    "Studio Tari",
-    "Studio Band",
-    "Studio Gamelan"
-  ],
-  jeli: [
-    "Surau Lama",
-    "Dewan Utama"
-  ]
-};
-
-const kampusSelect = document.getElementById("kampus");
-const studioSelect = document.getElementById("studio");
-
-kampusSelect.addEventListener("change", function () {
-  const kampus = this.value;
-  studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
-
-  if (studioData[kampus]) {
-    studioData[kampus].forEach(function (studio) {
-      const option = document.createElement("option");
-      option.textContent = studio;
-      option.value = studio;
-      studioSelect.appendChild(option);
-    });
-  }
-});
-</script>
-
-
-<div>
-  <label>Tarikh Penggunaan</label>
-  <input type="date" required>
-</div>
-
-<div>
-  <label>Masa Mula</label>
-  <select required>
-    <option value="">-- Pilih Masa Mula --</option>
-    <option>8:00 pagi</option>
-    <option>9:00 pagi</option>
-    <option>10:00 pagi</option>
-    <option>11:00 pagi</option>
-    <option>12:00 tengah hari</option>
-    <option>2:00 petang</option>
-    <option>3:00 petang</option>
-    <option>5:00 petang</option>
-    <option>6:00 petang</option>
-    <option>8:00 malam</option>
-    <option>9:00 malam</option>
-    <option>10:00 malam</option>
-  </select>
-</div>
-
-<div>
-  <label>Masa Tamat</label>
-  <select required>
-    <option value="">-- Pilih Masa Tamat --</option>
-    <option>9:00 pagi</option>
-    <option>10:00 pagi</option>
-    <option>11:00 pagi</option>
-    <option>12:00 tengah hari</option>
-    <option>1:00 petang</option>
-    <option>3:00 petang</option>
-    <option>4:00 petang</option>
-    <option>6:00 petang</option>
-    <option>7:00 malam</option>
-    <option>9:00 malam</option>
-    <option>10:00 malam</option>
-    <option>11:00 malam</option>
-  </select>
-</div>
-
-<div class="rules">
-<ul>
-  <li>Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
-  <li>Pemohon hendaklah mematuhi syarat dan etika penggunaan kemudahan.</li>
-  <li>Pemohon bertanggungjawab terhadap keselamatan dan kerosakan.</li>
-  <li>Pemohon tidak dibenarkan mengubahsuai peralatan.</li>
-</ul>
-<p class="bold">
-PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.
-</p>
-</div>
-
-<div class="checkbox">
-  <input type="checkbox" required>
-  <label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan.</label>
-</div>
-
-<button type="submit">Hantar Permohonan</button>
-
-</form>
-</div>
-
-<script>
-document.querySelector("form").addEventListener("submit", function (e) {
-  const inputs = this.querySelectorAll("input, select");
-  const checkbox = this.querySelector("input[type=checkbox]");
-  const tarikhField = document.getElementById("tarikh");
-
-  let lengkap = true;
-
-  // Semak semua input & select
-  inputs.forEach(function (field) {
-    if (field.type !== "checkbox" && field.value.trim() === "") {
-      lengkap = false;
-    }
-  });
-
-  // Semak checkbox
-  if (!checkbox.checked) {
-    lengkap = false;
-  }
-
-  // Semak tarikh ≥ 3 hari dari hari ini
-  if (tarikhField.value) {
-    const today = new Date();
-    const pilihanTarikh = new Date(tarikhField.value);
-    const diffTime = pilihanTarikh - today;
-    const diffDays = diffTime / (1000 * 60 * 60 * 24);
-
-    if (diffDays < 3) {
-      lengkap = false;
-      alert("Permohonan perlu dibuat sekurang-kurangnya 3 hari sebelum tarikh penggunaan.");
-      e.preventDefault();
-      return;
-    }
-  }
-
-  // Jika ada field kosong
-  if (!lengkap) {
-    e.preventDefault();
-    alert("Sila lengkapkan SEMUA maklumat dan tandakan persetujuan sebelum menghantar permohonan.");
-  }
-});
-</script>
-
-</body>
-</html>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-// 1. SETUP CONNECTION (Ganti maklumat dalam ' ' ini)
-const _supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
-const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
-const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
+    // 1. SETUP SUPABASE
+    const _supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
+    const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
+    const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
 
-document.querySelector("form").addEventListener("submit", async function (e) {
-  e.preventDefault(); // Halang page dari refresh
+    // 2. DATA STUDIO BERIKUTAN KAMPUS
+    const studioData = {
+        bachok: ["Teniat 3", "Teniat 4"],
+        kota: ["Studio Tari", "Studio Band", "Studio Gamelan"],
+        jeli: ["Surau Lama", "Dewan Utama"]
+    };
 
-  // Ambil element
-  const tarikhField = document.getElementById("tarikh");
-  const checkbox = this.querySelector("input[type=checkbox]");
-  
-  // Ambil nilai dari input (Pastikan ID ini wujud di HTML anda)
-  const namaVal = document.getElementById("nama").value;
-  const tarikhVal = tarikhField.value;
-  const masaMulaVal = document.getElementById("masaMula").value;
-  const masaTamatVal = document.getElementById("masaTamat").value;
+    const kampusSelect = document.getElementById("kampus");
+    const studioSelect = document.getElementById("studio");
 
-  // --- LOGIK VALIDASI ---
-  
-  // 1. Semak tarikh >= 3 hari
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Reset masa untuk perbandingan tarikh yang tepat
-  const pilihanTarikh = new Date(tarikhVal);
-  const diffTime = pilihanTarikh - today;
-  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    kampusSelect.addEventListener("change", function () {
+        const kampus = this.value;
+        studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
 
-  if (diffDays < 3) {
-    alert("Permohonan perlu dibuat sekurang-kurangnya 3 hari sebelum tarikh penggunaan.");
-    return; // Berhenti di sini, jangan hantar ke database
-  }
-
-  // 2. Semak Checkbox
-  if (!checkbox.checked) {
-    alert("Sila tandakan persetujuan syarat.");
-    return;
-  }
-
-  // --- PROSES HANTAR KE SUPABASE ---
-  
-  // Tunjukkan status loading pada butang
-  const btn = this.querySelector("button[type=submit]");
-  const originalBtnText = btn.innerText;
-  btn.innerText = "Menghantar...";
-  btn.disabled = true;
-
-  try {
-    const { data, error } = await supabaseClient
-      .from('permohonan') // Pastikan nama table di Supabase anda ialah 'permohonan'
-      .insert([
-        { 
-          nama: namaVal, 
-          tarikh: tarikhVal, 
-          masa_mula: masaMulaVal, 
-          masa_tamat: masaTamatVal,
-          status: 'pending' 
+        if (studioData[kampus]) {
+            studioData[kampus].forEach(function (studio) {
+                const option = document.createElement("option");
+                option.textContent = studio;
+                option.value = studio;
+                studioSelect.appendChild(option);
+            });
         }
-      ]);
+    });
 
-    if (error) throw error;
+    // 3. LOGIK PENGHANTARAN BORANG
+    const bookingForm = document.getElementById("bookingForm");
+    const submitBtn = document.getElementById("submitBtn");
 
-    alert("✅ Berjaya! Permohonan anda telah dihantar dan sedang diproses.");
-    this.reset(); // Kosongkan borang
+    bookingForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-  } catch (err) {
-    console.error("Ralat Supabase:", err.message);
-    alert("❌ Gagal: " + err.message);
-  } finally {
-    // Kembalikan butang ke asal
-    btn.innerText = originalBtnText;
-    btn.disabled = false;
-  }
-});
+        // Ambil Nilai Input
+        const nama = document.getElementById("nama").value;
+        const no_id = document.getElementById("no_id").value;
+        const jawatan = document.getElementById("jawatan").value;
+        const email = document.getElementById("email").value;
+        const kampus = document.getElementById("kampus").value;
+        const studio = document.getElementById("studio").value;
+        const tarikh = document.getElementById("tarikh").value;
+        const masaMula = document.getElementById("masaMula").value;
+        const masaTamat = document.getElementById("masaTamat").value;
+        const setuju = document.getElementById("setuju").checked;
+
+        // --- VALIDASI TARIKH (MINIMA 3 HARI) ---
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const pilihanTarikh = new Date(tarikh);
+        const diffTime = pilihanTarikh - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 3) {
+            alert("Ralat: Permohonan perlu dibuat sekurang-kurangnya 3 hari sebelum tarikh penggunaan.");
+            return;
+        }
+
+        if (!setuju) {
+            alert("Sila tandakan persetujuan syarat.");
+            return;
+        }
+
+        // --- PROSES HANTAR KE SUPABASE ---
+        submitBtn.innerText = "Menghantar...";
+        submitBtn.disabled = true;
+
+        try {
+            const { data, error } = await supabaseClient
+                .from('permohonan') // Pastikan nama table di Supabase ialah 'permohonan'
+                .insert([
+                    { 
+                        nama: nama, 
+                        no_id: no_id,
+                        jawatan: jawatan,
+                        email: email,
+                        kampus: kampus,
+                        studio: studio,
+                        tarikh: tarikh, 
+                        masa_mula: masaMula, 
+                        masa_tamat: masaTamat,
+                        status: 'pending' 
+                    }
+                ]);
+
+            if (error) throw error;
+
+            alert("✅ Berjaya! Permohonan anda telah dihantar dan akan diproses.");
+            bookingForm.reset();
+            studioSelect.innerHTML = '<option value="">-- Pilih Kampus Dahulu --</option>';
+
+        } catch (err) {
+            console.error("Ralat Supabase:", err.message);
+            alert("❌ Gagal menghantar: " + err.message);
+        } finally {
+            submitBtn.innerText = "Hantar Permohonan";
+            submitBtn.disabled = false;
+        }
+    });
 </script>
+
+</body>
+</html>
