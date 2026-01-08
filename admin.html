@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Kelulusan Permohonan | UMK</title>
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <style>
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; 
@@ -87,7 +90,7 @@
     <header>
         <div>
             <h1 style="margin:0;">Dashboard Admin</h1>
-            <p style="margin:5px 0 0 0;">Pengurusan Permohonan Studio</p>
+            <p style="margin:5px 0 0 0;">Pengurusan Permohonan & Notifikasi Emel</p>
         </div>
         <button class="btn-refresh" onclick="dapatkanData()">Refresh Data</button>
     </header>
@@ -96,7 +99,12 @@
 </div>
 
 <script>
-    // KONFIGURASI SUPABASE (Sama seperti borang tempahan)
+    // 1. SETUP EMAILJS
+    (function() {
+        emailjs.init("Tl9vKyr7pswPWFUw_"); // Public Key anda
+    })();
+
+    // 2. SETUP SUPABASE
     const _supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co'; 
     const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg'; 
     const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
@@ -120,13 +128,12 @@
         senaraiDiv.innerHTML = '';
 
         if (data.length === 0) {
-            senaraiDiv.innerHTML = '<p>Tiada permohonan dijumpai dalam pangkalan data.</p>';
+            senaraiDiv.innerHTML = '<p>Tiada permohonan dijumpai.</p>';
             return;
         }
 
         data.forEach(p => {
             const card = document.createElement('div');
-            // Menambah class status (pending/approved/denied)
             card.className = `card ${p.status}`;
             
             card.innerHTML = `
@@ -146,11 +153,11 @@
 
                 <div class="actions">
                     ${p.status === 'pending' ? `
-                        <button class="btn-approve" onclick="tukarStatus(${p.id}, 'approved')">Luluskan</button>
-                        <button class="btn-deny" onclick="tukarStatus(${p.id}, 'denied')">Tolak</button>
+                        <button class="btn-approve" onclick="tukarStatus(${p.id}, 'approved', '${p.email}', '${p.nama}', '${p.studio}', '${p.tarikh}')">Luluskan & Emel</button>
+                        <button class="btn-deny" onclick="tukarStatus(${p.id}, 'denied', '${p.email}', '${p.nama}', '${p.studio}', '${p.tarikh}')">Tolak & Emel</button>
                     ` : `
-                        <small style="color:#888;">Tindakan selesai pada rekod ini.</small>
-                        <button style="font-size:0.7em; background:none; color:blue; text-decoration:underline; padding:0;" onclick="tukarStatus(${p.id}, 'pending')">Reset ke Pending</button>
+                        <small style="color:#888;">Tindakan selesai.</small>
+                        <button style="font-size:0.7em; background:none; color:blue; text-decoration:underline; padding:0;" onclick="tukarStatus(${p.id}, 'pending')">Reset</button>
                     `}
                 </div>
             `;
@@ -158,24 +165,49 @@
         });
     }
 
-    // Fungsi Kemaskini Status
-    async function tukarStatus(id, statusBaru) {
-        const mesej = statusBaru === 'pending' ? "Reset status?" : `Adakah anda pasti mahu ${statusBaru} permohonan ini?`;
+    // Fungsi Kemaskini Status + Hantar Emel
+    async function tukarStatus(id, statusBaru, userEmail, userName, studio, tarikh) {
+        const mesej = statusBaru === 'pending' ? "Reset status?" : `Adakah anda pasti mahu ${statusBaru} permohonan ini? Emel notifikasi akan dihantar.`;
         if (!confirm(mesej)) return;
 
+        // 1. Update di Supabase
         const { error } = await supabaseClient
             .from('permohonan')
             .update({ status: statusBaru })
             .eq('id', id);
 
         if (error) {
-            alert("Gagal mengemaskini: " + error.message);
+            alert("Gagal mengemaskini database: " + error.message);
+            return;
+        }
+
+        // 2. Jika Status Approved/Denied, Hantar Emel
+        if (statusBaru === 'approved' || statusBaru === 'denied') {
+            const templateParams = {
+                to_email: userEmail,
+                to_name: userName,
+                status: statusBaru === 'approved' ? 'DILULUSKAN' : 'DITOLAK',
+                studio_name: studio,
+                booking_date: tarikh,
+                message: statusBaru === 'approved' 
+                    ? "Permohonan anda telah berjaya diluluskan. Sila patuhi peraturan studio." 
+                    : "Dukacita dimaklumkan permohonan anda telah ditolak atas sebab-sebab teknikal."
+            };
+
+            emailjs.send('service_p2zsg4l', 'template_w5zpeal', templateParams)
+                .then(() => {
+                    alert("✅ Berjaya! Status dikemaskini dan emel telah dihantar.");
+                    dapatkanData();
+                })
+                .catch((err) => {
+                    alert("⚠️ Status dikemaskini TAPI emel gagal dihantar: " + JSON.stringify(err));
+                    dapatkanData();
+                });
         } else {
-            dapatkanData(); // Refresh senarai selepas berjaya
+            dapatkanData();
         }
     }
 
-    // Panggil data bila page dibuka
     dapatkanData();
 </script>
 </body>
