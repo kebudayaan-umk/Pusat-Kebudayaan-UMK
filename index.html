@@ -23,7 +23,7 @@
             padding: 50px 20px;
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("assets/bg-kebudayaan.jpg");
             background-size: cover;
-            background-color: #222; /* Fallback */
+            background-color: #222;
         }
         .header img {
             width: 120px;
@@ -306,18 +306,35 @@
             return;
         }
 
-        if (!setuju) {
-            alert("Sila tandakan persetujuan syarat.");
-            return;
-        }
-
-        // --- PROSES HANTAR KE SUPABASE ---
-        submitBtn.innerText = "Menghantar...";
+        // --- LOGIK SEMAKAN PERTEMBUNGAN (ANTI-DOUBLE BOOKING) ---
+        submitBtn.innerText = "Menyemak Kekosongan...";
         submitBtn.disabled = true;
 
         try {
+            // Semak jika slot sudah 'approved'
+            const { data: sediaAda, error: checkError } = await supabaseClient
+                .from('permohonan')
+                .select('id')
+                .eq('studio', studio)
+                .eq('tarikh', tarikh)
+                .eq('masa_mula', masaMula)
+                .eq('status', 'approved');
+
+            if (checkError) throw checkError;
+
+            // Jika ada data yang sudah 'approved' pada slot tersebut
+            if (sediaAda && sediaAda.length > 0) {
+                alert(`Maaf, slot untuk ${studio} pada tarikh dan masa tersebut telahpun ditempah (LULUS). Sila pilih waktu atau studio lain.`);
+                submitBtn.innerText = "Hantar Permohonan";
+                submitBtn.disabled = false;
+                return;
+            }
+
+            // --- PROSES HANTAR KE SUPABASE ---
+            submitBtn.innerText = "Menghantar...";
+
             const { data, error } = await supabaseClient
-                .from('permohonan') // Pastikan nama table di Supabase ialah 'permohonan'
+                .from('permohonan')
                 .insert([
                     { 
                         nama: nama, 
@@ -340,7 +357,7 @@
             studioSelect.innerHTML = '<option value="">-- Pilih Kampus Dahulu --</option>';
 
         } catch (err) {
-            console.error("Ralat Supabase:", err.message);
+            console.error("Ralat:", err.message);
             alert("❌ Gagal menghantar: " + err.message);
         } finally {
             submitBtn.innerText = "Hantar Permohonan";
