@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Tempahan Studio PKUMK</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #003366;
@@ -17,61 +17,38 @@
 
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; }
 
-        /* HEADER & CONTACT INFO */
-        .header { position: relative; background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; padding: 60px 20px; text-align: center; }
-        .header::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.90); }
+        /* HEADER */
+        .header { position: relative; background: #fff; padding: 60px 20px; text-align: center; border-bottom: 5px solid var(--accent-color); }
         .header-content { position: relative; z-index: 1; }
-        .logo-umk { height: 100px; margin-bottom: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .logo-umk { height: 110px; margin-bottom: 15px; }
         .header h1 { margin: 0; font-size: 1.6rem; color: var(--primary-color); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
         
         .contact-info { margin-top: 12px; font-size: 0.95rem; }
-        .contact-info a { color: var(--primary-color); text-decoration: none; font-weight: 700; transition: 0.3s; padding: 5px 10px; }
+        .contact-info a { color: var(--primary-color); text-decoration: none; font-weight: 700; padding: 5px 10px; }
         .contact-info a:hover { color: var(--accent-color); text-decoration: underline; }
-        .contact-sep { margin: 0 5px; color: #bbb; }
 
-        .container { max-width: 850px; background: var(--white); padding: 35px; border-radius: 12px; margin: -30px auto 50px auto; box-shadow: 0 8px 30px rgba(0,0,0,0.1); position: relative; z-index: 2; }
+        .container { max-width: 850px; background: var(--white); padding: 35px; border-radius: 12px; margin: 30px auto; box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
         
         h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.3rem; font-weight: 700; }
 
-        /* JADUAL TEMPAHAN */
-        .jadual-tempahan { background: #fbfbfb; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 35px; }
-        .jadual-tempahan h3 { margin-top: 0; font-size: 1rem; color: var(--primary-color); text-transform: uppercase; font-weight: 700; }
-        .table-wrapper { overflow-x: auto; margin-top: 10px; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; }
-        table th { background: var(--primary-color); color: white; padding: 12px; text-align: left; }
-        table td { padding: 10px; border: 1px solid #eee; }
-        .status-tag { background: #ffe6e6; color: var(--danger); padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; }
-
-        /* FORM STYLING */
+        /* FORM GRID */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 20px; }
         .full-width { grid-column: span 2; }
         label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; color: #444; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         textarea { resize: vertical; min-height: 80px; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0,51,102,0.1); }
+
+        /* TICKBOX KEMAS KE KIRI */
+        .persetujuan { display: flex; align-items: flex-start; gap: 12px; margin-top: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+        .persetujuan input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; cursor: pointer; flex-shrink: 0; }
 
         .error-msg { color: var(--danger); font-size: 0.75rem; font-weight: 700; display: none; margin-top: 5px; }
 
-        /* SYARAT-SYARAT */
-        .syarat-container { background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 8px; margin-top: 30px; font-size: 0.85rem; }
-        .syarat-list { padding-left: 20px; }
-        .syarat-list li { margin-bottom: 8px; }
-        .amaran-denda { background: #fff5f5; color: var(--danger); padding: 15px; border: 1px solid #ffcccc; border-radius: 6px; text-align: center; font-weight: 800; margin-top: 15px; font-size: 0.85rem; text-transform: uppercase; }
+        button { background: var(--primary-color); color: white; padding: 16px; border: none; border-radius: 6px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 25px; text-transform: uppercase; transition: 0.3s; }
+        button:hover { background: #002244; transform: translateY(-2px); }
+        button:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* TICKBOX STYLING UPDATED */
-        .persetujuan { display: flex; align-items: center; gap: 12px; margin-top: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
-        .persetujuan input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; flex-shrink: 0; }
-
-        button { background: var(--primary-color); color: white; padding: 16px; border: none; border-radius: 6px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 25px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
-        button:hover { background: #002244; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-
-        @media (max-width: 600px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: span 1; }
-            .contact-sep { display: none; }
-            .contact-info a { display: block; margin-bottom: 5px; }
-        }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
     </style>
 </head>
 <body>
@@ -81,68 +58,30 @@
         <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
         <h1>Pusat Kebudayaan<br>Universiti Malaysia Kelantan</h1>
         <div class="contact-info">
-            <a href="mailto:kebudayaan@umk.edu.my">kebudayaan@umk.edu.my</a>
-            <span class="contact-sep">|</span>
+            <a href="mailto:kebudayaan@umk.edu.my">kebudayaan@umk.edu.my</a> | 
             <a href="tel:+6097797436">+609-779 7436</a>
         </div>
     </div>
 </div>
 
 <div class="container">
-    
-    <div class="jadual-tempahan">
-        <h3>Slot Jadual Terkini</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tarikh</th>
-                        <th>Kampus</th>
-                        <th>Studio</th>
-                        <th>Masa (Mula - Tamat)</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>20 Jan 2026</td>
-                        <td>Jeli</td>
-                        <td>Studio Kebudayaan</td>
-                        <td>09:00 AM - 12:00 PM</td>
-                        <td><span class="status-tag">DITEMPAH</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <form id="bookingForm" action="../backend/submit.php" method="POST">
+    <form id="bookingForm" action="submit.php" method="POST">
         <h2>Borang Tempahan Studio</h2>
         
         <div class="form-grid">
             <div class="full-width">
                 <label>Nama Penuh</label>
-                <input type="text" name="nama" placeholder="Sila masukkan nama penuh" required>
+                <input type="text" name="nama" required>
             </div>
 
             <div>
                 <label>No. Kad Pengenalan</label>
-                <input type="text" name="no_ic" maxlength="12" placeholder="Contoh: 001212035566" required>
+                <input type="text" name="no_ic" maxlength="12" required>
             </div>
 
             <div>
                 <label>No. Matrik / No. Staf</label>
-                <input type="text" name="no_id" placeholder="Contoh: A21A1234 / P1234" required>
-            </div>
-
-            <div>
-                <label>Kategori</label>
-                <select name="kategori" required>
-                    <option value="">-- Pilih Kategori --</option>
-                    <option>Pelajar</option>
-                    <option>Staf</option>
-                    <option>Orang Awam</option>
-                </select>
+                <input type="text" name="no_id" required>
             </div>
 
             <div>
@@ -163,7 +102,7 @@
             </div>
 
             <div>
-                <label>Tarikh Penggunaan (Min 3 Hari)</label>
+                <label>Tarikh Penggunaan</label>
                 <input type="date" id="tarikh_tempahan" name="tarikh" required>
             </div>
 
@@ -199,30 +138,23 @@
                     <option value="22">10:00 PM</option>
                     <option value="23">11:00 PM</option>
                 </select>
-                <div id="timeError" class="error-msg">Ralat: Masa tidak logik atau melangkaui waktu solat!</div>
+                <div id="timeError" class="error-msg">Masa tamat mestilah selepas masa mula!</div>
             </div>
 
             <div class="full-width">
-                <label>Senarai Peralatan Tambahan (Jika Ada)</label>
-                <textarea name="peralatan" placeholder="Contoh: 2 unit Microphone, 1 unit Speaker, dsb."></textarea>
+                <label>Keperluan Teknikal (Cth: Mikrofon, Speaker, Kabel)</label>
+                <textarea name="teknikal" placeholder="Nyatakan bilangan dan jenis peralatan teknikal yang diperlukan..."></textarea>
             </div>
-        </div>
 
-        <div class="syarat-container">
-            <span style="font-weight: 800; color: var(--primary-color); text-decoration: underline;">Syarat & Peraturan:</span>
-            <ul class="syarat-list">
-                <li>Permohonan mestilah TIGA (3) hari sebelum tarikh penggunaan.</li>
-                <li>Waktu solat (1pm-2pm, 4pm-5pm, 7pm-9pm) tidak dibuka untuk tempahan.</li>
-                <li>Peralatan tambahan tertakluk kepada kekosongan stok.</li>
-            </ul>
-            <div class="amaran-denda">
-                DENDA AKAN DIKENAKAN BAGI SEBARANG KEROSAKAN ATAU KEKOTORAN PERALATAN/STUDIO.
+            <div class="full-width">
+                <label>Barang Keperluan Penempah (Cth: Kerusi, Meja, Hiasan)</label>
+                <textarea name="keperluan_penempah" placeholder="Nyatakan barang-barang lain yang diperlukan untuk urusan penempah..."></textarea>
             </div>
         </div>
 
         <label class="persetujuan">
             <input type="checkbox" name="setuju" required>
-            <span>Saya telah membaca dan bersetuju dengan segala terma dan syarat di atas.</span>
+            <span>Saya bersetuju dengan syarat penggunaan studio dan bertanggungjawab ke atas peralatan yang digunakan.</span>
         </label>
 
         <button type="submit" id="submitBtn">Hantar Permohonan</button>
@@ -230,64 +162,49 @@
 </div>
 
 <script>
+    // Logik Studio
     const studioList = {
         bachok: ["Teniat 3", "Teniat 4"],
         kota: ["Studio Tari", "Studio Muzik", "Studio Gamelan"],
-        jeli: ["Studio Kebudayaan"] 
+        jeli: ["Studio Kebudayaan"]
     };
 
-    const kampus = document.getElementById("kampus");
-    const studio = document.getElementById("studio");
-    const datePicker = document.getElementById("tarikh_tempahan");
-    const masaMula = document.getElementById("masa_mula");
-    const masaTamat = document.getElementById("masa_tamat");
-    const timeError = document.getElementById("timeError");
-    const submitBtn = document.getElementById("submitBtn");
-
-    kampus.addEventListener("change", () => {
-        studio.innerHTML = '<option value="">-- Pilih Studio --</option>';
-        if(kampus.value && studioList[kampus.value]) {
-            studioList[kampus.value].forEach(s => {
-                let o = document.createElement("option");
-                o.value = s; o.text = s;
-                studio.add(o);
+    document.getElementById("kampus").addEventListener("change", function() {
+        const studioSelect = document.getElementById("studio");
+        studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
+        if(this.value) {
+            studioList[this.value].forEach(s => {
+                let opt = document.createElement("option");
+                opt.value = s; opt.text = s;
+                studioSelect.add(opt);
             });
         }
     });
 
-    const today = new Date();
-    const minDate = new Date();
-    minDate.setDate(today.getDate() + 3);
-    const yyyy = minDate.getFullYear();
-    const mm = String(minDate.getMonth() + 1).padStart(2, '0');
-    const dd = String(minDate.getDate()).padStart(2, '0');
-    datePicker.setAttribute("min", `${yyyy}-${mm}-${dd}`);
+    // Validasi Masa
+    const masaMula = document.getElementById("masa_mula");
+    const masaTamat = document.getElementById("masa_tamat");
+    const submitBtn = document.getElementById("submitBtn");
+    const timeError = document.getElementById("timeError");
 
-    function validateTime() {
-        const mula = parseInt(masaMula.value);
-        const tamat = parseInt(masaTamat.value);
-
-        if (masaMula.value && masaTamat.value) {
-            let isInvalid = false;
-            if (tamat <= mula) isInvalid = true;
-            if (mula < 13 && tamat > 14) isInvalid = true;
-            if (mula < 16 && tamat > 17) isInvalid = true;
-            if (mula < 19 && tamat > 21) isInvalid = true;
-
-            if (isInvalid) {
+    function checkTime() {
+        if(masaMula.value && masaTamat.value) {
+            if(parseInt(masaTamat.value) <= parseInt(masaMula.value)) {
                 timeError.style.display = "block";
-                masaTamat.style.borderColor = "var(--danger)";
                 submitBtn.disabled = true;
             } else {
                 timeError.style.display = "none";
-                masaTamat.style.borderColor = "#ccc";
                 submitBtn.disabled = false;
             }
         }
     }
+    masaMula.addEventListener("change", checkTime);
+    masaTamat.addEventListener("change", checkTime);
 
-    masaMula.addEventListener("change", validateTime);
-    masaTamat.addEventListener("change", validateTime);
+    // Had Tarikh (Min 3 hari)
+    const dt = new Date();
+    dt.setDate(dt.getDate() + 3);
+    document.getElementById("tarikh_tempahan").min = dt.toISOString().split("T")[0];
 </script>
 
 </body>
