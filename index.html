@@ -3,130 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tempahan Studio | Pusat Kebudayaan UMK</title>
-
+    <title>Sistem Tempahan Studio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* --- GAYA ASAL (DIKEKALKAN & DIPERAPIKAN) --- */
-        * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { margin: 0; background: #f2f2f2; line-height: 1.6; color: #333; }
-
-        .header {
-            text-align: center; color: #fff; padding: 50px 20px;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("assets/bg-kebudayaan.jpg");
-            background-size: cover; background-position: center; background-color: #222;
-        }
-        .header img { width: 120px; margin-bottom: 15px; }
-        .header h2 { margin: 5px 0; letter-spacing: 1px; }
-
-        .container { 
-            max-width: 750px; margin: -40px auto 50px; background: #fff; 
-            padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-        }
-        
-        h3 { margin-top: 0; color: #0a7a4b; border-bottom: 2px solid #0a7a4b; padding-bottom: 10px; }
-
-        /* --- UI KOMPONEN --- */
-        .slot-penuh { 
-            background: #e8f5e9; padding: 20px; border-radius: 8px; 
-            margin-bottom: 30px; border: 1px solid #c8e6c9; 
-        }
-        .slot-penuh h4 { margin: 0 0 10px 0; color: #2e7d32; display: flex; align-items: center; gap: 8px; }
-
-        form { display: flex; flex-direction: column; gap: 20px; }
-        .form-group { display: flex; flex-direction: column; gap: 8px; }
-        
-        label { font-weight: 600; font-size: 14px; color: #444; }
-        input, select { 
-            width: 100%; padding: 12px; border-radius: 6px; 
-            border: 1px solid #ccc; font-size: 15px; transition: border 0.3s;
-        }
-        input:focus, select:focus { border-color: #0a7a4b; outline: none; box-shadow: 0 0 0 3px rgba(10,122,75,0.1); }
-
-        /* --- SYARAT-SYARAT --- */
-        .rules { 
-            background: #fff9f9; border: 1px solid #ffcccc; 
-            padding: 20px; border-radius: 8px; font-size: 14px; 
-        }
-        .rules ul { padding-left: 20px; margin: 10px 0; }
-        .rules li { margin-bottom: 5px; }
-        .rules .bold-warning { font-weight: bold; color: #b00000; text-align: center; display: block; margin-top: 10px; }
-
-        .checkbox-container { display: flex; align-items: flex-start; gap: 12px; margin-top: 10px; cursor: pointer; }
-        .checkbox-container input { width: auto; margin-top: 4px; }
-
-        button { 
-            padding: 16px; background: #0a7a4b; color: #fff; border: none; 
-            border-radius: 6px; font-size: 16px; font-weight: bold; 
-            cursor: pointer; transition: 0.3s; margin-top: 10px;
-        }
-        button:hover { background: #08633d; transform: translateY(-1px); }
-        button:disabled { background: #ccc; cursor: not-allowed; }
+        body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
+        .form-container { max-width: 600px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select, button { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:disabled { background-color: #ccc; }
     </style>
 </head>
-
 <body>
 
-<div class="header">
-    <img src="assets/logo-umk.png" alt="Logo UMK">
-    <h2>PUSAT KEBUDAYAAN</h2>
-    <h2>UNIVERSITI MALAYSIA KELANTAN</h2>
-    <p>Email: kebudayaan@umk.edu.my | No. Telefon: +6097797436</p>
-</div>
-
-<div class="container">
-    <div class="slot-penuh">
-        <h4>🚫 Slot Telah Ditempah (Penuh):</h4>
-        <ul id="senaraiSlot" style="font-size: 13px; margin:0; padding-left:20px;">
-            <li>Memuatkan maklumat terkini...</li>
-        </ul>
-    </div>
-
-    <h3>Borang Permohonan Tempahan</h3>
-
+<div class="form-container">
+    <h2>Borang Tempahan Studio</h2>
     <form id="bookingForm">
         <div class="form-group">
             <label>Nama Penuh</label>
-            <input type="text" id="nama" placeholder="Contoh: Ahmad Bin Ali" required>
+            <input type="text" id="nama" required placeholder="Contoh: Ahmad Bin Ali">
+        </div>
+
+        <div class="form-group">
+            <label>No. ID (Staff/Pelajar)</label>
+            <input type="text" id="no_id" required placeholder="Contoh: SWP12345">
         </div>
 
         <div class="form-group">
             <label>No. Kad Pengenalan</label>
-            <input type="text" id="no_ic" placeholder="Tanpa sengkang (-) Contoh: 001122034455" required>
+            <input type="text" id="no_ic" required placeholder="Contoh: 900101105555">
         </div>
 
         <div class="form-group">
-            <label>No. Matrik / No. Staf</label>
-            <input type="text" id="no_id" placeholder="Contoh: A21A1234" required>
-        </div>
-<div class="form-group">
             <label>Kategori</label>
-            <select id="jawatan" required>
-                <option value="">-- Sila Pilih Kategori --</option>
+            <select id="kategori" required>
+                <option value="">-- Pilih Kategori --</option>
+                <option value="Staff">Staff</option>
                 <option value="Pelajar">Pelajar</option>
-                <option value="Staf UMK">Staf UMK</option>
-                <option value="Orang Awam">Orang Awam</option>
+                <option value="Pihak Luar">Pihak Luar</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>Email Rasmi</label>
-            <input type="email" id="email" placeholder="Contoh: nama@umk.edu.my" required>
+            <label>Email</label>
+            <input type="email" id="email" required placeholder="email@example.com">
         </div>
-          
+
         <div class="form-group">
-            <label>Pilih Kampus</label>
+            <label>Kampus</label>
             <select id="kampus" required>
                 <option value="">-- Pilih Kampus --</option>
-                <option value="bachok">Bachok</option>
-                <option value="kota">Kampus Kota</option>
-                <option value="jeli">Kampus Jeli</option>
+                <option value="Kampus A">Kampus A</option>
+                <option value="Kampus B">Kampus B</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>Pilih Studio</label>
+            <label>Studio</label>
             <select id="studio" required>
                 <option value="">-- Pilih Kampus Dahulu --</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Slot Tempahan</label>
+            <select id="slot" required>
+                <option value="">-- Pilih Slot --</option>
+                <option value="Pagi (08:00 - 12:00)">Pagi (08:00 - 12:00)</option>
+                <option value="Petang (14:00 - 18:00)">Petang (14:00 - 18:00)</option>
+                <option value="Malam (20:00 - 23:00)">Malam (20:00 - 23:00)</option>
             </select>
         </div>
 
@@ -135,152 +81,136 @@
             <input type="date" id="tarikh" required>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div class="form-group">
+        <div style="display: flex; gap: 10px;">
+            <div class="form-group" style="flex: 1;">
                 <label>Masa Mula</label>
-                <select id="masaMula" required>
-                    <option value="">-- Pilih --</option>
-                    <option>8:00 pagi</option><option>9:00 pagi</option><option>10:00 pagi</option>
-                    <option>11:00 pagi</option><option>12:00 tengah hari</option><option>2:00 petang</option>
-                    <option>3:00 petang</option><option>4:00 petang</option><option>5:00 petang</option>
-                    <option>8:00 malam</option><option>9:00 malam</option><option>10:00 malam</option>
-                </select>
+                <input type="time" id="masaMula" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="flex: 1;">
                 <label>Masa Tamat</label>
-                <select id="masaTamat" required>
-                    <option value="">-- Pilih --</option>
-                    <option>9:00 pagi</option><option>10:00 pagi</option><option>11:00 pagi</option>
-                    <option>12:00 tengah hari</option><option>1:00 petang</option><option>3:00 petang</option>
-                    <option>4:00 petang</option><option>5:00 petang</option><option>6:00 petang</option>
-                    <option>9:00 malam</option><option>10:00 malam</option><option>11:00 malam</option>
-                </select>
+                <input type="time" id="masaTamat" required>
             </div>
         </div>
-
-        <div class="rules">
-            <strong>PERATURAN DAN SYARAT-SYARAT TEMPAHAN:</strong>
-            <ul>
-                <li>Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
-                <li>Pemohon hendaklah mematuhi syarat dan etika penggunaan kemudahan yang telah ditetapkan.</li>
-                <li>Pemohon bertanggungjawab terhadap sebarang keselamatan dan kerosakan yang berlaku.</li>
-                <li>Pemohon tidak dibenarkan mengubahsuai sebarang kedudukan peralatan yang ada.</li>
-            </ul>
-            <span class="bold-warning">PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.</span>
-        </div>
-
-        <label class="checkbox-container">
-            <input type="checkbox" id="setuju" required>
-            <span>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan yang ditetapkan.</span>
-        </label>
 
         <button type="submit" id="submitBtn">Hantar Permohonan</button>
     </form>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-    // 1. KONFIGURASI SUPABASE
-    const _supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
-    const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
-    const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
+    // --- KONFIGURASI SUPABASE (Gantikan dengan Key Anda) ---
+    const SUPABASE_URL = 'https://YOUR_PROJECT_URL.supabase.co';
+    const SUPABASE_KEY = 'YOUR_ANON_KEY';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // 2. DATA STUDIO (SISTEMATIK)
-    const dataStudio = {
-        "bachok": ["Teniat 3", "Teniat 4"],
-        "kota": ["Studio Tari", "Studio Band", "Studio Gamelan"],
-        "jeli": ["Studio Kebudayaan"] // Jeli hanya Studio Kebudayaan
+    // --- DATA STUDIO ---
+    const studioData = {
+"Kampus A": ["Studio Muzik", "Studio Rakaman", "Studio Fotografi"],
+        "Kampus B": ["Studio TV", "Studio Radio", "Bilik Edit"]
     };
 
-    const kampusElemen = document.getElementById("kampus");
-    const studioElemen = document.getElementById("studio");
+    // --- LOGIK PILIHAN STUDIO DINAMIK ---
+    const kampusSelect = document.getElementById("kampus");
+    const studioSelect = document.getElementById("studio");
 
-    // FUNGSI TUKAR STUDIO (DIJAMIN BERFUNGSI)
-    kampusElemen.addEventListener("change", function() {
-        const pilihan = this.value;
-        
-        // Kosongkan dropdown studio
-        studioElemen.innerHTML = '<option value="">-- Sila Pilih Studio --</option>';
+    kampusSelect.addEventListener("change", function () {
+        const kampus = this.value;
+        studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
 
-        if (dataStudio[pilihan]) {
-            dataStudio[pilihan].forEach(nama => {
-                const opt = document.createElement("option");
-                opt.value = nama;
-                opt.textContent = nama;
-                studioElemen.appendChild(opt);
+        if (studioData[kampus]) {
+            studioData[kampus].forEach(function (studio) {
+                const option = document.createElement("option");
+                option.textContent = studio;
+                option.value = studio;
+                studioSelect.appendChild(option);
             });
         }
     });
 
-    // 3. HAD TARIKH (MINIMA 3 HARI)
-    const tkhInput = document.getElementById('tarikh');
-    const minTkh = new Date();
-    minTkh.setDate(minTkh.getDate() + 3);
-    tkhInput.min = minTkh.toISOString().split("T")[0];
+    // --- LOGIK PENGHANTARAN BORANG ---
+    const bookingForm = document.getElementById("bookingForm");
+    const submitBtn = document.getElementById("submitBtn");
 
-    // 4. AMBIL DATA SLOT PENUH
-    async function muatSlotPenuh() {
-        const listUl = document.getElementById('senaraiSlot');
-        const { data, error } = await supabaseClient
-            .from('permohonan')
-            .select('studio, tarikh, masa_mula')
-            .eq('status', 'approved');
-
-        if (data && data.length > 0) {
-            listUl.innerHTML = data.map(s => `<li>📌 <b>${s.studio}</b> | ${s.tarikh} | ${s.masa_mula}</li>`).join('');
-        } else {
-            listUl.innerHTML = '<li>✅ Tiada tempahan bertembung. Semua slot tersedia.</li>';
-        }
-    }
-    muatSlotPenuh();
-
-    // 5. PROSES HANTAR BORANG
-    document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+    bookingForm.addEventListener("submit", async function (e) {
         e.preventDefault();
-        const btn = document.getElementById("submitBtn");
-        btn.disabled = true;
-        btn.innerText = "Sedang Dihantar...";
 
-        const formData = {
-            nama: document.getElementById("nama").value,
-            no_ic: document.getElementById("no_ic").value,
-            no_id: document.getElementById("no_id").value,
-            jawatan: document.getElementById("jawatan").value,
-            email: document.getElementById("email").value,
-            kampus: document.getElementById("kampus").value,
-            studio: document.getElementById("studio").value,
-            tarikh: document.getElementById("tarikh").value,
-            masa_mula: document.getElementById("masaMula").value,
-            masa_tamat: document.getElementById("masaTamat").value,
-            status: 'pending'
-        };
+        // 1. Ambil Nilai Input
+        const nama = document.getElementById("nama").value;
+        const no_id = document.getElementById("no_id").value;
+        const no_ic = document.getElementById("no_ic").value;
+        const kategori = document.getElementById("kategori").value;
+        const email = document.getElementById("email").value;
+        const kampus = document.getElementById("kampus").value;
+        const studio = document.getElementById("studio").value;
+        const slot = document.getElementById("slot").value;
+        const tarikh = document.getElementById("tarikh").value;
+        const masaMula = document.getElementById("masaMula").value;
+        const masaTamat = document.getElementById("masaTamat").value;
+
+        // 2. Validasi Tarikh (Minima 3 Hari)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const pilihanTarikh = new Date(tarikh);
+        const diffDays = Math.ceil((pilihanTarikh - today) / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 3) {
+            alert("Ralat: Permohonan perlu dibuat sekurang-kurangnya 3 hari sebelum tarikh penggunaan.");
+            return;
+        }
+
+        // 3. Semakan Pertembungan (Anti-Double Booking)
+        submitBtn.innerText = "Menyemak Kekosongan...";
+        submitBtn.disabled = true;
 
         try {
-            // Semak Double Booking sebelum simpan
-            const { data: sedia } = await supabaseClient
+            const { data: sediaAda, error: checkError } = await supabaseClient
                 .from('permohonan')
                 .select('id')
-                .eq('studio', formData.studio)
-                .eq('tarikh', formData.tarikh)
-                .eq('masa_mula', formData.masa_mula)
+                .eq('studio', studio)
+                .eq('tarikh', tarikh)
+                .eq('slot', slot)
                 .eq('status', 'approved');
 
-            if (sedia && sedia.length > 0) {
-                alert("Maaf, slot waktu ini baru sahaja ditempah oleh orang lain. Sila pilih waktu lain.");
-            } else {
-                const { error } = await supabaseClient.from('permohonan').insert([formData]);
-                if (error) throw error;
-                alert("Berjaya! Permohonan anda telah diterima dan sedang diproses.");
-                this.reset();
-                muatSlotPenuh();
+            if (checkError) throw checkError;
+
+            if (sediaAda && sediaAda.length > 0) {
+                alert(`Maaf, ${slot} untuk ${studio} pada tarikh tersebut telahpun ditempah (LULUS). Sila pilih slot lain.`);
+                return;
             }
+
+            // 4. Proses Hantar ke Supabase
+            submitBtn.innerText = "Menghantar...";
+
+            const { error } = await supabaseClient
+                .from('permohonan')
+                .insert([
+                    { 
+                        nama, 
+                        no_id,
+                        no_ic,      
+                        kategori,   
+                        email,
+                        kampus,
+                        studio,
+                        slot,       
+                        tarikh, 
+                        masa_mula: masaMula, 
+                        masa_tamat: masaTamat,
+                        status: 'pending' 
+                    }
+                ]);
+
+            if (error) throw error;
+
+            alert("✅ Berjaya! Permohonan anda telah dihantar.");
+            bookingForm.reset();
+            studioSelect.innerHTML = '<option value="">-- Pilih Kampus Dahulu --</option>';
+
         } catch (err) {
-            alert("Ralat: " + err.message);
+            console.error("Ralat:", err.message);
+            alert("❌ Gagal: " + err.message);
         } finally {
-            btn.disabled = false;
-            btn.innerText = "Hantar Permohonan";
+            submitBtn.innerText = "Hantar Permohonan";
+submitBtn.disabled = false;
         }
     });
 </script>
