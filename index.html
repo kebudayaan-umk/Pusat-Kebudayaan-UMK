@@ -46,8 +46,9 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 20px; }
         .full-width { grid-column: span 2; }
         label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; color: #444; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        input:focus, select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0,51,102,0.1); }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        textarea { resize: vertical; min-height: 80px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0,51,102,0.1); }
 
         .error-msg { color: var(--danger); font-size: 0.75rem; font-weight: 700; display: none; margin-top: 5px; }
 
@@ -57,7 +58,10 @@
         .syarat-list li { margin-bottom: 8px; }
         .amaran-denda { background: #fff5f5; color: var(--danger); padding: 15px; border: 1px solid #ffcccc; border-radius: 6px; text-align: center; font-weight: 800; margin-top: 15px; font-size: 0.85rem; text-transform: uppercase; }
 
-        .persetujuan { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+        /* TICKBOX STYLING UPDATED */
+        .persetujuan { display: flex; align-items: center; gap: 12px; margin-top: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+        .persetujuan input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; flex-shrink: 0; }
+
         button { background: var(--primary-color); color: white; padding: 16px; border: none; border-radius: 6px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 25px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
         button:hover { background: #002244; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
@@ -187,25 +191,32 @@
                     <option value="10">10:00 AM</option>
                     <option value="11">11:00 AM</option>
                     <option value="12">12:00 PM</option>
-                    <option value="13">01:00 PM</option> <option value="15">03:00 PM</option>
-                    <option value="16">04:00 PM</option> <option value="18">06:00 PM</option>
-                    <option value="19">07:00 PM</option> <option value="22">10:00 PM</option>
+                    <option value="13">01:00 PM</option>
+                    <option value="15">03:00 PM</option>
+                    <option value="16">04:00 PM</option>
+                    <option value="18">06:00 PM</option>
+                    <option value="19">07:00 PM</option>
+                    <option value="22">10:00 PM</option>
                     <option value="23">11:00 PM</option>
                 </select>
-                <div id="timeError" class="error-msg">Ralat: Masa tidak logik atau bertindih waktu solat!</div>
+                <div id="timeError" class="error-msg">Ralat: Masa tidak logik atau melangkaui waktu solat!</div>
+            </div>
+
+            <div class="full-width">
+                <label>Senarai Peralatan Tambahan (Jika Ada)</label>
+                <textarea name="peralatan" placeholder="Contoh: 2 unit Microphone, 1 unit Speaker, dsb."></textarea>
             </div>
         </div>
 
         <div class="syarat-container">
             <span style="font-weight: 800; color: var(--primary-color); text-decoration: underline;">Syarat & Peraturan:</span>
-            <ol class="syarat-list">
-                <li>Borang permohonan hendaklah dimohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
-                <li>Pilihan masa tidak termasuk waktu solat (1pm-2pm, 4pm-5pm, 7pm-9pm).</li>
-                <li>Pemohon hendaklah bertanggungjawab terhadap keadaan, keselamatan dan kerosakan kemudahan.</li>
-                <li>Pihak pengurusan berhak membatalkan tempahan mengikut situasi semasa.</li>
-            </ol>
+            <ul class="syarat-list">
+                <li>Permohonan mestilah TIGA (3) hari sebelum tarikh penggunaan.</li>
+                <li>Waktu solat (1pm-2pm, 4pm-5pm, 7pm-9pm) tidak dibuka untuk tempahan.</li>
+                <li>Peralatan tambahan tertakluk kepada kekosongan stok.</li>
+            </ul>
             <div class="amaran-denda">
-                PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTI RUGI TERHADAP SEBARANG KEROSAKAN DAN KEKOTORAN KEMUDAHAN.
+                DENDA AKAN DIKENAKAN BAGI SEBARANG KEROSAKAN ATAU KEKOTORAN PERALATAN/STUDIO.
             </div>
         </div>
 
@@ -233,7 +244,6 @@
     const timeError = document.getElementById("timeError");
     const submitBtn = document.getElementById("submitBtn");
 
-    // 1. Logik Pilihan Studio
     kampus.addEventListener("change", () => {
         studio.innerHTML = '<option value="">-- Pilih Studio --</option>';
         if(kampus.value && studioList[kampus.value]) {
@@ -245,7 +255,6 @@
         }
     });
 
-    // 2. Logik Had Tarikh (Min 3 Hari)
     const today = new Date();
     const minDate = new Date();
     minDate.setDate(today.getDate() + 3);
@@ -254,23 +263,15 @@
     const dd = String(minDate.getDate()).padStart(2, '0');
     datePicker.setAttribute("min", `${yyyy}-${mm}-${dd}`);
 
-    // 3. LOGIK VALIDASI MASA (Mula vs Tamat + Halangan Waktu Solat)
     function validateTime() {
         const mula = parseInt(masaMula.value);
         const tamat = parseInt(masaTamat.value);
 
         if (masaMula.value && masaTamat.value) {
             let isInvalid = false;
-
-            // Pastikan Tamat selepas Mula
             if (tamat <= mula) isInvalid = true;
-
-            // Semak jika tempahan "melangkaui" waktu solat (Contoh: Mula 3pm, Tamat 6pm melangkaui Asar 4pm-5pm)
-            // Zuhur: 13-14
             if (mula < 13 && tamat > 14) isInvalid = true;
-            // Asar: 16-17
             if (mula < 16 && tamat > 17) isInvalid = true;
-            // Maghrib/Isyak: 19-21
             if (mula < 19 && tamat > 21) isInvalid = true;
 
             if (isInvalid) {
@@ -287,7 +288,6 @@
 
     masaMula.addEventListener("change", validateTime);
     masaTamat.addEventListener("change", validateTime);
-
 </script>
 
 </body>
