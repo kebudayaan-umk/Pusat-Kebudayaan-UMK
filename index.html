@@ -17,45 +17,40 @@
 
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-dark); }
 
-        .header { position: relative; background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; padding: 60px 20px; text-align: center; }
-        .header::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.85); }
+        /* HEADER DENGAN INFO HUBUNGAN */
+        .header { position: relative; background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; padding: 50px 20px; text-align: center; }
+        .header::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.88); }
         .header-content { position: relative; z-index: 1; }
-        .logo-umk { height: 70px; margin-bottom: 15px; }
-        .header h1 { margin: 0; font-size: 1.5rem; color: var(--primary-color); text-transform: uppercase; }
+        .logo-umk { height: 70px; margin-bottom: 10px; }
+        .header h1 { margin: 0; font-size: 1.4rem; color: var(--primary-color); text-transform: uppercase; font-weight: 700; }
+        .contact-info { margin-top: 8px; font-size: 0.85rem; color: #555; line-height: 1.4; }
 
         .container { max-width: 850px; background: var(--white); padding: 35px; border-radius: 12px; margin: -30px auto 50px auto; box-shadow: 0 8px 30px rgba(0,0,0,0.1); position: relative; z-index: 2; }
         
-        h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 25px; font-size: 1.3rem; }
+        h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.3rem; }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 20px; }
         .full-width { grid-column: span 2; }
 
         label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; color: #444; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; transition: 0.3s; }
-        input:focus, select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(0,51,102,0.1); }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; }
 
-        /* JADUAL TEMPAHAN (DI ATAS) */
-        .jadual-tempahan {
-            background: #fbfbfb;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            margin-bottom: 30px;
-        }
+        /* JADUAL TEMPAHAN */
+        .jadual-tempahan { background: #fbfbfb; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 30px; }
         .jadual-tempahan h3 { margin-top: 0; font-size: 1rem; color: var(--primary-color); }
         .table-wrapper { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; }
-        table th { background: var(--primary-color); color: white; padding: 12px; text-align: left; }
-        table td { padding: 10px; border: 1px solid #eee; }
-        .status-tag { background: #ffe6e6; color: var(--danger); padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; background: white; }
+        table th { background: var(--primary-color); color: white; padding: 10px; text-align: left; }
+        table td { padding: 8px; border: 1px solid #eee; }
+        .status-tag { background: #ffe6e6; color: var(--danger); padding: 2px 6px; border-radius: 4px; font-weight: bold; }
 
-        /* SYARAT & AMARAN */
+        /* SYARAT */
         .syarat-container { background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 8px; margin-top: 30px; font-size: 0.85rem; }
         .amaran-denda { background: #fff5f5; color: var(--danger); padding: 12px; border: 1px solid #ffcccc; border-radius: 6px; text-align: center; font-weight: 700; margin-top: 15px; }
 
         .persetujuan { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; font-weight: 600; font-size: 0.85rem; }
-        button { background: var(--primary-color); color: white; padding: 15px; border: none; border-radius: 6px; width: 100%; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 25px; transition: 0.3s; }
-        button:hover { background: #002244; transform: translateY(-2px); }
+        button { background: var(--primary-color); color: white; padding: 15px; border: none; border-radius: 6px; width: 100%; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #002244; }
 
         @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
     </style>
@@ -66,15 +61,15 @@
     <div class="header-content">
         <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
         <h1>Pusat Kebudayaan<br>Universiti Malaysia Kelantan</h1>
+        <div class="contact-info">
+            Email: kebudayaan@umk.edu.my | No. Telefon: +609-779 7436
+        </div>
     </div>
 </div>
 
 <div class="container">
-    <h2>Borang Tempahan Studio</h2>
-
     <div class="jadual-tempahan">
         <h3>Slot Jadual Terkini</h3>
-        <p style="font-size: 0.75rem; color: #666; margin-bottom: 10px;">* Sila semak jadual di bawah sebelum memilih masa tempahan anda.</p>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -82,7 +77,7 @@
                         <th>Tarikh</th>
                         <th>Kampus</th>
                         <th>Studio</th>
-                        <th>Masa (Mula - Tamat)</th>
+                        <th>Masa</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -100,20 +95,31 @@
     </div>
     
     <form action="../backend/submit.php" method="POST">
+        <h2>Borang Tempahan Studio</h2>
         <div class="form-grid">
             <div class="full-width">
                 <label>Nama Penuh</label>
-                <input type="text" name="nama" placeholder="Sila masukkan nama penuh" required>
+                <input type="text" name="nama" placeholder="Masukkan nama penuh" required>
             </div>
 
             <div>
                 <label>No. Kad Pengenalan</label>
-                <input type="text" name="no_ic" maxlength="12" placeholder="Contoh: 010101115566" required>
+                <input type="text" name="no_ic" maxlength="12" placeholder="Contoh: 001212035566" required>
             </div>
 
             <div>
                 <label>No. Matrik / Staf</label>
                 <input type="text" name="no_id" placeholder="Contoh: A21A1234" required>
+            </div>
+
+            <div>
+                <label>Kategori</label>
+                <select name="kategori" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    <option value="Pelajar">Pelajar</option>
+                    <option value="Staf">Staf</option>
+                    <option value="Orang Awam">Orang Awam</option>
+                </select>
             </div>
 
             <div>
@@ -139,16 +145,18 @@
             </div>
 
             <div>
-                <label>Waktu (Mula - Tamat)</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="time" name="masa_mula" required>
-                    <input type="time" name="masa_tamat" required>
-                </div>
+                <label>Masa Mula</label>
+                <input type="time" name="masa_mula" required>
+            </div>
+
+            <div>
+                <label>Masa Tamat</label>
+                <input type="time" name="masa_tamat" required>
             </div>
         </div>
 
         <div class="syarat-container">
-            <span style="font-weight: 700; color: var(--primary-color); text-decoration: underline;">Syarat & Peraturan:</span>
+            <span style="font-weight: 700; color: var(--primary-color);">Syarat & Peraturan:</span>
             <ol style="padding-left: 20px; line-height: 1.6;">
                 <li>Borang permohonan hendaklah dimohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
                 <li>Pemohon hendaklah memahami dan mematuhi syarat-syarat, garis panduan dan etika penggunaan kemudahan yang telah ditetapkan oleh Universiti.</li>
@@ -171,9 +179,10 @@
 </div>
 
 <script>
+    // Konfigurasi Studio (Jeli & Muzik dikemaskini)
     const studioList = {
         bachok: ["Teniat 3", "Teniat 4"],
-        kota: ["Studio Tari", "Studio Band", "Studio Gamelan"],
+        kota: ["Studio Tari", "Studio Muzik", "Studio Gamelan"],
         jeli: ["Studio Kebudayaan"] 
     };
 
@@ -192,7 +201,7 @@
         }
     });
 
-    // Tetapan minima tarikh 3 hari dari sekarang
+    // Had Tarikh (Minima 3 Hari)
     const today = new Date();
     const minDate = new Date();
     minDate.setDate(today.getDate() + 3);
