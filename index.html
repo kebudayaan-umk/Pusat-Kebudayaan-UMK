@@ -1,98 +1,299 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistem Tempahan Studio PKUMK</title>
-<style>
-body{font-family:Arial, sans-serif;margin:0;background:#f4f4f4;}
-.header{position:relative;background:url("assets/bg-kebudayaan.jpg") center/cover no-repeat;padding:50px 20px;}
-.header::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,0.75);}
-.header-content{position:relative;text-align:center;}
-.logo-umk{height:60px;margin-bottom:10px;}
-.container{background:#fff;padding:20px;border-radius:8px;margin:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);}
-label{display:block;margin-top:10px;}
-input,select,button{width:100%;padding:8px;margin-top:4px;}
-button{background:#003366;color:#fff;border:none;cursor:pointer;}
-.syarat{background:#f9f9f9;padding:10px;border:1px solid #ccc;margin-top:10px;}
-.persetujuan{display:flex;gap:6px;align-items:flex-start;margin-top:12px;}
-.persetujuan input{width:auto;margin:3px 0 0 0;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Tempahan Studio PKUMK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #003366;
+            --accent-color: #d4af37;
+            --bg-color: #f0f2f5;
+            --text-dark: #333;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header dengan efek Gradient Overlay */
+        .header {
+            position: relative;
+            background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat;
+            padding: 80px 20px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-umk {
+            height: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Container Borang */
+        .container {
+            max-width: 700px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            margin: -40px auto 40px auto; /* Menaikkan sedikit ke atas header */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        /* Susunan Grid untuk Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box; /* Pastikan padding tak rosakkan lebar */
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
+        }
+
+        /* Syarat & Peraturan */
+        .syarat {
+            background: #fef9e7;
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+            margin-top: 30px;
+            font-size: 0.85rem;
+        }
+
+        .syarat p {
+            margin: 5px 0;
+        }
+
+        .persetujuan {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin-top: 20px;
+            font-size: 0.85rem;
+        }
+
+        .persetujuan input {
+            width: auto;
+            margin-top: 4px;
+        }
+
+        /* Butang Hantar */
+        button {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background: #002244;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-content">
-    <img src="assets/logo-umk.png" class="logo-umk">
-    <h1>Pusat Kebudayaan<br>Universiti Malaysia Kelantan</h1>
-    <p>Email: kebudayaan@umk.edu.my<br>No. Telefon: +6097797436</p>
-  </div>
+    <div class="header-content">
+        <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
+        <h1>Pusat Kebudayaan<br>Universiti Malaysia Kelantan</h1>
+        <p>Email: kebudayaan@umk.edu.my | Tel: +609-779 7436</p>
+    </div>
 </div>
 
 <div class="container">
-<h2>Borang Tempahan Studio</h2>
-<form action="../backend/submit.php" method="POST">
-<label>Nama Penuh<input type="text" name="nama" required></label>
-<label>No. Matrik / No. Staf / Kad Pengenalan<input type="text" name="id" required></label>
+    <h2>Borang Tempahan Studio</h2>
+    
+    <form action="../backend/submit.php" method="POST">
+        <div class="form-grid">
+            <div class="full-width">
+                <label>Nama Penuh</label>
+                <input type="text" name="nama" placeholder="Masukkan nama penuh anda" required>
+            </div>
 
-<label>Jawatan
-<select name="jawatan" required>
-<option>Pelajar</option>
-<option>Staf Akademik</option>
-<option>Staf Pentadbiran</option>
-<option>Orang Awam</option>
-</select>
-</label>
+            <div class="full-width">
+                <label>No. Matrik / No. Staf / Kad Pengenalan</label>
+                <input type="text" name="id" placeholder="Contoh: A21A1234 / 8801..." required>
+            </div>
 
-<label>Email<input type="email" name="email" required></label>
+            <div>
+                <label>Jawatan</label>
+                <select name="jawatan" required>
+                    <option value="">-- Pilih Jawatan --</option>
+                    <option>Pelajar</option>
+                    <option>Staf Akademik</option>
+                    <option>Staf Pentadbiran</option>
+                    <option>Orang Awam</option>
+                </select>
+            </div>
 
-<label>Kampus
-<select id="kampus" name="kampus" required>
-<option value="">-- Pilih Kampus --</option>
-<option value="bachok">Bachok</option>
-<option value="kota">Kampus Kota</option>
-<option value="jeli">Jeli</option>
-</select>
-</label>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="nama@email.com" required>
+            </div>
 
-<label>Studio
-<select id="studio" name="studio" required>
-<option>-- Pilih Kampus Dahulu --</option>
-</select>
-</label>
+            <div>
+                <label>Kampus</label>
+                <select id="kampus" name="kampus" required>
+                    <option value="">-- Pilih Kampus --</option>
+                    <option value="bachok">Bachok</option>
+                    <option value="kota">Kampus Kota</option>
+                    <option value="jeli">Jeli</option>
+                </select>
+            </div>
 
-<label>Tarikh<input type="date" name="tarikh" required></label>
-<label>Masa Mula<input type="time" name="masa_mula" required></label>
-<label>Masa Tamat<input type="time" name="masa_tamat" required></label>
+            <div>
+                <label>Studio</label>
+                <select id="studio" name="studio" required>
+                    <option value="">-- Pilih Kampus Dahulu --</option>
+                </select>
+            </div>
 
-<div class="syarat">
-<p>1. Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</p>
-<p>2. Pemohon hendaklah memahami dan mematuhi syarat, garis panduan dan etika penggunaan Universiti.</p>
-<p>3. Pemohon hendaklah bertanggungjawab terhadap keselamatan dan kerosakan kemudahan.</p>
-<p>4. Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan.</p>
-<p><strong>PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.</strong></p>
-</div>
+            <div>
+                <label>Tarikh Penggunaan</label>
+                <input type="date" name="tarikh" required>
+            </div>
 
-<div class="persetujuan">
-<input type="checkbox" name="setuju" required>
-<label>Saya telah membaca dan bersetuju dengan semua syarat dan peraturan di atas</label>
-</div>
+            <div>
+                <label>Waktu (Mula - Tamat)</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="time" name="masa_mula" required>
+                    <input type="time" name="masa_tamat" required>
+                </div>
+            </div>
+        </div>
 
-<br>
-<button type="submit">Hantar Permohonan</button>
-</form>
+        <div class="syarat">
+            <p><strong>Syarat-Syarat:</strong></p>
+            <p>1. Permohonan mestilah dibuat <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</p>
+            <p>2. Mematuhi garis panduan dan etika penggunaan Universiti Malaysia Kelantan.</p>
+            <p>3. Bertanggungjawab sepenuhnya atas keselamatan dan kerosakan peralatan.</p>
+            <p>4. Dilarang mengubah kedudukan asal peralatan studio.</p>
+            <p style="color: #d9534f; margin-top: 10px;"><strong>* Denda akan dikenakan bagi sebarang kerosakan atau kekotoran.</strong></p>
+        </div>
+
+        <div class="persetujuan">
+            <input type="checkbox" id="setuju" name="setuju" required>
+            <label for="setuju">Saya telah membaca dan bersetuju dengan semua syarat dan peraturan di atas.</label>
+        </div>
+
+        <button type="submit">Hantar Permohonan</button>
+    </form>
 </div>
 
 <script>
-const studioList={bachok:["Teniat 3","Teniat 4"],kota:["Studio Tari","Studio Band","Studio Gamelan"],jeli:["Surau Lama","Dewan Utama"]};
-const kampus=document.getElementById("kampus");
-const studio=document.getElementById("studio");
-kampus.addEventListener("change",()=>{
-  studio.innerHTML="";
-  studioList[kampus.value].forEach(s=>{
-    let o=document.createElement("option");o.text=s;studio.add(o);
-  });
-});
+    const studioList = {
+        bachok: ["Teniat 3", "Teniat 4"],
+        kota: ["Studio Tari", "Studio Band", "Studio Gamelan"],
+        jeli: ["Surau Lama", "Dewan Utama"]
+    };
+
+    const kampus = document.getElementById("kampus");
+    const studio = document.getElementById("studio");
+
+    kampus.addEventListener("change", () => {
+        studio.innerHTML = '<option value="">-- Pilih Studio --</option>'; // Reset option
+        if(kampus.value && studioList[kampus.value]) {
+            studioList[kampus.value].forEach(s => {
+                let o = document.createElement("option");
+                o.value = s;
+                o.text = s;
+                studio.add(o);
+            });
+        }
+    });
 </script>
+
 </body>
 </html>
