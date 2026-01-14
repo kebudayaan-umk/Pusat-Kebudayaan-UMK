@@ -19,15 +19,13 @@
             margin: 0;
             background-color: var(--bg-color);
             color: var(--text-dark);
-            line-height: 1.6;
         }
 
-        /* Header dengan efek Gradient Overlay */
+        /* Header Styling */
         .header {
             position: relative;
             background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat;
-            padding: 80px 20px;
-            color: var(--primary-color);
+            padding: 60px 20px;
             text-align: center;
         }
 
@@ -35,83 +33,58 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            background: rgba(255, 255, 255, 0.85);
         }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
+        .header-content { position: relative; z-index: 1; }
+        .logo-umk { height: 70px; margin-bottom: 15px; }
+        .header h1 { margin: 0; font-size: 1.5rem; color: var(--primary-color); text-transform: uppercase; }
 
-        .logo-umk {
-            height: 80px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .header p {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        /* Container Borang */
+        /* Form Container */
         .container {
-            max-width: 700px;
+            max-width: 750px;
             background: var(--white);
-            padding: 40px;
+            padding: 35px;
             border-radius: 12px;
-            margin: -40px auto 40px auto; /* Menaikkan sedikit ke atas header */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin: -30px auto 50px auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
             position: relative;
             z-index: 2;
         }
 
         h2 {
-            text-align: center;
             color: var(--primary-color);
-            margin-bottom: 30px;
             border-bottom: 2px solid var(--accent-color);
-            display: inline-block;
-            width: 100%;
             padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
         }
 
-        /* Susunan Grid untuk Form */
+        /* Layout Grid */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        .full-width {
-            grid-column: span 2;
-        }
+        .full-width { grid-column: span 2; }
 
         label {
             display: block;
             font-weight: 600;
             font-size: 0.85rem;
-            margin-bottom: 8px;
-            color: #555;
+            margin-bottom: 6px;
+            color: #444;
         }
 
         input, select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 6px;
-            box-sizing: border-box; /* Pastikan padding tak rosakkan lebar */
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: border 0.3s ease;
         }
 
         input:focus, select:focus {
@@ -120,65 +93,44 @@
             box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
         }
 
-        /* Syarat & Peraturan */
+        /* Info Section */
         .syarat {
-            background: #fef9e7;
+            background: #fff9e6;
             padding: 20px;
-            border-left: 4px solid var(--accent-color);
-            border-radius: 4px;
-            margin-top: 30px;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-color);
+            margin-top: 25px;
             font-size: 0.85rem;
-        }
-
-        .syarat p {
-            margin: 5px 0;
         }
 
         .persetujuan {
             display: flex;
-            gap: 10px;
             align-items: flex-start;
+            gap: 10px;
             margin-top: 20px;
-            font-size: 0.85rem;
         }
 
-        .persetujuan input {
-            width: auto;
-            margin-top: 4px;
-        }
+        .persetujuan input { width: auto; margin-top: 4px; }
 
-        /* Butang Hantar */
         button {
             background: var(--primary-color);
-            color: var(--white);
+            color: white;
             padding: 15px;
             border: none;
             border-radius: 6px;
+            width: 100%;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
-            margin-top: 20px;
-            text-transform: uppercase;
+            margin-top: 25px;
+            transition: 0.3s;
         }
 
-        button:hover {
-            background: #002244;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
+        button:hover { background: #002244; transform: translateY(-2px); }
 
-        /* Responsive */
         @media (max-width: 600px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .full-width {
-                grid-column: span 1;
-            }
-            .container {
-                margin: 20px;
-                padding: 20px;
-            }
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
         }
     </style>
 </head>
@@ -188,39 +140,27 @@
     <div class="header-content">
         <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
         <h1>Pusat Kebudayaan<br>Universiti Malaysia Kelantan</h1>
-        <p>Email: kebudayaan@umk.edu.my | Tel: +609-779 7436</p>
     </div>
 </div>
 
 <div class="container">
-    <h2>Borang Tempahan Studio</h2>
+    <h2>Maklumat Tempahan</h2>
     
     <form action="../backend/submit.php" method="POST">
         <div class="form-grid">
             <div class="full-width">
                 <label>Nama Penuh</label>
-                <input type="text" name="nama" placeholder="Masukkan nama penuh anda" required>
-            </div>
-
-            <div class="full-width">
-                <label>No. Matrik / No. Staf / Kad Pengenalan</label>
-                <input type="text" name="id" placeholder="Contoh: A21A1234 / 8801..." required>
+                <input type="text" name="nama" placeholder="Sila masukkan nama penuh" required>
             </div>
 
             <div>
-                <label>Jawatan</label>
-                <select name="jawatan" required>
-                    <option value="">-- Pilih Jawatan --</option>
-                    <option>Pelajar</option>
-                    <option>Staf Akademik</option>
-                    <option>Staf Pentadbiran</option>
-                    <option>Orang Awam</option>
-                </select>
+                <label>No. Kad Pengenalan</label>
+                <input type="text" name="no_ic" placeholder="Contoh: 001122031234" required>
             </div>
 
             <div>
-                <label>Email</label>
-                <input type="email" name="email" placeholder="nama@email.com" required>
+                <label>No. Matrik / Staf</label>
+                <input type="text" name="no_id" placeholder="Contoh: A21A0001 / P9901" required>
             </div>
 
             <div>
@@ -234,7 +174,7 @@
             </div>
 
             <div>
-                <label>Studio</label>
+                <label>Pilihan Studio</label>
                 <select id="studio" name="studio" required>
                     <option value="">-- Pilih Kampus Dahulu --</option>
                 </select>
@@ -247,7 +187,7 @@
 
             <div>
                 <label>Waktu (Mula - Tamat)</label>
-                <div style="display: flex; gap: 5px;">
+                <div style="display: flex; gap: 8px;">
                     <input type="time" name="masa_mula" required>
                     <input type="time" name="masa_tamat" required>
                 </div>
@@ -255,17 +195,15 @@
         </div>
 
         <div class="syarat">
-            <p><strong>Syarat-Syarat:</strong></p>
-            <p>1. Permohonan mestilah dibuat <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</p>
-            <p>2. Mematuhi garis panduan dan etika penggunaan Universiti Malaysia Kelantan.</p>
-            <p>3. Bertanggungjawab sepenuhnya atas keselamatan dan kerosakan peralatan.</p>
-            <p>4. Dilarang mengubah kedudukan asal peralatan studio.</p>
-            <p style="color: #d9534f; margin-top: 10px;"><strong>* Denda akan dikenakan bagi sebarang kerosakan atau kekotoran.</strong></p>
+            <strong>Syarat Penggunaan:</strong>
+            <p style="margin: 5px 0;">1. Permohonan mestilah dibuat 3 hari sebelum tarikh penggunaan.</p>
+            <p style="margin: 5px 0;">2. Bertanggungjawab atas kebersihan dan keselamatan peralatan.</p>
+            <p style="margin: 5px 0; color: #d9534f;"><strong>* Sebarang kerosakan akan dikenakan denda/ganti rugi.</strong></p>
         </div>
 
         <div class="persetujuan">
             <input type="checkbox" id="setuju" name="setuju" required>
-            <label for="setuju">Saya telah membaca dan bersetuju dengan semua syarat dan peraturan di atas.</label>
+            <label for="setuju">Saya telah membaca dan bersetuju dengan segala terma dan syarat.</label>
         </div>
 
         <button type="submit">Hantar Permohonan</button>
@@ -283,7 +221,7 @@
     const studio = document.getElementById("studio");
 
     kampus.addEventListener("change", () => {
-        studio.innerHTML = '<option value="">-- Pilih Studio --</option>'; // Reset option
+        studio.innerHTML = '<option value="">-- Pilih Studio --</option>';
         if(kampus.value && studioList[kampus.value]) {
             studioList[kampus.value].forEach(s => {
                 let o = document.createElement("option");
