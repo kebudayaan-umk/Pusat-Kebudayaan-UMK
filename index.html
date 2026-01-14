@@ -23,7 +23,7 @@
             padding: 50px 20px;
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("assets/bg-kebudayaan.jpg");
             background-size: cover;
-            background-color: #222; /* Fallback */
+            background-color: #222;
         }
         .header img {
             width: 120px;
@@ -46,7 +46,7 @@
             padding-bottom: 10px;
         }
 
-        /* FORM */
+        /* FORM GAYA ASAL */
         form {
             display: flex;
             flex-direction: column;
@@ -65,7 +65,7 @@
             font-size: 14px;
         }
 
-        /* RULES */
+        /* RULES ASAL */
         .rules {
             margin-top: 10px;
             padding: 20px;
@@ -122,7 +122,7 @@
             cursor: not-allowed;
         }
 
-        /* SLOT PENUH STYLE */
+        /* SLOT PENUH */
         .slot-penuh {
             background: #e8f5e9;
             padding: 15px;
@@ -144,8 +144,10 @@
 
 <div class="container">
     <div class="slot-penuh">
-        <h4 style="margin:0 0 10px 0;">🚫 Slot Telah Ditempah:</h4>
-        <ul id="senaraiSlot" style="font-size: 13px; margin:0; padding-left:20px;"><li>Memuatkan data...</li></ul>
+        <h4 style="margin:0 0 10px 0;">🚫 Slot Telah Ditempah (Penuh):</h4>
+        <ul id="senaraiSlot" style="font-size: 13px; margin:0; padding-left:20px;">
+            <li>Memuatkan data...</li>
+        </ul>
     </div>
 
     <h3>Borang Tempahan Studio</h3>
@@ -153,23 +155,23 @@
     <form id="bookingForm">
         <div>
             <label>Nama Penuh</label>
-            <input type="text" id="nama" placeholder="Contoh: Ahmad Bin Ali" required>
+            <input type="text" id="nama" placeholder="Sila masukkan nama penuh anda" required>
         </div>
 
         <div>
-            <label>No. Kad Pengenalan</label>
-<input type="text" id="no_ic" placeholder="Contoh: 010203031234" required>
+<label>No. Kad Pengenalan</label>
+            <input type="text" id="no_ic" placeholder="Sila masukkan No. KP tanpa (-)" required>
         </div>
 
         <div>
             <label>No. Matrik / Staf</label>
-            <input type="text" id="no_id" placeholder="Contoh: A21A1234" required>
+            <input type="text" id="no_id" placeholder="Sila masukkan No. Matrik atau Staf" required>
         </div>
 
         <div>
             <label>Kategori</label>
             <select id="jawatan" required>
-                <option value="">-- Pilih Kategori --</option>
+                <option value="">-- Sila Pilih Kategori --</option>
                 <option>Pelajar</option>
                 <option>Staf UMK</option>
                 <option>Orang Awam</option>
@@ -178,13 +180,13 @@
 
         <div>
             <label>Email</label>
-            <input type="email" id="email" placeholder="email@example.com" required>
+            <input type="email" id="email" placeholder="Sila masukkan alamat email" required>
         </div>
           
         <div>
             <label>Kampus</label>
             <select id="kampus" required>
-                <option value="">-- Pilih Kampus --</option>
+                <option value="">-- Sila Pilih Kampus --</option>
                 <option value="bachok">Bachok</option>
                 <option value="kota">Kampus Kota</option>
                 <option value="jeli">Kampus Jeli</option>
@@ -194,7 +196,7 @@
         <div>
             <label>Studio</label>
             <select id="studio" required>
-                <option value="">-- Pilih Kampus Dahulu --</option>
+                <option value="">-- Sila Pilih Kampus Dahulu --</option>
             </select>
         </div>
 
@@ -206,7 +208,7 @@
         <div>
             <label>Masa Mula</label>
             <select id="masaMula" required>
-                <option value="">-- Pilih Masa Mula --</option>
+                <option value="">-- Sila Pilih Masa Mula --</option>
                 <option>8:00 pagi</option>
                 <option>9:00 pagi</option>
                 <option>10:00 pagi</option>
@@ -214,8 +216,8 @@
                 <option>12:00 tengah hari</option>
                 <option>2:00 petang</option>
                 <option>3:00 petang</option>
+                <option>4:00 petang</option>
                 <option>5:00 petang</option>
-                <option>6:00 petang</option>
                 <option>8:00 malam</option>
                 <option>9:00 malam</option>
                 <option>10:00 malam</option>
@@ -225,7 +227,7 @@
         <div>
             <label>Masa Tamat</label>
             <select id="masaTamat" required>
-                <option value="">-- Pilih Masa Tamat --</option>
+                <option value="">-- Sila Pilih Masa Tamat --</option>
                 <option>9:00 pagi</option>
                 <option>10:00 pagi</option>
                 <option>11:00 pagi</option>
@@ -233,8 +235,8 @@
                 <option>1:00 petang</option>
                 <option>3:00 petang</option>
                 <option>4:00 petang</option>
+                <option>5:00 petang</option>
                 <option>6:00 petang</option>
-                <option>7:00 malam</option>
                 <option>9:00 malam</option>
                 <option>10:00 malam</option>
                 <option>11:00 malam</option>
@@ -242,52 +244,50 @@
         </div>
 
         <div class="rules">
+            <strong>PERATURAN DAN SYARAT-SYARAT TEMPAHAN:</strong>
             <ul>
                 <li>Borang permohonan perlu dipohon <strong>TIGA (3) hari</strong> sebelum tarikh penggunaan.</li>
-                <li>Pemohon hendaklah mematuhi syarat dan etika penggunaan kemudahan.</li>
-                <li>Pemohon bertanggungjawab terhadap keselamatan dan kerosakan.</li>
-                <li>Pemohon tidak dibenarkan mengubahsuai peralatan.</li>
+                <li>Pemohon hendaklah mematuhi syarat dan etika penggunaan kemudahan yang telah ditetapkan.</li>
+                <li>Pemohon bertanggungjawab terhadap sebarang keselamatan dan kerosakan yang berlaku.</li>
+                <li>Pemohon tidak dibenarkan mengubahsuai sebarang kedudukan peralatan yang ada.</li>
+                <li>Setiap tempahan adalah bergantung kepada kekosongan studio pada waktu tersebut.</li>
             </ul>
-            <p class="bold">
-                PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.
-            </p>
+            <p class="bold">PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTIRUGI TERHADAP SEBARANG KEKOTORAN DAN KEROSAKAN KEMUDAHAN.</p>
         </div>
 
         <div class="checkbox-container">
             <input type="checkbox" id="setuju" required>
-            <label for="setuju">Saya telah membaca dan bersetuju dengan semua syarat dan peraturan yang ditetapkan.</label>
+            <label for="setuju">Saya telah membaca dan bersetuju dengan semua syarat dan peraturan yang telah ditetapkan di atas.</label>
         </div>
-
-        <button type="submit" id="submitBtn">Hantar Permohonan</button>
+<button type="submit" id="submitBtn">Hantar Permohonan</button>
     </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    // 1. SETUP SUPABASE
+    // SETUP SUPABASE
     const _supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
-    const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
+    const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
     const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
 
-    // AUTO-DISABLE TARIKH < 3 HARI
-    const tarikhInput = document.getElementById('tarikh');
-    const minDate = new Date();
-    minDate.setDate(minDate.getDate() + 3);
-    tarikhInput.min = minDate.toISOString().split("T")[0];
+    // LIMIT TARIKH 3 HARI
+    const inputTkh = document.getElementById('tarikh');
+    const minD = new Date();
+    minD.setDate(minD.getDate() + 3);
+    inputTkh.min = minD.toISOString().split("T")[0];
 
-    // PAPAR SLOT LULUS
+    // PAPAR SLOT PENUH
     async function paparSlotPenuh() {
         const list = document.getElementById('senaraiSlot');
         const { data } = await supabaseClient.from('permohonan').select('studio, tarikh, masa_mula').eq('status', 'approved');
         if (data && data.length > 0) {
             list.innerHTML = data.map(s => `<li>📌 ${s.studio} | ${s.tarikh} | ${s.masa_mula}</li>`).join('');
-        } else { list.innerHTML = '<li>✅ Semua slot masih kosong.</li>'; }
+        } else { list.innerHTML = '<li>✅ Semua slot masih tersedia.</li>'; }
     }
     paparSlotPenuh();
 
-    // 2. DATA STUDIO BERIKUTAN KAMPUS
+    // STUDIO DATA (JELI DITUKAR KE SATU PILIHAN SAHAJA)
     const studioData = {
         bachok: ["Teniat 3", "Teniat 4"],
         kota: ["Studio Tari", "Studio Band", "Studio Gamelan"],
@@ -298,27 +298,26 @@ eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24i
     const studioSelect = document.getElementById("studio");
 
     kampusSelect.addEventListener("change", function () {
-        const kampus = this.value;
-        studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
+        const k = this.value;
+        studioSelect.innerHTML = '<option value="">-- Sila Pilih Studio --</option>';
 
-        if (studioData[kampus]) {
-            studioData[kampus].forEach(function (studio) {
-                const option = document.createElement("option");
-                option.textContent = studio;
-                option.value = studio;
-                studioSelect.appendChild(option);
+        if (studioData[k]) {
+            studioData[k].forEach(function (s) {
+                const opt = document.createElement("option");
+                opt.value = s;
+                opt.textContent = s;
+                studioSelect.appendChild(opt);
             });
         }
     });
 
-    // 3. LOGIK PENGHANTARAN BORANG
+    // PENGHANTARAN BORANG
     const bookingForm = document.getElementById("bookingForm");
     const submitBtn = document.getElementById("submitBtn");
 
     bookingForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        // Ambil Nilai Input
         const nama = document.getElementById("nama").value;
         const no_ic = document.getElementById("no_ic").value;
         const no_id = document.getElementById("no_id").value;
@@ -329,20 +328,19 @@ eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24i
         const tarikh = document.getElementById("tarikh").value;
         const masaMula = document.getElementById("masaMula").value;
         const masaTamat = document.getElementById("masaTamat").value;
-        const setuju = document.getElementById("setuju").checked;
 
-        submitBtn.innerText = "Menghantar...";
+        submitBtn.innerText = "Sila Tunggu...";
         submitBtn.disabled = true;
 
         try {
-            // SEMAK DOUBLE BOOKING
-            const { data: sediaAda } = await supabaseClient
+            // SEMAK PERTEMBUNGAN
+            const { data: sedia } = await supabaseClient
                 .from('permohonan')
                 .select('id')
                 .eq('studio', studio).eq('tarikh', tarikh).eq('masa_mula', masaMula).eq('status', 'approved');
 
-            if (sediaAda && sediaAda.length > 0) {
-                alert("Slot ini telah ditempah. Sila pilih waktu lain.");
+            if (sedia && sedia.length > 0) {
+                alert("Ralat: Slot waktu ini telah diluluskan untuk pemohon lain. Sila pilih waktu atau studio lain.");
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Hantar Permohonan";
                 return;
@@ -357,16 +355,17 @@ eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24i
 
             if (error) throw error;
 
-            alert("✅ Berjaya dihantar!");
+            alert("Permohonan anda telah berjaya dihantar untuk diproses.
+Sila semak status melalui email anda dari semasa ke semasa.");
             bookingForm.reset();
             paparSlotPenuh();
 
         } catch (err) {
-            alert("❌ Gagal: " + err.message);
+            alert("Ralat Semasa Menghantar: " + err.message);
         } finally {
             submitBtn.innerText = "Hantar Permohonan";
             submitBtn.disabled = false;
-}
+        }
     });
 </script>
 
