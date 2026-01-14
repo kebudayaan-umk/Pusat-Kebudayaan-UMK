@@ -17,28 +17,17 @@
 
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; }
 
-        /* HEADER & CONTACT INFO UPDATED */
+        /* HEADER & CONTACT INFO */
         .header { position: relative; background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; padding: 60px 20px; text-align: center; }
         .header::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.90); }
         .header-content { position: relative; z-index: 1; }
-        
-        /* Logo dibesarkan sedikit */
-        .logo-umk { height: 150px; margin-bottom: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-        
-        /* Tulisan di-bold-kan sepenuhnya */
-        .header h1 { 
-            margin: 0; 
-            font-size: 1.6rem; 
-            color: var(--primary-color); 
-            text-transform: uppercase; 
-            font-weight: 800; /* Extra Bold */
-            letter-spacing: 0.5px;
-        }
+        .logo-umk { height: 100px; margin-bottom: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .header h1 { margin: 0; font-size: 1.6rem; color: var(--primary-color); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
         
         .contact-info { margin-top: 12px; font-size: 0.95rem; }
         .contact-info a { color: var(--primary-color); text-decoration: none; font-weight: 700; transition: 0.3s; padding: 5px 10px; }
         .contact-info a:hover { color: var(--accent-color); text-decoration: underline; }
-        .contact-sep { margin: 0 5px; color: #bbb; font-weight: normal; }
+        .contact-sep { margin: 0 5px; color: #bbb; }
 
         .container { max-width: 850px; background: var(--white); padding: 35px; border-radius: 12px; margin: -30px auto 50px auto; box-shadow: 0 8px 30px rgba(0,0,0,0.1); position: relative; z-index: 2; }
         
@@ -60,6 +49,8 @@
         input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         input:focus, select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0,51,102,0.1); }
 
+        .error-msg { color: var(--danger); font-size: 0.75rem; font-weight: 700; display: none; margin-top: 5px; }
+
         /* SYARAT-SYARAT */
         .syarat-container { background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 8px; margin-top: 30px; font-size: 0.85rem; }
         .syarat-list { padding-left: 20px; }
@@ -67,17 +58,15 @@
         .amaran-denda { background: #fff5f5; color: var(--danger); padding: 15px; border: 1px solid #ffcccc; border-radius: 6px; text-align: center; font-weight: 800; margin-top: 15px; font-size: 0.85rem; text-transform: uppercase; }
 
         .persetujuan { display: flex; align-items: flex-start; gap: 10px; margin-top: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
-        .persetujuan input { width: auto; margin-top: 4px; }
-
         button { background: var(--primary-color); color: white; padding: 16px; border: none; border-radius: 6px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 25px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
         button:hover { background: #002244; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
 
         @media (max-width: 600px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
             .contact-sep { display: none; }
             .contact-info a { display: block; margin-bottom: 5px; }
-            .logo-umk { height: 80px; }
         }
     </style>
 </head>
@@ -123,7 +112,7 @@
         </div>
     </div>
 
-    <form action="../backend/submit.php" method="POST">
+    <form id="bookingForm" action="../backend/submit.php" method="POST">
         <h2>Borang Tempahan Studio</h2>
         
         <div class="form-grid">
@@ -176,12 +165,45 @@
 
             <div>
                 <label>Masa Mula</label>
-                <input type="time" name="masa_mula" required>
+                <select id="masa_mula" name="masa_mula" required>
+                    <option value="">-- Pilih Waktu --</option>
+                    <option value="9">09:00 AM</option>
+                    <option value="10">10:00 AM</option>
+                    <option value="11">11:00 AM</option>
+                    <option value="12">12:00 PM</option>
+                    <option value="13">01:00 PM</option>
+                    <option value="14">02:00 PM</option>
+                    <option value="15">03:00 PM</option>
+                    <option value="16">04:00 PM</option>
+                    <option value="17">05:00 PM</option>
+                    <option value="18">06:00 PM</option>
+                    <option value="19">07:00 PM</option>
+                    <option value="20">08:00 PM</option>
+                    <option value="21">09:00 PM</option>
+                    <option value="22">10:00 PM</option>
+                </select>
             </div>
 
             <div>
                 <label>Masa Tamat</label>
-                <input type="time" name="masa_tamat" required>
+                <select id="masa_tamat" name="masa_tamat" required>
+                    <option value="">-- Pilih Waktu --</option>
+                    <option value="10">10:00 AM</option>
+                    <option value="11">11:00 AM</option>
+                    <option value="12">12:00 PM</option>
+                    <option value="13">01:00 PM</option>
+                    <option value="14">02:00 PM</option>
+                    <option value="15">03:00 PM</option>
+                    <option value="16">04:00 PM</option>
+                    <option value="17">05:00 PM</option>
+                    <option value="18">06:00 PM</option>
+                    <option value="19">07:00 PM</option>
+                    <option value="20">08:00 PM</option>
+                    <option value="21">09:00 PM</option>
+                    <option value="22">10:00 PM</option>
+                    <option value="23">11:00 PM</option>
+                </select>
+                <div id="timeError" class="error-msg">Ralat: Masa tamat mestilah selepas masa mula!</div>
             </div>
         </div>
 
@@ -204,7 +226,7 @@
             <span>Saya telah membaca dan bersetuju dengan segala terma dan syarat di atas.</span>
         </label>
 
-        <button type="submit">Hantar Permohonan</button>
+        <button type="submit" id="submitBtn">Hantar Permohonan</button>
     </form>
 </div>
 
@@ -218,7 +240,12 @@
     const kampus = document.getElementById("kampus");
     const studio = document.getElementById("studio");
     const datePicker = document.getElementById("tarikh_tempahan");
+    const masaMula = document.getElementById("masa_mula");
+    const masaTamat = document.getElementById("masa_tamat");
+    const timeError = document.getElementById("timeError");
+    const submitBtn = document.getElementById("submitBtn");
 
+    // 1. Logik Pilihan Studio
     kampus.addEventListener("change", () => {
         studio.innerHTML = '<option value="">-- Pilih Studio --</option>';
         if(kampus.value && studioList[kampus.value]) {
@@ -230,6 +257,7 @@
         }
     });
 
+    // 2. Logik Had Tarikh (Min 3 Hari)
     const today = new Date();
     const minDate = new Date();
     minDate.setDate(today.getDate() + 3);
@@ -237,8 +265,29 @@
     const mm = String(minDate.getMonth() + 1).padStart(2, '0');
     const dd = String(minDate.getDate()).padStart(2, '0');
     datePicker.setAttribute("min", `${yyyy}-${mm}-${dd}`);
+
+    // 3. LOGIK VALIDASI MASA (Mula vs Tamat)
+    function validateTime() {
+        const mula = parseInt(masaMula.value);
+        const tamat = parseInt(masaTamat.value);
+
+        if (masaMula.value && masaTamat.value) {
+            if (tamat <= mula) {
+                timeError.style.display = "block";
+                masaTamat.style.borderColor = "var(--danger)";
+                submitBtn.disabled = true;
+            } else {
+                timeError.style.display = "none";
+                masaTamat.style.borderColor = "#ccc";
+                submitBtn.disabled = false;
+            }
+        }
+    }
+
+    masaMula.addEventListener("change", validateTime);
+    masaTamat.addEventListener("change", validateTime);
+
 </script>
 
 </body>
 </html>
-
