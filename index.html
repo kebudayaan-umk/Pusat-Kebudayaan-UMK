@@ -6,130 +6,37 @@
     <title>Tempahan Studio | Pusat Kebudayaan UMK</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        body {
-            margin: 0;
-            background: #f2f2f2;
-            line-height: 1.6;
-        }
+        * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+        body { margin: 0; background: #f2f2f2; line-height: 1.6; }
 
-        /* HEADER */
         .header {
-            text-align: center;
-            color: #fff;
-            padding: 50px 20px;
+            text-align: center; color: #fff; padding: 50px 20px;
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("assets/bg-kebudayaan.jpg");
-            background-size: cover;
-            background-color: #222;
+            background-size: cover; background-color: #222;
         }
-        .header img {
-            width: 120px;
-            margin-bottom: 10px;
-        }
+        .header img { width: 120px; margin-bottom: 10px; }
 
-        /* FORM CONTAINER */
-        .container {
-            max-width: 700px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        h3 {
-            margin-bottom: 20px;
-            color: #333;
-            border-bottom: 2px solid #0a7a4b;
-            padding-bottom: 10px;
-        }
+        .container { max-width: 700px; margin: 30px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h3 { margin-bottom: 20px; color: #333; border-bottom: 2px solid #0a7a4b; padding-bottom: 10px; }
 
-        /* FORM GAYA ASAL */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 6px;
-            display: block;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
+        form { display: flex; flex-direction: column; gap: 20px; }
+        label { font-weight: bold; margin-bottom: 6px; display: block; }
+        input, select { width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px; }
 
-        /* RULES ASAL */
-        .rules {
-            margin-top: 10px;
-            padding: 20px;
-            background: #fff9f9;
-            border: 1px solid #ffcccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        .rules ul {
-            padding-left: 20px;
-        }
-        .rules li {
-            margin-bottom: 8px;
-        }
-        .rules .bold {
-            font-weight: bold;
-            color: #b00000;
-            text-transform: uppercase;
-        }
+        .rules { margin-top: 10px; padding: 20px; background: #fff9f9; border: 1px solid #ffcccc; border-radius: 6px; font-size: 14px; }
+        .rules ul { padding-left: 20px; }
+        .rules li { margin-bottom: 8px; }
+        .rules .bold { font-weight: bold; color: #b00000; text-transform: uppercase; }
 
-        /* CHECKBOX */
-        .checkbox-container {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .checkbox-container input {
-            width: auto;
-            margin-top: 5px;
-        }
-        .checkbox-container label {
-            font-weight: normal;
-            font-size: 14px;
-        }
+        .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; }
+        .checkbox-container input { width: auto; margin-top: 5px; }
+        .checkbox-container label { font-weight: normal; font-size: 14px; }
 
-        /* BUTTON */
-        button {
-            padding: 15px;
-            background: #0a7a4b;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #08633d;
-        }
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
+        button { padding: 15px; background: #0a7a4b; color: #fff; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #08633d; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* SLOT PENUH */
-        .slot-penuh {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border: 1px solid #c8e6c9;
-        }
+        .slot-penuh { background: #e8f5e9; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c8e6c9; }
     </style>
 </head>
 
@@ -159,7 +66,7 @@
         </div>
 
         <div>
-<label>No. Kad Pengenalan</label>
+            <label>No. Kad Pengenalan</label>
             <input type="text" id="no_ic" placeholder="Sila masukkan No. KP tanpa (-)" required>
         </div>
 
@@ -189,7 +96,7 @@
                 <option value="">-- Sila Pilih Kampus --</option>
                 <option value="bachok">Bachok</option>
                 <option value="kota">Kampus Kota</option>
-                <option value="jeli">Kampus Jeli</option>
+<option value="jeli">Kampus Jeli</option>
             </select>
         </div>
 
@@ -209,18 +116,7 @@
             <label>Masa Mula</label>
             <select id="masaMula" required>
                 <option value="">-- Sila Pilih Masa Mula --</option>
-                <option>8:00 pagi</option>
-                <option>9:00 pagi</option>
-                <option>10:00 pagi</option>
-                <option>11:00 pagi</option>
-                <option>12:00 tengah hari</option>
-                <option>2:00 petang</option>
-                <option>3:00 petang</option>
-                <option>4:00 petang</option>
-                <option>5:00 petang</option>
-                <option>8:00 malam</option>
-                <option>9:00 malam</option>
-                <option>10:00 malam</option>
+                <option>8:00 pagi</option><option>9:00 pagi</option><option>10:00 pagi</option><option>11:00 pagi</option><option>12:00 tengah hari</option><option>2:00 petang</option><option>3:00 petang</option><option>4:00 petang</option><option>5:00 petang</option><option>8:00 malam</option><option>9:00 malam</option><option>10:00 malam</option>
             </select>
         </div>
 
@@ -228,18 +124,7 @@
             <label>Masa Tamat</label>
             <select id="masaTamat" required>
                 <option value="">-- Sila Pilih Masa Tamat --</option>
-                <option>9:00 pagi</option>
-                <option>10:00 pagi</option>
-                <option>11:00 pagi</option>
-                <option>12:00 tengah hari</option>
-                <option>1:00 petang</option>
-                <option>3:00 petang</option>
-                <option>4:00 petang</option>
-                <option>5:00 petang</option>
-                <option>6:00 petang</option>
-                <option>9:00 malam</option>
-                <option>10:00 malam</option>
-                <option>11:00 malam</option>
+                <option>9:00 pagi</option><option>10:00 pagi</option><option>11:00 pagi</option><option>12:00 tengah hari</option><option>1:00 petang</option><option>3:00 petang</option><option>4:00 petang</option><option>5:00 petang</option><option>6:00 petang</option><option>9:00 malam</option><option>10:00 malam</option><option>11:00 malam</option>
             </select>
         </div>
 
@@ -259,115 +144,95 @@
             <input type="checkbox" id="setuju" required>
             <label for="setuju">Saya telah membaca dan bersetuju dengan semua syarat dan peraturan yang telah ditetapkan di atas.</label>
         </div>
-<button type="submit" id="submitBtn">Hantar Permohonan</button>
+
+        <button type="submit" id="submitBtn">Hantar Permohonan</button>
     </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    // SETUP SUPABASE
+    // 1. SUPABASE SETUP
     const _supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
     const _supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
     const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseKey);
 
-    // LIMIT TARIKH 3 HARI
-    const inputTkh = document.getElementById('tarikh');
-    const minD = new Date();
-    minD.setDate(minD.getDate() + 3);
-    inputTkh.min = minD.toISOString().split("T")[0];
-
-    // PAPAR SLOT PENUH
-    async function paparSlotPenuh() {
-        const list = document.getElementById('senaraiSlot');
-        const { data } = await supabaseClient.from('permohonan').select('studio, tarikh, masa_mula').eq('status', 'approved');
-        if (data && data.length > 0) {
-            list.innerHTML = data.map(s => `<li>📌 ${s.studio} | ${s.tarikh} | ${s.masa_mula}</li>`).join('');
-        } else { list.innerHTML = '<li>✅ Semua slot masih tersedia.</li>'; }
-    }
-    paparSlotPenuh();
-
-    // STUDIO DATA (JELI DITUKAR KE SATU PILIHAN SAHAJA)
+    // 2. LOGIK PILIHAN STUDIO (DIBETULKAN)
     const studioData = {
-        bachok: ["Teniat 3", "Teniat 4"],
-        kota: ["Studio Tari", "Studio Band", "Studio Gamelan"],
-        jeli: ["Studio Kebudayaan"]
+        "bachok": ["Teniat 3", "Teniat 4"],
+        "kota": ["Studio Tari", "Studio Band", "Studio Gamelan"],
+        "jeli": ["Studio Kebudayaan"]
     };
 
     const kampusSelect = document.getElementById("kampus");
     const studioSelect = document.getElementById("studio");
 
-    kampusSelect.addEventListener("change", function () {
-        const k = this.value;
+    // Pastikan event listener berfungsi dengan stabil
+    kampusSelect.addEventListener("change", function() {
+        const val = this.value;
         studioSelect.innerHTML = '<option value="">-- Sila Pilih Studio --</option>';
 
-        if (studioData[k]) {
-            studioData[k].forEach(function (s) {
+        if (studioData[val]) {
+            studioData[val].forEach(function(nama) {
                 const opt = document.createElement("option");
-                opt.value = s;
-                opt.textContent = s;
+                opt.value = nama;
+                opt.textContent = nama;
                 studioSelect.appendChild(opt);
             });
         }
     });
 
-    // PENGHANTARAN BORANG
-    const bookingForm = document.getElementById("bookingForm");
-    const submitBtn = document.getElementById("submitBtn");
+    // 3.
+LOGIK TARIKH & SLOT PENUH
+    const tarikhInput = document.getElementById('tarikh');
+    const minD = new Date();
+    minD.setDate(minD.getDate() + 3);
+    if(tarikhInput) tarikhInput.min = minD.toISOString().split("T")[0];
 
-    bookingForm.addEventListener("submit", async function (e) {
+    async function paparSlotPenuh() {
+        const list = document.getElementById('senaraiSlot');
+        const { data } = await supabaseClient.from('permohonan').select('studio, tarikh, masa_mula').eq('status', 'approved');
+        if (data && data.length > 0) {
+            list.innerHTML = data.map(s => `<li>📌 ${s.studio} | ${s.tarikh} | ${s.masa_mula}</li>`).join('');
+        } else { if(list) list.innerHTML = '<li>✅ Semua slot masih tersedia.</li>'; }
+    }
+    paparSlotPenuh();
+
+    // 4. PENGHANTARAN BORANG
+    document.getElementById("bookingForm").addEventListener("submit", async function (e) {
         e.preventDefault();
+        const btn = document.getElementById("submitBtn");
+        btn.innerText = "Sila Tunggu...";
+        btn.disabled = true;
 
-        const nama = document.getElementById("nama").value;
-        const no_ic = document.getElementById("no_ic").value;
-        const no_id = document.getElementById("no_id").value;
-        const jawatan = document.getElementById("jawatan").value;
-        const email = document.getElementById("email").value;
-        const kampus = document.getElementById("kampus").value;
-        const studio = document.getElementById("studio").value;
-        const tarikh = document.getElementById("tarikh").value;
-        const masaMula = document.getElementById("masaMula").value;
-        const masaTamat = document.getElementById("masaTamat").value;
-
-        submitBtn.innerText = "Sila Tunggu...";
-        submitBtn.disabled = true;
+        const payload = {
+            nama: document.getElementById("nama").value,
+            no_ic: document.getElementById("no_ic").value,
+            no_id: document.getElementById("no_id").value,
+            jawatan: document.getElementById("jawatan").value,
+            email: document.getElementById("email").value,
+            kampus: document.getElementById("kampus").value,
+            studio: document.getElementById("studio").value,
+            tarikh: document.getElementById("tarikh").value,
+            masa_mula: document.getElementById("masaMula").value,
+            masa_tamat: document.getElementById("masaTamat").value,
+            status: 'pending'
+        };
 
         try {
-            // SEMAK PERTEMBUNGAN
-            const { data: sedia } = await supabaseClient
-                .from('permohonan')
-                .select('id')
-                .eq('studio', studio).eq('tarikh', tarikh).eq('masa_mula', masaMula).eq('status', 'approved');
-
+            const { data: sedia } = await supabaseClient.from('permohonan').select('id').eq('studio', payload.studio).eq('tarikh', payload.tarikh).eq('masa_mula', payload.masa_mula).eq('status', 'approved');
             if (sedia && sedia.length > 0) {
-                alert("Ralat: Slot waktu ini telah diluluskan untuk pemohon lain. Sila pilih waktu atau studio lain.");
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Hantar Permohonan";
+                alert("Slot waktu ini telah ditempah. Sila pilih waktu lain.");
                 return;
             }
-
-            const { error } = await supabaseClient
-                .from('permohonan')
-                .insert([{
-                    nama, no_ic, no_id, jawatan, email, kampus, studio, tarikh, 
-                    masa_mula: masaMula, masa_tamat: masaTamat, status: 'pending'
-                }]);
-
+            const { error } = await supabaseClient.from('permohonan').insert([payload]);
             if (error) throw error;
-
-            alert("Permohonan anda telah berjaya dihantar untuk diproses.
-Sila semak status melalui email anda dari semasa ke semasa.");
-            bookingForm.reset();
+            alert("Berjaya dihantar!");
+            this.reset();
             paparSlotPenuh();
-
-        } catch (err) {
-            alert("Ralat Semasa Menghantar: " + err.message);
-        } finally {
-            submitBtn.innerText = "Hantar Permohonan";
-            submitBtn.disabled = false;
-        }
+        } catch (err) { alert("Ralat: " + err.message); }
+        finally { btn.innerText = "Hantar Permohonan"; btn.disabled = false; }
     });
 </script>
-
 </body>
 </html>
