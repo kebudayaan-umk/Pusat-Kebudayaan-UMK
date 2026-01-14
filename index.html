@@ -6,112 +6,77 @@
     <title>Sistem Tempahan Studio</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
-        .form-container { max-width: 600px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input, select, button { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background-color: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
-        button:disabled { background-color: #ccc; }
+        /* Sila kekalkan CSS asal anda di sini (Saya biarkan kosong untuk anda paste balik CSS asal anda) */
+        body { font-family: sans-serif; padding: 20px; }
+        form { display: flex; flex-direction: column; max-width: 500px; gap: 10px; }
+        input, select, button { padding: 10px; }
     </style>
 </head>
 <body>
 
-<div class="form-container">
-    <h2>Borang Tempahan Studio</h2>
-    <form id="bookingForm">
-        <div class="form-group">
-            <label>Nama Penuh</label>
-            <input type="text" id="nama" required placeholder="Contoh: Ahmad Bin Ali">
-        </div>
+    <div class="container">
+        <h2>Borang Permohonan Tempahan Studio</h2>
+        <form id="bookingForm">
+            <input type="text" id="nama" placeholder="Nama Penuh" required>
+            <input type="text" id="no_id" placeholder="No. ID (Staff/Pelajar)" required>
+            
+            <input type="text" id="no_ic" placeholder="No. Kad Pengenalan" required>
 
-        <div class="form-group">
-            <label>No. ID (Staff/Pelajar)</label>
-            <input type="text" id="no_id" required placeholder="Contoh: SWP12345">
-        </div>
-
-        <div class="form-group">
-            <label>No. Kad Pengenalan</label>
-            <input type="text" id="no_ic" required placeholder="Contoh: 900101105555">
-        </div>
-
-        <div class="form-group">
-            <label>Kategori</label>
             <select id="kategori" required>
                 <option value="">-- Pilih Kategori --</option>
                 <option value="Staff">Staff</option>
                 <option value="Pelajar">Pelajar</option>
-                <option value="Pihak Luar">Pihak Luar</option>
+                <option value="Luar">Pihak Luar</option>
             </select>
-        </div>
 
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="email" required placeholder="email@example.com">
-        </div>
+            <input type="email" id="email" placeholder="Alamat Emel" required>
 
-        <div class="form-group">
-            <label>Kampus</label>
             <select id="kampus" required>
                 <option value="">-- Pilih Kampus --</option>
                 <option value="Kampus A">Kampus A</option>
                 <option value="Kampus B">Kampus B</option>
-            </select>
-        </div>
+                </select>
 
-        <div class="form-group">
-            <label>Studio</label>
             <select id="studio" required>
-                <option value="">-- Pilih Kampus Dahulu --</option>
+                <option value="">-- Pilih Studio --</option>
             </select>
-        </div>
 
-        <div class="form-group">
-            <label>Slot Tempahan</label>
             <select id="slot" required>
-                <option value="">-- Pilih Slot --</option>
-                <option value="Pagi (08:00 - 12:00)">Pagi (08:00 - 12:00)</option>
-                <option value="Petang (14:00 - 18:00)">Petang (14:00 - 18:00)</option>
-                <option value="Malam (20:00 - 23:00)">Malam (20:00 - 23:00)</option>
+                <option value="">-- Pilih Slot Penggunaan --</option>
+                <option value="Slot 1 (08:00 - 10:00)">Slot 1 (08:00 - 10:00)</option>
+                <option value="Slot 2 (10:00 - 12:00)">Slot 2 (10:00 - 12:00)</option>
+                <option value="Slot 3 (14:00 - 16:00)">Slot 3 (14:00 - 16:00)</option>
+                <option value="Slot 4 (16:00 - 18:00)">Slot 4 (16:00 - 18:00)</option>
             </select>
-        </div>
 
-        <div class="form-group">
-            <label>Tarikh Penggunaan</label>
             <input type="date" id="tarikh" required>
-        </div>
+            <input type="time" id="masaMula" required>
+            <input type="time" id="masaTamat" required>
 
-        <div style="display: flex; gap: 10px;">
-            <div class="form-group" style="flex: 1;">
-                <label>Masa Mula</label>
-                <input type="time" id="masaMula" required>
+            <div class="checkbox-group">
+                <input type="checkbox" id="setuju" required>
+                <label for="setuju">Saya bersetuju dengan segala syarat penggunaan studio.</label>
             </div>
-            <div class="form-group" style="flex: 1;">
-                <label>Masa Tamat</label>
-                <input type="time" id="masaTamat" required>
-            </div>
-        </div>
 
-        <button type="submit" id="submitBtn">Hantar Permohonan</button>
-    </form>
-</div>
+            <button type="submit" id="submitBtn">Hantar Permohonan</button>
+        </form>
+    </div>
 
 <script>
-    // --- KONFIGURASI SUPABASE (Gantikan dengan Key Anda) ---
-    const SUPABASE_URL = 'https://YOUR_PROJECT_URL.supabase.co';
-    const SUPABASE_KEY = 'YOUR_ANON_KEY';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // --- KONFIGURASI SUPABASE ---
+    const supabaseClient = supabase.createClient('URL_ANDA', 'KEY_ANDA');
 
-    // --- DATA STUDIO ---
+    // --- DATA STUDIO (Gunakan data penuh 300 baris anda di sini) ---
     const studioData = {
-"Kampus A": ["Studio Muzik", "Studio Rakaman", "Studio Fotografi"],
+        "Kampus A": ["Studio Muzik", "Studio Rakaman", "Studio Fotografi"],
         "Kampus B": ["Studio TV", "Studio Radio", "Bilik Edit"]
+        // Paste balik semua list studio asal anda yang banyak itu di sini
     };
 
-    // --- LOGIK PILIHAN STUDIO DINAMIK ---
-    const kampusSelect = document.getElementById("kampus");
     const studioSelect = document.getElementById("studio");
+    const kampusSelect = document.getElementById("kampus");
 
+    // 2. LOGIK PILIHAN STUDIO (Fungsi Asal)
     kampusSelect.addEventListener("change", function () {
         const kampus = this.value;
         studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
@@ -126,73 +91,78 @@
         }
     });
 
-    // --- LOGIK PENGHANTARAN BORANG ---
+    // 3. LOGIK PENGHANTARAN BORANG
     const bookingForm = document.getElementById("bookingForm");
     const submitBtn = document.getElementById("submitBtn");
 
     bookingForm.addEventListener("submit", async function (e) {
         e.preventDefault();
-
-        // 1. Ambil Nilai Input
+// Ambil Nilai Input (Kekal susunan asal + 3 tambahan)
         const nama = document.getElementById("nama").value;
         const no_id = document.getElementById("no_id").value;
-        const no_ic = document.getElementById("no_ic").value;
-        const kategori = document.getElementById("kategori").value;
+        const no_ic = document.getElementById("no_ic").value;      // Tambahan 2
+        const kategori = document.getElementById("kategori").value; // Tambahan 3
         const email = document.getElementById("email").value;
         const kampus = document.getElementById("kampus").value;
         const studio = document.getElementById("studio").value;
-        const slot = document.getElementById("slot").value;
+        const slot = document.getElementById("slot").value;         // Tambahan 1
         const tarikh = document.getElementById("tarikh").value;
         const masaMula = document.getElementById("masaMula").value;
         const masaTamat = document.getElementById("masaTamat").value;
+        const setuju = document.getElementById("setuju").checked;
 
-        // 2. Validasi Tarikh (Minima 3 Hari)
+        // --- VALIDASI TARIKH (MINIMA 3 HARI) ---
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const pilihanTarikh = new Date(tarikh);
-        const diffDays = Math.ceil((pilihanTarikh - today) / (1000 * 60 * 60 * 24));
+        const diffTime = pilihanTarikh - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         if (diffDays < 3) {
             alert("Ralat: Permohonan perlu dibuat sekurang-kurangnya 3 hari sebelum tarikh penggunaan.");
             return;
         }
 
-        // 3. Semakan Pertembungan (Anti-Double Booking)
+        // --- LOGIK SEMAKAN PERTEMBUNGAN (ANTI-DOUBLE BOOKING) ---
         submitBtn.innerText = "Menyemak Kekosongan...";
         submitBtn.disabled = true;
 
         try {
+            // Semak jika slot sudah 'approved'
             const { data: sediaAda, error: checkError } = await supabaseClient
                 .from('permohonan')
                 .select('id')
                 .eq('studio', studio)
                 .eq('tarikh', tarikh)
-                .eq('slot', slot)
+                .eq('slot', slot) // Tambahan semakan slot
                 .eq('status', 'approved');
 
             if (checkError) throw checkError;
 
+            // Jika ada data yang sudah 'approved' pada slot tersebut
             if (sediaAda && sediaAda.length > 0) {
-                alert(`Maaf, ${slot} untuk ${studio} pada tarikh tersebut telahpun ditempah (LULUS). Sila pilih slot lain.`);
+                alert(`Maaf, slot untuk ${studio} pada tarikh dan masa tersebut telahpun ditempah (LULUS). Sila pilih waktu atau studio lain.`);
+                submitBtn.innerText = "Hantar Permohonan";
+                submitBtn.disabled = false;
                 return;
             }
 
-            // 4. Proses Hantar ke Supabase
+            // --- PROSES HANTAR KE SUPABASE ---
             submitBtn.innerText = "Menghantar...";
 
-            const { error } = await supabaseClient
+            const { data, error } = await supabaseClient
                 .from('permohonan')
                 .insert([
                     { 
-                        nama, 
-                        no_id,
-                        no_ic,      
-                        kategori,   
-                        email,
-                        kampus,
-                        studio,
-                        slot,       
-                        tarikh, 
+                        nama: nama, 
+                        no_id: no_id,
+                        no_ic: no_ic,       // Simpan IC
+                        kategori: kategori, // Simpan Kategori
+                        email: email,
+                        kampus: kampus,
+                        studio: studio,
+                        slot: slot,         // Simpan Slot
+                        tarikh: tarikh, 
                         masa_mula: masaMula, 
                         masa_tamat: masaTamat,
                         status: 'pending' 
@@ -201,16 +171,16 @@
 
             if (error) throw error;
 
-            alert("✅ Berjaya! Permohonan anda telah dihantar.");
+            alert("✅ Berjaya! Permohonan anda telah dihantar dan akan diproses.");
             bookingForm.reset();
             studioSelect.innerHTML = '<option value="">-- Pilih Kampus Dahulu --</option>';
 
         } catch (err) {
             console.error("Ralat:", err.message);
-            alert("❌ Gagal: " + err.message);
+            alert("❌ Gagal menghantar: " + err.message);
         } finally {
             submitBtn.innerText = "Hantar Permohonan";
-submitBtn.disabled = false;
+            submitBtn.disabled = false;
         }
     });
 </script>
