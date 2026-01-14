@@ -17,22 +17,55 @@
 
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; }
 
-        /* HEADER & CONTACT INFO */
-        .header { position: relative; background: #fff; padding: 60px 20px; text-align: center; border-bottom: 5px solid var(--accent-color); }
+        /* HEADER DENGAN BACKGROUND IMAGE */
+        .header { 
+            position: relative; 
+            background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; 
+            padding: 60px 20px; 
+            text-align: center; 
+        }
+        /* Lapisan putih pudar (overlay) supaya tulisan jelas */
+        .header::before { 
+            content: ""; 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(255, 255, 255, 0.85); 
+        }
         .header-content { position: relative; z-index: 1; }
+        
+        /* Logo UMK saiz besar */
         .logo-umk { height: 100px; margin-bottom: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-        .header h1 { margin: 0; font-size: 1.6rem; color: var(--primary-color); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+        
+        /* Nama Pusat (Bold & Caps) */
+        .header h1 { 
+            margin: 0; 
+            font-size: 1.6rem; 
+            color: var(--primary-color); 
+            text-transform: uppercase; 
+            font-weight: 800; 
+            letter-spacing: 0.5px;
+        }
         
         .contact-info { margin-top: 12px; font-size: 0.95rem; }
-        .contact-info a { color: var(--primary-color); text-decoration: none; font-weight: 700; transition: 0.3s; padding: 5px 10px; }
+        .contact-info a { color: var(--primary-color); text-decoration: none; font-weight: 700; padding: 5px 10px; }
         .contact-info a:hover { color: var(--accent-color); text-decoration: underline; }
         .contact-sep { margin: 0 5px; color: #bbb; }
 
-        .container { max-width: 850px; background: var(--white); padding: 35px; border-radius: 12px; margin: -30px auto 50px auto; box-shadow: 0 8px 30px rgba(0,0,0,0.1); position: relative; z-index: 2; }
+        /* CONTAINER UTAMA */
+        .container { 
+            max-width: 850px; 
+            background: var(--white); 
+            padding: 35px; 
+            border-radius: 12px; 
+            margin: -30px auto 50px auto; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1); 
+            position: relative; 
+            z-index: 2; 
+        }
         
         h2 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.3rem; font-weight: 700; }
 
-        /* JADUAL TEMPAHAN */
+        /* JADUAL TERKINI */
         .jadual-tempahan { background: #fbfbfb; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 35px; }
         .jadual-tempahan h3 { margin-top: 0; font-size: 1rem; color: var(--primary-color); text-transform: uppercase; font-weight: 700; }
         .table-wrapper { overflow-x: auto; margin-top: 10px; }
@@ -41,7 +74,7 @@
         table td { padding: 10px; border: 1px solid #eee; }
         .status-tag { background: #ffe6e6; color: var(--danger); padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; }
 
-        /* FORM STYLING */
+        /* BORANG & GRID */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 20px; }
         .full-width { grid-column: span 2; }
         label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; color: #444; }
@@ -55,13 +88,37 @@
         .syarat-container { background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 8px; margin-top: 30px; font-size: 0.85rem; }
         .syarat-list { padding-left: 20px; }
         .syarat-list li { margin-bottom: 8px; }
-        .amaran-denda { background: #fff5f5; color: var(--danger); padding: 15px; border: 1px solid #ffcccc; border-radius: 6px; text-align: center; font-weight: 800; margin-top: 15px; font-size: 0.85rem; text-transform: uppercase; }
+        .amaran-denda { 
+            background: #fff5f5; 
+            color: var(--danger); 
+            padding: 15px; 
+            border: 1px solid #ffcccc; 
+            border-radius: 6px; 
+            text-align: center; 
+            font-weight: 800; 
+            margin-top: 15px; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+        }
 
-        /* TICKBOX KEMAS KE KIRI */
+        /* TICKBOX (KEMAS KE KIRI) */
         .persetujuan { display: flex; align-items: flex-start; gap: 12px; margin-top: 25px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
         .persetujuan input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; cursor: pointer; flex-shrink: 0; }
 
-        button { background: var(--primary-color); color: white; padding: 16px; border: none; border-radius: 6px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 25px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        button { 
+            background: var(--primary-color); 
+            color: white; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 6px; 
+            width: 100%; 
+            font-size: 1rem; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 25px; 
+            text-transform: uppercase; 
+            transition: 0.3s; 
+        }
         button:hover { background: #002244; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         button:disabled { background: #ccc; cursor: not-allowed; }
 
@@ -121,7 +178,7 @@
         <div class="form-grid">
             <div class="full-width">
                 <label>Nama Penuh</label>
-                <input type="text" name="nama" placeholder="Sila masukkan nama penuh" required>
+                <input type="text" name="nama" placeholder="Masukkan nama penuh" required>
             </div>
 
             <div>
@@ -198,17 +255,17 @@
                     <option value="22">10:00 PM</option>
                     <option value="23">11:00 PM</option>
                 </select>
-                <div id="timeError" class="error-msg">Ralat: Masa tidak logik atau melangkaui waktu solat!</div>
+                <div id="timeError" class="error-msg">Ralat: Masa tidak sah atau melangkaui waktu solat!</div>
             </div>
 
             <div class="full-width">
                 <label>Keperluan Teknikal (Cth: Mikrofon, Speaker, Kabel)</label>
-                <textarea name="teknikal" placeholder="Nyatakan jenis dan bilangan peralatan teknikal jika ada..."></textarea>
+                <textarea name="teknikal" placeholder="Nyatakan keperluan teknikal anda jika ada..."></textarea>
             </div>
 
             <div class="full-width">
                 <label>Barang Keperluan Penempah (Cth: Kerusi, Meja, Hiasan)</label>
-                <textarea name="keperluan_penempah" placeholder="Nyatakan keperluan lain untuk urusan anda..."></textarea>
+                <textarea name="keperluan_penempah" placeholder="Nyatakan barang keperluan tambahan yang lain..."></textarea>
             </div>
         </div>
 
@@ -236,6 +293,7 @@
 </div>
 
 <script>
+    // 1. Data Studio
     const studioList = {
         bachok: ["Teniat 3", "Teniat 4"],
         kota: ["Studio Tari", "Studio Muzik", "Studio Gamelan"],
@@ -250,6 +308,7 @@
     const timeError = document.getElementById("timeError");
     const submitBtn = document.getElementById("submitBtn");
 
+    // 2. Dinamik Studio ikut Kampus
     kampus.addEventListener("change", () => {
         studio.innerHTML = '<option value="">-- Pilih Studio --</option>';
         if(kampus.value && studioList[kampus.value]) {
@@ -261,6 +320,7 @@
         }
     });
 
+    // 3. Had Tarikh Minima
     const today = new Date();
     const minDate = new Date();
     minDate.setDate(today.getDate() + 3);
@@ -269,6 +329,7 @@
     const dd = String(minDate.getDate()).padStart(2, '0');
     datePicker.setAttribute("min", `${yyyy}-${mm}-${dd}`);
 
+    // 4. Validasi Masa (Tamat > Mula & Tiada Overlap Waktu Solat)
     function validateTime() {
         const mula = parseInt(masaMula.value);
         const tamat = parseInt(masaTamat.value);
@@ -276,6 +337,7 @@
         if (masaMula.value && masaTamat.value) {
             let isInvalid = false;
             if (tamat <= mula) isInvalid = true;
+            // Overlap Solat
             if (mula < 13 && tamat > 14) isInvalid = true;
             if (mula < 16 && tamat > 17) isInvalid = true;
             if (mula < 19 && tamat > 21) isInvalid = true;
