@@ -30,17 +30,23 @@
         /* HEADER */
         .header { 
             position: relative; 
-            background: #003366; /* Ganti dengan warna solid jika image tiada */
+            background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; 
             padding: 60px 20px; 
             text-align: center; 
             border-bottom: 4px solid var(--accent-color);
         }
-        .header-content { position: relative; z-index: 1; color: white; }
+        .header::before { 
+            content: ""; 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(255, 255, 255, 0.9); 
+        }
+        .header-content { position: relative; z-index: 1; }
         .logo-umk { height: 100px; margin-bottom: 10px; }
         .header h1 { 
             margin: 0; 
             font-size: 1.7rem; 
-            color: var(--white); 
+            color: var(--primary-color); 
             text-transform: uppercase; 
             font-weight: 800; 
         }
@@ -82,9 +88,11 @@
             margin-left: 15px;
         }
 
+        /* FORM STRUCTURE */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .full-width { grid-column: span 2; }
 
+        /* IMPROVISED: FLIGHT BOOKING DATE SLOT */
         .flight-date-container {
             display: flex;
             border: 1px solid #cbd5e1;
@@ -101,6 +109,7 @@
         .date-slot label { font-size: 0.7rem; color: #718096; text-transform: uppercase; margin-bottom: 0; font-weight: 800; }
         .date-slot input { border: none; padding: 5px 0; width: 100%; font-weight: 700; font-size: 1rem; outline: none; cursor: pointer; }
 
+        /* LOGISTIC BOX */
         .logistic-container {
             background-color: var(--section-bg);
             border: 2px solid #e2e8f0;
@@ -114,9 +123,15 @@
             width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; 
             font-size: 1rem; box-sizing: border-box; background: white; transition: all 0.2s;
         }
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--primary-color); 
+            outline: none; 
+            box-shadow: 0 0 0 3px rgba(0,51,102,0.1); 
+        }
 
         .error-msg { color: var(--danger); font-size: 0.75rem; font-weight: 700; display: none; margin-top: 5px; }
 
+        /* FOOTER COMPONENTS */
         .syarat-box { 
             background: #fffaf0; 
             border: 1px solid #feebc8; 
@@ -177,6 +192,7 @@
 
 <div class="header">
     <div class="header-content">
+        <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
         <h1>Pusat Kebudayaan dan Kesenian (PBS)<br>Universiti Malaysia Kelantan</h1>
     </div>
 </div>
@@ -189,7 +205,7 @@
         <div class="form-grid">
             <div class="full-width">
                 <label>Nama Penuh</label>
-                <input type="text" name="nama" placeholder="Nama penuh mengikut IC" required>
+                <input type="text" name="nama" placeholder="Sila masukkan nama penuh mengikut IC" required>
             </div>
             <div>
                 <label>No. Kad Pengenalan</label>
@@ -242,7 +258,7 @@
 
             <div class="form-grid" style="margin-top: 20px;">
                 <div>
-                    <label>Masa Mula</label>
+                    <label>Masa Mula (Pilihan Setiap Jam)</label>
                     <select id="masa_mula" name="masa_mula" required>
                         <option value="">-- Pilih --</option>
                         <option value="09:00">09:00 AM</option>
@@ -252,37 +268,50 @@
                         <option value="14:00">02:00 PM</option>
                         <option value="15:00">03:00 PM</option>
                         <option value="17:00">05:00 PM</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Masa Tamat</label>
-                    <select id="masa_tamat" name="masa_tamat" required>
-                        <option value="">-- Pilih --</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="12:00">12:00 PM</option>
-                        <option value="14:00">02:00 PM</option>
-                        <option value="17:00">05:00 PM</option>
+                        <option value="18:00">06:00 PM</option>
+                        <option value="21:00">09:00 PM</option>
                         <option value="22:00">10:00 PM</option>
                     </select>
                 </div>
+                <div>
+                    <label>Masa Tamat (Pilihan Setiap Jam)</label>
+                    <select id="masa_tamat" name="masa_tamat" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="18:00">06:00 PM</option>
+                        <option value="19:00">07:00 PM</option>
+                        <option value="22:00">10:00 PM</option>
+                        <option value="23:00">11:00 PM</option>
+                    </select>
+                    <div id="timeError" class="error-msg">Waktu tidak sah (Sila semak waktu mula/tamat).</div>
+                </div>
                 <div class="full-width">
-                    <label>Keperluan Teknikal</label>
-                    <textarea name="teknikal" placeholder="Contoh: Mikrofon, PA Sistem..."></textarea>
+                    <label>Keperluan Teknikal (Cth: Mikrofon, PA Sistem, Kabel Instrumen)</label>
+                    <textarea name="teknikal" placeholder="Sila nyatakan barang teknikal yang ingin dipinjam dari Pusat Kebudayaan dan Kesenian..."></textarea>
                 </div>
             </div>
         </div>
 
         <div class="syarat-box">
-            <strong>Terma & Peraturan:</strong>
+            <strong style="color: var(--primary-color); text-transform: uppercase;">Terma & Peraturan:</strong>
             <ul style="margin: 10px 0; padding-left: 20px;">
-                <li>Permohonan dibuat sekurang-kurangnya 3 hari sebelum.</li>
-                <li>Maksimum penggunaan 3 hari sahaja.</li>
+                <li>Permohonan mestilah dibuat sekurang-kurangnya <strong>TIGA (3) HARI</strong> sebelum tarikh penggunaan.</li>
+                <li>Tempahan maksimum hanya <strong>TIGA (3) HARI</strong> berturut-turut sahaja.</li>
+                <li>Pemohon hendaklah memahami dan mematuhi syarat-syarat, garis panduan serta etika penggunaan kemudahan Universiti.</li>
+                <li>Pemohon hendaklah bertanggungjawab terhadap keadaan, keselamatan dan kerosakan kemudahan yang digunakan.</li>
+                <li>Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan di dalam tempat yang digunakan.</li>
             </ul>
+            <div class="amaran-denda">PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTI RUGI TERHADAP SEBARANG KEROSAKAN DAN KEKOTORAN KEMUDAHAN YANG DIGUNAKAN.</div>
         </div>
 
         <label class="checkbox-container">
             <input type="checkbox" name="setuju" required>
-            <span>Saya bersetuju mematuhi segala peraturan PBS UMK.</span>
+            <span>Saya dengan ini mengaku maklumat di atas adalah benar dan bersetuju mematuhi segala peraturan Pusat Kebudayaan dan Kesenian (PBS) UMK.</span>
         </label>
 
         <button type="submit" id="submitBtn">Hantar Permohonan</button>
@@ -290,12 +319,12 @@
 </div>
 
 <script>
-    // 1. KONFIGURASI SUPABASE (MASUKKAN URL & KEY ANDA)
-    const supabaseUrl = 'YOUR_SUPABASE_URL';
-    const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+    // --- 1. KONFIGURASI SUPABASE (MASUKKAN DATA ANDA DI SINI) ---
+    const supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // 2. LOGIK STUDIO
+    // --- 2. LOGIK ASAL ANDA (TIDAK BERUBAH) ---
     const studioData = {
         bachok: ["Teniat 3", "Teniat 4"],
         kota: ["Studio Tari", "Studio Muzik", "Studio Gamelan"],
@@ -314,7 +343,6 @@
         }
     });
 
-    // 3. VALIDASI TARIKH & MASA
     const tMula = document.getElementById("tarikh_mula");
     const tTamat = document.getElementById("tarikh_tamat");
     const dateErr = document.getElementById("dateError");
@@ -322,14 +350,17 @@
 
     const today = new Date();
     today.setDate(today.getDate() + 3);
-    const minDateStr = today.toISOString().split("T")[0];
-    tMula.min = minDateStr;
-    tTamat.min = minDateStr;
+    const minDate = today.toISOString().split("T")[0];
+    tMula.min = minDate;
+    tTamat.min = minDate;
 
-    function validate() {
+    function checkDateRange() {
         if(tMula.value && tTamat.value) {
-            const diff = (new Date(tTamat.value) - new Date(tMula.value)) / (1000*60*60*24) + 1;
-            if(diff > 3 || diff < 1) {
+            const start = new Date(tMula.value);
+            const end = new Date(tTamat.value);
+            const diffDays = ((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+            if(diffDays > 3 || diffDays < 1) {
                 dateErr.style.display = "block";
                 submitBtn.disabled = true;
             } else {
@@ -338,18 +369,42 @@
             }
         }
     }
-    tMula.addEventListener("change", () => { tTamat.min = tMula.value; validate(); });
-    tTamat.addEventListener("change", validate);
 
-    // 4. PROSES HANTAR KE SUPABASE
+    tMula.addEventListener("change", function() {
+        tTamat.min = tMula.value;
+        checkDateRange();
+    });
+    tTamat.addEventListener("change", checkDateRange);
+
+    const mMula = document.getElementById("masa_mula");
+    const mTamat = document.getElementById("masa_tamat");
+    const timeErr = document.getElementById("timeError");
+
+    function checkTime() {
+        if(mMula.value && mTamat.value) {
+            if(mTamat.value <= mMula.value) {
+                timeErr.style.display = "block";
+                submitBtn.disabled = true;
+            } else {
+                timeErr.style.display = "none";
+                checkDateRange(); 
+            }
+        }
+    }
+    mMula.addEventListener("change", checkTime);
+    mTamat.addEventListener("change", checkTime);
+
+    // --- 3. LOGIK BARU: HANTAR KE SUPABASE (MENYELESAIKAN RALAT 405) ---
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
-        e.preventDefault(); 
-        
-        submitBtn.innerText = "Menghantar...";
+        e.preventDefault(); // SANGAT PENTING: Menghalang ralat 405 Not Found
+
+        submitBtn.innerText = "Sila Tunggu...";
         submitBtn.disabled = true;
 
         const formData = new FormData(this);
-        const dataPayload = {
+        
+        // Data yang dihantar ke table 'bookings'
+        const dataToInsert = {
             full_name: formData.get("nama"),
             ic_number: formData.get("no_ic"),
             student_staff_id: formData.get("no_id"),
@@ -357,7 +412,7 @@
             campus: formData.get("kampus"),
             studio_name: formData.get("studio"),
             start_date: formData.get("tarikh_mula"),
-            end_date: formData.get("tarikh_tamat"),
+            end_date: formData.get("tarikh_tamat"), // Kolum tambahan jika perlu
             start_time: formData.get("masa_mula"),
             end_time: formData.get("masa_tamat"),
             technical_requirements: formData.get("teknikal"),
@@ -366,16 +421,16 @@
 
         try {
             const { error } = await _supabase
-                .from('bookings') 
-                .insert([dataPayload]);
+                .from('bookings')
+                .insert([dataToInsert]);
 
             if (error) throw error;
 
-            alert("Tahniah! Permohonan anda telah berjaya dihantar.");
-            this.reset();
+            alert("Permohonan Berjaya Dihantar! Kami akan menghubungi anda melalui emel.");
+            this.reset(); // Kosongkan borang semula
         } catch (err) {
-            console.error(err);
-            alert("Ralat: " + err.message);
+            console.error("Ralat:", err);
+            alert("Gagal menghantar permohonan: " + err.message);
         } finally {
             submitBtn.innerText = "Hantar Permohonan";
             submitBtn.disabled = false;
