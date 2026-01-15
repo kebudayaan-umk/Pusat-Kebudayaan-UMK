@@ -13,7 +13,7 @@
             --text-dark: #1a202c;
             --white: #ffffff;
             --danger: #e53e3e;
-            --section-bg: #f7fafc;
+            --section-bg: #f8fafc; /* Warna latar belakang lembut untuk bahagian logistik */
         }
 
         body { 
@@ -59,7 +59,6 @@
             z-index: 2; 
         }
 
-        /* TYPOGRAPHY */
         h2 { 
             color: var(--primary-color); 
             font-size: 1.4rem; 
@@ -90,7 +89,7 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .full-width { grid-column: span 2; }
 
-        /* LOGISTIC BOX (TARIKH, MASA, TEKNIKAL) */
+        /* LOGISTIC BOX (PENGUMPULAN TARIKH, MASA, TEKNIKAL) */
         .logistic-container {
             background-color: var(--section-bg);
             border: 2px solid #e2e8f0;
@@ -217,7 +216,7 @@
             </div>
         </div>
 
-        <div class="section-title">2. Perincian Tarikh, Masa & Teknikal</div>
+        <div class="section-title">2. Perincian Tempahan (Logistik & Teknikal)</div>
         <div class="logistic-container">
             <div class="form-grid">
                 <div>
@@ -230,25 +229,13 @@
                     <div id="dateError" class="error-msg">Tempahan maksimum adalah 3 hari sahaja!</div>
                 </div>
                 <div>
-                    <label>Masa Mula (Setiap Hari)</label>
-                    <select id="masa_mula" name="masa_mula" required>
-                        <option value="">-- Pilih --</option>
-                        <option value="9">09:00 AM</option>
-                        <option value="10">10:00 AM</option>
-                        <option value="14">02:00 PM</option>
-                        <option value="20">08:00 PM</option>
-                    </select>
+                    <label>Masa Mula</label>
+                    <input type="time" id="masa_mula" name="masa_mula" required>
                 </div>
                 <div>
-                    <label>Masa Tamat (Setiap Hari)</label>
-                    <select id="masa_tamat" name="masa_tamat" required>
-                        <option value="">-- Pilih --</option>
-                        <option value="12">12:00 PM</option>
-                        <option value="17">05:00 PM</option>
-                        <option value="22">10:00 PM</option>
-                        <option value="23">11:00 PM</option>
-                    </select>
-                    <div id="timeError" class="error-msg">Waktu tidak sah (Sila semak waktu solat/tamat).</div>
+                    <label>Masa Tamat</label>
+                    <input type="time" id="masa_tamat" name="masa_tamat" required>
+                    <div id="timeError" class="error-msg">Waktu tamat mestilah selepas waktu mula.</div>
                 </div>
                 <div class="full-width">
                     <label>Keperluan Teknikal (Cth: Mikrofon, PA Sistem, Kabel Instrumen)</label>
@@ -262,11 +249,10 @@
             <ul style="margin: 10px 0; padding-left: 20px;">
                 <li>Permohonan mestilah dibuat sekurang-kurangnya <strong>TIGA (3) HARI</strong> sebelum tarikh penggunaan.</li>
                 <li>Tempahan maksimum hanya <strong>TIGA (3) HARI</strong> berturut-turut sahaja.</li>
-                <li>Pemohon hendaklah memahami dan mematuhi syarat-syarat, garis panduan serta etika penggunaan kemudahan Universiti.</li>
-                <li>Pemohon hendaklah bertanggungjawab terhadap keadaan, keselamatan dan kerosakan kemudahan yang digunakan.</li>
-                <li>Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan di dalam tempat yang digunakan.</li>
+                <li>Pemohon dibenarkan menempah slot secara terus (contoh: 9 pagi hingga malam).</li>
+                <li>Pemohon hendaklah bertanggungjawab terhadap keadaan, keselamatan dan kerosakan kemudahan.</li>
             </ul>
-            <div class="amaran-denda">PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTI RUGI TERHADAP SEBARANG KEROSAKAN DAN KEKOTORAN KEMUDAHAN YANG DIGUNAKAN.</div>
+            <div class="amaran-denda">PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTI RUGI TERHADAP SEBARANG KEROSAKAN DAN KEKOTORAN KEMUDAHAN.</div>
         </div>
 
         <label class="checkbox-container">
@@ -298,10 +284,13 @@
         }
     });
 
-    // Validasi Tarikh (Maksimum 3 Hari)
+    // Validasi Tarikh & Masa
     const tMula = document.getElementById("tarikh_mula");
     const tTamat = document.getElementById("tarikh_tamat");
+    const mMula = document.getElementById("masa_mula");
+    const mTamat = document.getElementById("masa_tamat");
     const dateErr = document.getElementById("dateError");
+    const timeErr = document.getElementById("timeError");
     const submitBtn = document.getElementById("submitBtn");
 
     // Tetapkan tarikh minimum (3 hari dari hari ini)
@@ -311,7 +300,11 @@
     tMula.min = minDate;
     tTamat.min = minDate;
 
-    function checkDateRange() {
+    function validateForm() {
+        let isDateValid = true;
+        let isTimeValid = true;
+
+        // Validasi Tarikh
         if(tMula.value && tTamat.value) {
             const start = new Date(tMula.value);
             const end = new Date(tTamat.value);
@@ -319,44 +312,33 @@
 
             if(diffDays > 3 || diffDays < 1) {
                 dateErr.style.display = "block";
-                submitBtn.disabled = true;
+                isDateValid = false;
             } else {
                 dateErr.style.display = "none";
-                submitBtn.disabled = false;
             }
         }
+
+        // Validasi Masa
+        if(mMula.value && mTamat.value) {
+            if(mTamat.value <= mMula.value) {
+                timeErr.style.display = "block";
+                isTimeValid = false;
+            } else {
+                timeErr.style.display = "none";
+            }
+        }
+
+        submitBtn.disabled = !(isDateValid && isTimeValid);
     }
 
     tMula.addEventListener("change", function() {
         tTamat.min = tMula.value;
-        checkDateRange();
+        validateForm();
     });
-    tTamat.addEventListener("change", checkDateRange);
-
-    // Validasi Masa (Asas)
-    const mMula = document.getElementById("masa_mula");
-    const mTamat = document.getElementById("masa_tamat");
-    const timeErr = document.getElementById("timeError");
-
-    function checkTime() {
-        const v1 = parseInt(mMula.value);
-        const v2 = parseInt(mTamat.value);
-        if(mMula.value && mTamat.value) {
-            if(v2 <= v1) {
-                timeErr.style.display = "block";
-                submitBtn.disabled = true;
-            } else {
-                timeErr.style.display = "none";
-                checkDateRange(); // Semak semula tarikh juga
-            }
-        }
-    }
-    mMula.addEventListener("change", checkTime);
-    mTamat.addEventListener("change", checkTime);
+    tTamat.addEventListener("change", validateForm);
+    mMula.addEventListener("change", validateForm);
+    mTamat.addEventListener("change", validateForm);
 </script>
 
 </body>
 </html>
-
-
-
