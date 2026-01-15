@@ -3,139 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Tempahan Studio PKUMK</title>
+    <title>Sistem Tempahan Studio PKUMK - Pusat Kebudayaan dan Kesenian</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #003366;
             --accent-color: #d4af37;
             --bg-color: #f0f2f5;
-            --text-dark: #333;
+            --text-dark: #1a202c;
             --white: #ffffff;
-            --danger: #cc0000;
+            --danger: #e53e3e;
+            --section-bg: #f7fafc;
         }
 
-        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background-color: var(--bg-color); 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+        }
 
+        /* HEADER */
         .header { 
             position: relative; 
             background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; 
-            padding: 80px 20px; 
+            padding: 60px 20px; 
             text-align: center; 
+            border-bottom: 4px solid var(--accent-color);
         }
         .header::before { 
             content: ""; 
             position: absolute; 
             inset: 0; 
-            background: rgba(255, 255, 255, 0.85); 
+            background: rgba(255, 255, 255, 0.9); 
         }
         .header-content { position: relative; z-index: 1; }
-        
-        .logo-umk { height: 110px; margin-bottom: 15px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-        
+        .logo-umk { height: 100px; margin-bottom: 10px; }
         .header h1 { 
             margin: 0; 
-            font-size: 1.8rem; 
+            font-size: 1.7rem; 
             color: var(--primary-color); 
             text-transform: uppercase; 
             font-weight: 800; 
-            letter-spacing: 1px;
         }
-        
-        .contact-info { margin-top: 15px; font-size: 1rem; }
-        .contact-info a { color: var(--primary-color); text-decoration: none; font-weight: 700; }
-        .contact-sep { margin: 0 10px; color: #bbb; }
 
         .container { 
             max-width: 850px; 
             background: var(--white); 
             padding: 40px; 
             border-radius: 12px; 
-            margin: -40px auto 60px auto; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+            margin: -30px auto 60px auto; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
             position: relative; 
             z-index: 2; 
         }
-        
-        h2 { color: var(--primary-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 25px; font-size: 1.4rem; font-weight: 800; }
 
-        /* JADUAL */
-        .jadual-tempahan { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 35px; }
-        .jadual-tempahan h3 { margin-top: 0; font-size: 1rem; color: var(--primary-color); text-transform: uppercase; font-weight: 700; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; margin-top: 10px; }
-        table th { background: var(--primary-color); color: white; padding: 12px; text-align: left; }
-        table td { padding: 10px; border: 1px solid #eee; }
-        .status-tag { background: #ffe6e6; color: var(--danger); padding: 3px 8px; border-radius: 4px; font-weight: bold; }
-
-        /* BORANG STRUKTUR */
-        .form-section-title { 
-            font-size: 1rem; 
-            font-weight: 800; 
+        /* TYPOGRAPHY */
+        h2 { 
             color: var(--primary-color); 
-            margin: 30px 0 15px 0; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
+            font-size: 1.4rem; 
+            margin-bottom: 30px; 
+            text-align: center;
+            font-weight: 800;
         }
-        .form-section-title::after { content: ""; flex: 1; height: 1px; background: #eee; }
 
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 30px 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: #edf2f7;
+            margin-left: 15px;
+        }
+
+        /* FORM STRUCTURE */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .full-width { grid-column: span 2; }
-        
-        /* KOTAK LOGISTIK UNTUK KEMAS */
-        .logistic-group { 
-            background: #fcfcfc; 
-            border: 1px solid #edf2f7; 
-            padding: 20px; 
-            border-radius: 8px; 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px;
+
+        /* LOGISTIC BOX (TARIKH, MASA, TEKNIKAL) */
+        .logistic-container {
+            background-color: var(--section-bg);
+            border: 2px solid #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 10px;
         }
 
-        label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: #444; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        textarea { resize: vertical; min-height: 100px; }
-        
-        .error-msg { color: var(--danger); font-size: 0.8rem; font-weight: 700; display: none; margin-top: 5px; }
+        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #4a5568; }
+        input, select, textarea { 
+            width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; 
+            font-size: 1rem; box-sizing: border-box; background: white; transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--primary-color); 
+            outline: none; 
+            box-shadow: 0 0 0 3px rgba(0,51,102,0.1); 
+        }
 
-        .syarat-container { background: #fdfdfd; padding: 25px; border: 1px solid #eee; border-radius: 8px; margin-top: 35px; font-size: 0.9rem; }
-        .syarat-list { padding-left: 20px; margin-bottom: 15px; }
+        .error-msg { color: var(--danger); font-size: 0.75rem; font-weight: 700; display: none; margin-top: 5px; }
+
+        /* FOOTER COMPONENTS */
+        .syarat-box { 
+            background: #fffaf0; 
+            border: 1px solid #feebc8; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            font-size: 0.85rem; 
+        }
         .amaran-denda { 
             background: #fff5f5; 
             color: var(--danger); 
-            padding: 15px; 
-            border: 1px solid #ffcccc; 
+            padding: 12px; 
             border-radius: 6px; 
             text-align: center; 
             font-weight: 800; 
-            text-transform: uppercase; 
+            margin-top: 15px; 
+            border: 1px solid #fed7d7; 
+            font-size: 0.8rem;
         }
 
-        .persetujuan { display: flex; align-items: flex-start; gap: 12px; margin-top: 30px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-        .persetujuan input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
+        .checkbox-container { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+            margin-top: 25px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            font-size: 0.9rem;
+        }
+        .checkbox-container input { width: 20px; height: 20px; margin-top: 2px; }
 
         button { 
             background: var(--primary-color); 
             color: white; 
             padding: 18px; 
             border: none; 
-            border-radius: 6px; 
+            border-radius: 8px; 
             width: 100%; 
             font-size: 1.1rem; 
-            font-weight: 700; 
+            font-weight: 800; 
             cursor: pointer; 
             margin-top: 30px; 
             text-transform: uppercase; 
-            transition: 0.3s; 
+            transition: background 0.3s;
         }
-        button:hover { background: #002244; transform: translateY(-2px); }
-        button:disabled { background: #ccc; cursor: not-allowed; }
+        button:hover { background: #002244; }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
 
-        @media (max-width: 600px) { 
-            .form-grid, .logistic-group { grid-template-columns: 1fr; } 
-            .full-width { grid-column: span 1; } 
-        }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
     </style>
 </head>
 <body>
@@ -144,60 +170,27 @@
     <div class="header-content">
         <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
         <h1>Pusat Kebudayaan dan Kesenian<br>Universiti Malaysia Kelantan</h1>
-        <div class="contact-info">
-            <a href="mailto:kebudayaan@umk.edu.my">kebudayaan@umk.edu.my</a>
-            <span class="contact-sep">|</span>
-            <a href="tel:+6097797436">+609-779 7436</a>
-        </div>
     </div>
 </div>
 
 <div class="container">
-    
-    <div class="jadual-tempahan">
-        <h3>Slot Jadual Terkini</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Tarikh</th>
-                    <th>Kampus</th>
-                    <th>Studio</th>
-                    <th>Masa (Mula - Tamat)</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>20 Jan 2026</td>
-                    <td>Jeli</td>
-                    <td>Studio Kebudayaan</td>
-                    <td>09:00 AM - 12:00 PM</td>
-                    <td><span class="status-tag">DITEMPAH</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
     <form id="bookingForm" action="../backend/submit.php" method="POST">
-        <h2>Borang Tempahan Studio</h2>
+        <h2>Borang Tempahan Studio Online</h2>
 
-        <div class="form-section-title">MAKLUMAT PEMOHON</div>
+        <div class="section-title">1. Maklumat Peribadi</div>
         <div class="form-grid">
             <div class="full-width">
                 <label>Nama Penuh</label>
-                <input type="text" name="nama" placeholder="Sila masukkan nama penuh" required>
+                <input type="text" name="nama" placeholder="Sila masukkan nama penuh mengikut IC" required>
             </div>
-
             <div>
                 <label>No. Kad Pengenalan</label>
                 <input type="text" name="no_ic" maxlength="12" placeholder="Contoh: 001212035566" required>
             </div>
-
             <div>
                 <label>No. Matrik / No. Staf</label>
                 <input type="text" name="no_id" placeholder="Contoh: A21A1234" required>
             </div>
-
             <div>
                 <label>Kategori</label>
                 <select name="kategori" required>
@@ -207,7 +200,6 @@
                     <option>Orang Awam</option>
                 </select>
             </div>
-
             <div>
                 <label>Kampus</label>
                 <select id="kampus" name="kampus" required>
@@ -217,82 +209,67 @@
                     <option value="jeli">Kampus Jeli</option>
                 </select>
             </div>
-
             <div class="full-width">
                 <label>Pilihan Studio</label>
                 <select id="studio" name="studio" required>
-                    <option value="">-- Pilih Kampus Dahulu --</option>
+                    <option value="">-- Sila Pilih Kampus Dahulu --</option>
                 </select>
             </div>
         </div>
 
-        <div class="form-section-title">PERINCIAN PENGGUNAAN (TARIKH, MASA & TEKNIKAL)</div>
-        <div class="logistic-group">
-            <div>
-                <label>Tarikh Mula</label>
-                <input type="date" id="tarikh_mula" name="tarikh_mula" required>
-            </div>
-
-            <div>
-                <label>Tarikh Tamat</label>
-                <input type="date" id="tarikh_tamat" name="tarikh_tamat" required>
-                <div id="dateError" class="error-msg">Tempahan maksimum 3 hari!</div>
-            </div>
-
-            <div>
-                <label>Masa Mula</label>
-                <select id="masa_mula" name="masa_mula" required>
-                    <option value="">-- Pilih Waktu --</option>
-                    <option value="9">09:00 AM</option>
-                    <option value="10">10:00 AM</option>
-                    <option value="11">11:00 AM</option>
-                    <option value="12">12:00 PM</option>
-                    <option value="14">02:00 PM</option>
-                    <option value="15">03:00 PM</option>
-                    <option value="17">05:00 PM</option>
-                    <option value="18">06:00 PM</option>
-                    <option value="21">09:00 PM</option>
-                    <option value="22">10:00 PM</option>
-                </select>
-            </div>
-
-            <div>
-                <label>Masa Tamat</label>
-                <select id="masa_tamat" name="masa_tamat" required>
-                    <option value="">-- Pilih Waktu --</option>
-                    <option value="10">10:00 AM</option>
-                    <option value="11">11:00 AM</option>
-                    <option value="12">12:00 PM</option>
-                    <option value="13">01:00 PM</option>
-                    <option value="15">03:00 PM</option>
-                    <option value="16">04:00 PM</option>
-                    <option value="18">06:00 PM</option>
-                    <option value="19">07:00 PM</option>
-                    <option value="22">10:00 PM</option>
-                    <option value="23">11:00 PM</option>
-                </select>
-                <div id="timeError" class="error-msg">Waktu tidak sah atau waktu solat!</div>
-            </div>
-
-            <div class="full-width">
-                <label>Keperluan Teknikal (Cth: Mikrofon, Speaker, Kabel)</label>
-                <textarea name="teknikal" placeholder="Nyatakan barang teknikal yang diperlukan..."></textarea>
+        <div class="section-title">2. Perincian Tarikh, Masa & Teknikal</div>
+        <div class="logistic-container">
+            <div class="form-grid">
+                <div>
+                    <label>Tarikh Mula</label>
+                    <input type="date" id="tarikh_mula" name="tarikh_mula" required>
+                </div>
+                <div>
+                    <label>Tarikh Tamat</label>
+                    <input type="date" id="tarikh_tamat" name="tarikh_tamat" required>
+                    <div id="dateError" class="error-msg">Tempahan maksimum adalah 3 hari sahaja!</div>
+                </div>
+                <div>
+                    <label>Masa Mula (Setiap Hari)</label>
+                    <select id="masa_mula" name="masa_mula" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="9">09:00 AM</option>
+                        <option value="10">10:00 AM</option>
+                        <option value="14">02:00 PM</option>
+                        <option value="20">08:00 PM</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Masa Tamat (Setiap Hari)</label>
+                    <select id="masa_tamat" name="masa_tamat" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="12">12:00 PM</option>
+                        <option value="17">05:00 PM</option>
+                        <option value="22">10:00 PM</option>
+                        <option value="23">11:00 PM</option>
+                    </select>
+                    <div id="timeError" class="error-msg">Waktu tidak sah (Sila semak waktu solat/tamat).</div>
+                </div>
+                <div class="full-width">
+                    <label>Keperluan Teknikal (Cth: Mikrofon, PA Sistem, Kabel Instrumen)</label>
+                    <textarea name="teknikal" placeholder="Sila nyatakan barang teknikal yang ingin dipinjam dari Pusat Kebudayaan dan Kesenian..."></textarea>
+                </div>
             </div>
         </div>
 
-        <div class="syarat-container">
-            <span style="font-weight: 800; color: var(--primary-color); text-decoration: underline;">Syarat & Peraturan:</span>
-            <ol class="syarat-list">
-                <li>Permohonan hendaklah dibuat <strong>(TIGA) 3 hari</strong> sebelum tarikh penggunaan.</li>
-                <li>Tempahan dibenarkan untuk maksimum <strong>3 hari berturut-turut</strong> sahaja.</li>
-                <li>Pihak pengurusan berhak membatalkan tempahan atas urusan rasmi.</li>
-            </ol>
-            <div class="amaran-denda">DENDA DIKENAKAN BAGI KEROSAKAN ATAU KEKOTORAN KEMUDAHAN.</div>
+        <div class="syarat-box">
+            <strong style="color: var(--primary-color); text-transform: uppercase;">Terma & Peraturan:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Permohonan mestilah dibuat sekurang-kurangnya 3 hari sebelum tarikh mula.</li>
+                <li>Tempahan dibenarkan untuk maksimum <strong>TIGA (3) HARI</strong> berturut-turut sahaja.</li>
+                <li>Kebersihan studio adalah tanggungjawab pemohon sepenuhnya.</li>
+            </ul>
+            <div class="amaran-denda">DENDA AKAN DIKENAKAN BAGI SEBARANG KEROSAKAN KEMUDAHAN.</div>
         </div>
 
-        <label class="persetujuan">
+        <label class="checkbox-container">
             <input type="checkbox" name="setuju" required>
-            <span>Saya bersetuju dengan segala terma dan syarat di atas.</span>
+            <span>Saya dengan ini mengaku maklumat di atas adalah benar dan bersetuju mematuhi segala peraturan Pusat Kebudayaan dan Kesenian UMK.</span>
         </label>
 
         <button type="submit" id="submitBtn">Hantar Permohonan</button>
@@ -300,59 +277,80 @@
 </div>
 
 <script>
-    // Logik pilihan studio
-    const studioList = {
+    // Dinamik Studio mengikut Kampus
+    const studioData = {
         bachok: ["Teniat 3", "Teniat 4"],
         kota: ["Studio Tari", "Studio Muzik", "Studio Gamelan"],
-        jeli: ["Studio Kebudayaan"] 
+        jeli: ["Studio Kebudayaan"]
     };
 
     document.getElementById("kampus").addEventListener("change", function() {
-        const s = document.getElementById("studio");
-        s.innerHTML = '<option value="">-- Pilih Studio --</option>';
+        const studioSelect = document.getElementById("studio");
+        studioSelect.innerHTML = '<option value="">-- Pilih Studio --</option>';
         if(this.value) {
-            studioList[this.value].forEach(name => {
-                let o = document.createElement("option"); o.value = name; o.text = name; s.add(o);
+            studioData[this.value].forEach(item => {
+                let opt = document.createElement("option");
+                opt.value = item; opt.text = item;
+                studioSelect.add(opt);
             });
         }
     });
 
-    // Logik Tarikh (3 Hari)
+    // Validasi Tarikh (Maksimum 3 Hari)
     const tMula = document.getElementById("tarikh_mula");
     const tTamat = document.getElementById("tarikh_tamat");
-    const dErr = document.getElementById("dateError");
-    const btn = document.getElementById("submitBtn");
+    const dateErr = document.getElementById("dateError");
+    const submitBtn = document.getElementById("submitBtn");
 
-    const d = new Date(); d.setDate(d.getDate() + 3);
-    const minDate = d.toISOString().split("T")[0];
+    // Tetapkan tarikh minimum (3 hari dari hari ini)
+    const today = new Date();
+    today.setDate(today.getDate() + 3);
+    const minDate = today.toISOString().split("T")[0];
     tMula.min = minDate;
     tTamat.min = minDate;
 
-    function valDate() {
+    function checkDateRange() {
         if(tMula.value && tTamat.value) {
-            const diff = (new Date(tTamat.value) - new Date(tMula.value)) / (1000*60*60*24) + 1;
-            const inv = diff > 3 || diff < 1;
-            dErr.style.display = inv ? "block" : "none";
-            btn.disabled = inv;
+            const start = new Date(tMula.value);
+            const end = new Date(tTamat.value);
+            const diffDays = ((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+            if(diffDays > 3 || diffDays < 1) {
+                dateErr.style.display = "block";
+                submitBtn.disabled = true;
+            } else {
+                dateErr.style.display = "none";
+                submitBtn.disabled = false;
+            }
         }
     }
-    tMula.addEventListener("change", () => { tTamat.min = tMula.value; valDate(); });
-    tTamat.addEventListener("change", valDate);
 
-    // Logik Masa
-    const m1 = document.getElementById("masa_mula");
-    const m2 = document.getElementById("masa_tamat");
-    const tErr = document.getElementById("timeError");
+    tMula.addEventListener("change", function() {
+        tTamat.min = tMula.value;
+        checkDateRange();
+    });
+    tTamat.addEventListener("change", checkDateRange);
 
-    function valTime() {
-        const v1 = parseInt(m1.value); const v2 = parseInt(m2.value);
-        if(m1.value && m2.value) {
-            let inv = (v2 <= v1) || (v1 < 13 && v2 > 14) || (v1 < 16 && v2 > 17) || (v1 < 19 && v2 > 21);
-            tErr.style.display = inv ? "block" : "none";
-            if(inv) btn.disabled = true; else valDate();
+    // Validasi Masa (Asas)
+    const mMula = document.getElementById("masa_mula");
+    const mTamat = document.getElementById("masa_tamat");
+    const timeErr = document.getElementById("timeError");
+
+    function checkTime() {
+        const v1 = parseInt(mMula.value);
+        const v2 = parseInt(mTamat.value);
+        if(mMula.value && mTamat.value) {
+            if(v2 <= v1) {
+                timeErr.style.display = "block";
+                submitBtn.disabled = true;
+            } else {
+                timeErr.style.display = "none";
+                checkDateRange(); // Semak semula tarikh juga
+            }
         }
     }
-    m1.addEventListener("change", valTime); m2.addEventListener("change", valTime);
+    mMula.addEventListener("change", checkTime);
+    mTamat.addEventListener("change", checkTime);
 </script>
 
 </body>
