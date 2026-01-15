@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Tempahan Studio PKUMK</title>
+    <title>Sistem Tempahan Studio PKUMK - Pusat Kebudayaan dan Kesenian</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -17,14 +17,13 @@
 
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; }
 
-        /* HEADER DENGAN GAMBAR LATAR (BACKGROUND) */
+        /* HEADER DENGAN GAMBAR LATAR */
         .header { 
             position: relative; 
             background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; 
             padding: 80px 20px; 
             text-align: center; 
         }
-        /* Overlay untuk memastikan teks nampak jelas atas gambar */
         .header::before { 
             content: ""; 
             position: absolute; 
@@ -61,7 +60,6 @@
         
         h2 { color: var(--primary-color); border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 25px; font-size: 1.4rem; font-weight: 800; }
 
-        /* JADUAL */
         .jadual-tempahan { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 35px; }
         .jadual-tempahan h3 { margin-top: 0; font-size: 1rem; color: var(--primary-color); text-transform: uppercase; font-weight: 700; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; margin-top: 10px; }
@@ -69,17 +67,15 @@
         table td { padding: 10px; border: 1px solid #eee; }
         .status-tag { background: #ffe6e6; color: var(--danger); padding: 3px 8px; border-radius: 4px; font-weight: bold; }
 
-        /* BORANG */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .full-width { grid-column: span 2; }
         label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: #444; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        textarea { resize: vertical; min-height: 90px; }
+        textarea { resize: vertical; min-height: 100px; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0,51,102,0.1); }
 
         .error-msg { color: var(--danger); font-size: 0.8rem; font-weight: 700; display: none; margin-top: 5px; }
 
-        /* SYARAT */
         .syarat-container { background: #fdfdfd; padding: 25px; border: 1px solid #eee; border-radius: 8px; margin-top: 35px; font-size: 0.9rem; }
         .syarat-list { padding-left: 20px; margin-bottom: 15px; }
         .syarat-list li { margin-bottom: 10px; }
@@ -95,7 +91,6 @@
             text-transform: uppercase; 
         }
 
-        /* TICKBOX KEMAS */
         .persetujuan { display: flex; align-items: flex-start; gap: 12px; margin-top: 30px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
         .persetujuan input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
 
@@ -124,7 +119,7 @@
 <div class="header">
     <div class="header-content">
         <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
-        <h1>Pusat Kebudayaan<br>Universiti Malaysia Kelantan</h1>
+        <h1>Pusat Kebudayaan dan Kesenian<br>Universiti Malaysia Kelantan</h1>
         <div class="contact-info">
             <a href="mailto:kebudayaan@umk.edu.my">kebudayaan@umk.edu.my</a>
             <span class="contact-sep">|</span>
@@ -150,7 +145,7 @@
             <tbody>
                 <tr>
                     <td>20 Jan 2026</td>
-                    <td>Jeli</td>
+                    <td>Kampus Jeli</td>
                     <td>Studio Kebudayaan</td>
                     <td>09:00 AM - 12:00 PM</td>
                     <td><span class="status-tag">DITEMPAH</span></td>
@@ -160,7 +155,7 @@
     </div>
 
     <form id="bookingForm" action="../backend/submit.php" method="POST">
-        <h2>Borang Tempahan Studio</h2>
+        <h2>Borang Tempahan Studio (Maks 3 Hari)</h2>
         
         <div class="form-grid">
             <div class="full-width">
@@ -206,12 +201,18 @@
             </div>
 
             <div>
-                <label>Tarikh Penggunaan (Min 3 Hari)</label>
-                <input type="date" id="tarikh_tempahan" name="tarikh" required>
+                <label>Tarikh Mula</label>
+                <input type="date" id="tarikh_mula" name="tarikh_mula" required>
             </div>
 
             <div>
-                <label>Masa Mula</label>
+                <label>Tarikh Tamat</label>
+                <input type="date" id="tarikh_tamat" name="tarikh_tamat" required>
+                <div id="dateError" class="error-msg">Tempahan maksimum adalah 3 hari sahaja!</div>
+            </div>
+
+            <div>
+                <label>Masa Mula (Setiap Hari)</label>
                 <select id="masa_mula" name="masa_mula" required>
                     <option value="">-- Pilih Waktu --</option>
                     <option value="9">09:00 AM</option>
@@ -228,7 +229,7 @@
             </div>
 
             <div>
-                <label>Masa Tamat</label>
+                <label>Masa Tamat (Setiap Hari)</label>
                 <select id="masa_tamat" name="masa_tamat" required>
                     <option value="">-- Pilih Waktu --</option>
                     <option value="10">10:00 AM</option>
@@ -249,24 +250,18 @@
                 <label>Keperluan Teknikal (Cth: Mikrofon, Speaker, Kabel)</label>
                 <textarea name="teknikal" placeholder="Nyatakan barang teknikal yang diperlukan..."></textarea>
             </div>
-
-            <div class="full-width">
-                <label>Barang Keperluan Penempah (Cth: Kerusi, Meja, Hiasan)</label>
-                <textarea name="keperluan_penempah" placeholder="Nyatakan barang-barang keperluan yang lain..."></textarea>
-            </div>
         </div>
 
         <div class="syarat-container">
             <span style="font-weight: 800; color: var(--primary-color); text-decoration: underline;">Syarat & Peraturan:</span>
             <ol class="syarat-list">
-                <li>Permohonan hendaklah dibuat <strong> (TIGA) 3 hari</strong> sebelum tarikh penggunaan.</li>
-                <li>Pemohon hendaklah mematuhi dan memahami syarat-syarat, garis panduan dan etika penggunaan kemudahan yang telah ditetapkan oleh pihak Universiti.</li>
-                <li>Pemohon hendaklah bertanggungjawab terhadap keadaan, keselamatan dan kerosakan kemudahan yang digunakan.</li>
-                <li>Pemohon tidak dibenarkan mengubahsuai kedudukan peralatan di dalam tempat yang digunakan.</li>
-                <li>Pihak pengurusan berhak membatalkan tempahan atas urusan rasmi.</li>
+                <li>Permohonan hendaklah dibuat <strong>(TIGA) 3 hari</strong> sebelum tarikh penggunaan.</li>
+                <li>Tempahan dibenarkan untuk maksimum <strong>TIGA (3) hari berturut-turut</strong> sahaja.</li>
+                <li>Pemohon hendaklah mematuhi etika penggunaan yang ditetapkan oleh <strong>Pusat Kebudayaan dan Kesenian UMK</strong>.</li>
+                <li>Pilihan masa tidak termasuk waktu solat (1pm-2pm, 4pm-5pm, 7pm-9pm).</li>
             </ol>
             <div class="amaran-denda">
-                PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTI RUGI TERHADAP SEBARANG KEROSAKAN DAN KEKOTORAN KEMUDAHAN YANG DIGUNAKAN.
+                PEMOHON HENDAKLAH MEMBAYAR DENDA DAN GANTI RUGI TERHADAP SEBARANG KEROSAKAN DAN KEKOTORAN.
             </div>
         </div>
 
@@ -296,26 +291,54 @@
         }
     });
 
+    const tMula = document.getElementById("tarikh_mula");
+    const tTamat = document.getElementById("tarikh_tamat");
+    const dateError = document.getElementById("dateError");
+    const btn = document.getElementById("submitBtn");
+
+    const d = new Date(); d.setDate(d.getDate() + 3);
+    const minDateStr = d.toISOString().split("T")[0];
+    tMula.min = minDateStr;
+    tTamat.min = minDateStr;
+
+    function validateDates() {
+        if(tMula.value && tTamat.value) {
+            const start = new Date(tMula.value);
+            const end = new Date(tTamat.value);
+            const diffTime = end - start;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            if(end < start || diffDays > 3) {
+                dateError.style.display = "block";
+                btn.disabled = true;
+            } else {
+                dateError.style.display = "none";
+                btn.disabled = false;
+            }
+        }
+    }
+
+    tMula.addEventListener("change", function() {
+        tTamat.min = tMula.value;
+        validateDates();
+    });
+    tTamat.addEventListener("change", validateDates);
+
     const m1 = document.getElementById("masa_mula");
     const m2 = document.getElementById("masa_tamat");
-    const err = document.getElementById("timeError");
-    const btn = document.getElementById("submitBtn");
+    const timeErr = document.getElementById("timeError");
 
     function valTime() {
         const t1 = parseInt(m1.value); const t2 = parseInt(m2.value);
         if(m1.value && m2.value) {
             let inv = (t2 <= t1) || (t1 < 13 && t2 > 14) || (t1 < 16 && t2 > 17) || (t1 < 19 && t2 > 21);
-            err.style.display = inv ? "block" : "none";
-            btn.disabled = inv;
+            timeErr.style.display = inv ? "block" : "none";
+            if(inv) btn.disabled = true;
+            else validateDates();
         }
     }
     m1.addEventListener("change", valTime); m2.addEventListener("change", valTime);
-
-    const d = new Date(); d.setDate(d.getDate() + 3);
-    document.getElementById("tarikh_tempahan").min = d.toISOString().split("T")[0];
 </script>
 
 </body>
 </html>
-
-
