@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Tempahan Studio PKUMK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { 
+            --primary-color: #003366; 
+            --accent-color: #d4af37; 
+            --bg-gradient: linear-gradient(135deg, #003366 0%, #001a33 100%);
+            --card-bg: #ffffff;
+            --danger: #e53e3e; 
+        }
+
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #f0f2f5; min-height: 100vh; }
+
+        /* HEADER & BACKGROUND */
+        .main-wrapper {
+            background: var(--bg-gradient);
+            padding: 60px 20px 160px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .logo-umk { height: 120px; margin-bottom: 20px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+        h1 { font-size: 2.2rem; font-weight: 800; margin: 0; letter-spacing: -1px; line-height: 1.2; }
+        
+        .hubungi-pantas { font-size: 0.9rem; margin-top: 15px; opacity: 0.9; font-weight: 400; }
+        .hubungi-pantas span { margin: 0 10px; border-right: 1px solid rgba(255,255,255,0.3); padding-right: 10px; }
+        .hubungi-pantas span:last-child { border: none; }
+
+        /* CONTAINER BORANG */
+        .container { 
+            max-width: 850px; background: var(--card-bg); padding: 50px; border-radius: 20px; 
+            margin: -100px auto 50px auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
+            position: relative; z-index: 10;
+        }
+
+        /* LIVE STATUS ALERT */
+        .live-status-box {
+            background: #fff; border: 2px solid var(--accent-color); border-radius: 12px;
+            padding: 20px; margin-bottom: 30px; text-align: left;
+        }
+        .live-status-title { font-weight: 800; color: var(--primary-color); font-size: 0.9rem; margin-bottom: 10px; display: flex; align-items: center; }
+        .live-status-title::before { content: "●"; color: var(--danger); margin-right: 8px; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        .booking-tag-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .booking-tag { 
+            background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; 
+            font-size: 0.75rem; color: #475569; font-weight: 600;
+        }
+
+        /* STYLES BORANG */
+        .section-title { 
+            display: flex; align-items: center; font-size: 1.1rem; font-weight: 800; 
+            color: var(--primary-color); margin: 35px 0 20px; text-transform: uppercase; 
+        }
+        .section-title::after { content: ""; flex: 1; height: 2px; background: #edf2f7; margin-left: 20px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: span 2; }
+
+        label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #2d3748; }
+        input, select, textarea { 
+            width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; 
+            font-size: 0.95rem; background: #f8fafc; box-sizing: border-box; transition: 0.3s;
+        }
+        input:focus, select:focus { border-color: var(--primary-color); outline: none; background: #fff; }
+
+        .logistic-box { background: #f1f5f9; padding: 25px; border-radius: 15px; border: 1px solid #cbd5e1; }
+        .date-row { 
+            display: flex; gap: 15px; background: white; padding: 15px; 
+            border-radius: 12px; margin-bottom: 20px; border: 1px solid #e2e8f0;
+        }
+        .date-input-group { flex: 1; }
+        .date-input-group label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; }
+        .date-input-group input { border: none; background: transparent; font-weight: 700; width: 100%; outline: none; }
+
+        /* SYARAT & DENDA */
+        .syarat-box { background: #fffaf0; border: 1px solid #feebc8; padding: 25px; border-radius: 15px; margin-top: 35px; text-align: left; }
+        .syarat-box li { margin-bottom: 10px; font-size: 0.9rem; color: #4a5568; line-height: 1.5; }
+        .amaran-denda { 
+            background: #fff5f5; color: var(--danger); padding: 15px; border-radius: 10px; 
+            text-align: center; font-weight: 800; border: 2px dashed var(--danger); font-size: 0.85rem; margin-top: 15px;
+        }
+
+        button { 
+            background: var(--primary-color); color: white; padding: 20px; border: none; 
+            border-radius: 12px; width: 100%; font-size: 1.2rem; font-weight: 800; cursor: pointer; 
+            margin: 35px 0; text-transform: uppercase; transition: 0.3s;
+        }
+        button:hover { background: #002244; transform: translateY(-2px); box-shadow: 0 10px 15px rgba(0,0,0,0.2); }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+
+        .footer-info { text-align: center; padding-bottom: 60px; color: #718096; font-size: 0.85rem; }
+        .error-msg { color: var(--danger); font-size: 0.75rem; font-weight: 700; display: none; margin-top: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="header-content">
+        <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
+        <h1>Pusat Kebudayaan dan Kesenian (PBS)<br>Universiti Malaysia Kelantan</h1>
+        <div class="hubungi-pantas">
+            <span>📧 kebudayaan@umk.edu.my</span>
+            <span>📞 +6097797436</span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="live-status-box">
+        <div class="live-status-title">SLOT TERISI (ALERT)</div>
+        <div id="occupiedSlots" class="booking-tag-container">
+            <span style="font-size: 0.8rem; color: #94a3b8;">Memuatkan status studio...</span>
+        </div>
+    </div>
+
+    <form id="bookingForm">
+        <div class="section-title">1. Maklumat Peribadi</div>
+        <div class="form-grid">
+            <div class="full-width"><label>Nama Penuh</label><input type="text" name="nama" placeholder="Sila masukkan nama penuh" required></div>
+            <div><label>No. Kad Pengenalan</label><input type="text" name="no_ic" maxlength="12" placeholder="Cth: 010203030501" required></div>
+            <div><label>No. Matrik / No. Staf</label><input type="text" name="no_id" required></div>
+            <div><label>Alamat Emel Peribadi</label><input type="email" name="email" placeholder="Cth: ali@siswa.umk.edu.my" required></div>
+            <div><label>No. Telefon / WhatsApp</label><input type="tel" name="phone" placeholder="Cth: 0123456789" required></div>
+            <div><label>Kategori</label>
+                <select name="kategori" required>
+                    <option value="">-- Pilih --</option>
+                    <option>Pelajar</option><option>Staf</option><option>Orang Awam</option>
+                </select>
+            </div>
+            <div><label>Kampus</label>
+                <select id="kampus" name="kampus" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="bachok">Bachok</option>
+                    <option value="kota">Kampus Kota</option>
+                    <option value="jeli">Kampus Jeli</option>
+                </select>
+            </div>
+            <div class="full-width"><label>Pilihan Studio</label>
+                <select id="studio" name="studio" required>
+                    <option value="">-- Sila Pilih Kampus Dahulu --</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section-title">2. Tarikh & Masa Tempahan</div>
+        <div class="logistic-box">
+            <div class="date-row">
+                <div class="date-input-group"><label>Tarikh Mula</label><input type="date" id="tarikh_mula" name="tarikh_mula" required></div>
+                <div class="date-input-group"><label>Tarikh Tamat</label><input type="date" id="tarikh_tamat" name="tarikh_tamat" required></div>
+            </div>
+            <div id="dateError" class="error-msg">Had tempahan maksimum adalah 3 hari sahaja!</div>
+            <div class="form-grid">
+                <div><label>Masa Mula</label>
+                    <select id="masa_mula" name="masa_mula" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="09:00">09:00 AM</option><option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option><option value="12:00">12:00 PM</option>
+                        <option value="13:00">01:00 PM</option><option value="14:00">02:00 PM</option>
+                        <option value="15:00">03:00 PM</option><option value="16:00">04:00 PM</option>
+                        <option value="17:00">05:00 PM</option><option value="18:00">06:00 PM</option>
+                        <option value="19:00">07:00 PM</option><option value="20:00">08:00 PM</option>
+                        <option value="21:00">09:00 PM</option><option value="22:00">10:00 PM</option>
+                    </select>
+                </div>
+                <div><label>Masa Tamat</label>
+                    <select id="masa_tamat" name="masa_tamat" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="10:00">10:00 AM</option><option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option><option value="13:00">01:00 PM</option>
+                        <option value="14:00">02:00 PM</option><option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option><option value="17:00">05:00 PM</option>
+                        <option value="18:00">06:00 PM</option><option value="19:00">07:00 PM</option>
+                        <option value="20:00">08:00 PM</option><option value="21:00">09:00 PM</option>
+                        <option value="22:00">10:00 PM</option><option value="23:00">11:00 PM</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="full-width" style="margin-top:25px"><label>Keperluan Teknikal / Catatan</label><textarea name="teknikal" rows="3" placeholder="Contoh: PA Sistem, Kostum, Mikrofon..."></textarea></div>
+
+        <div class="syarat-box">
+            <strong style="color: var(--primary-color)">Terma & Syarat Penggunaan Studio:</strong>
+            <ul>
+                <li>Permohonan mestilah dibuat sekurang-kurangnya <strong>3 HARI</strong> sebelum tarikh penggunaan.</li>
+                <li>Tempahan maksimum hanya <strong>3 HARI</strong> berturut-turut sahaja dibenarkan.</li>
+                <li>Pemohon bertanggungjawab sepenuhnya terhadap kebersihan dan keselamatan peralatan di dalam studio.</li>
+                <li>Penggunaan studio mestilah mengikut slot masa yang telah diluluskan sahaja.</li>
+                <li>Pihak pengurusan berhak membatalkan tempahan sekiranya terdapat aktiviti rasmi universiti.</li>
+            </ul>
+            <div class="amaran-denda">PEMOHON HENDAKLAH MEMBAYAR DENDA TERHADAP SEBARANG KEROSAKAN ATAU KEHILANGAN PERALATAN.</div>
+        </div>
+
+        <button type="submit" id="submitBtn">Hantar Permohonan</button>
+    </form>
+</div>
+
+<div class="footer-info">
+    <p>© 2026 <strong>Pusat Kebudayaan dan Kesenian</strong> - Universiti Malaysia Kelantan</p>
+    <p>📧 kebudayaan@umk.edu.my | 📞 +6097797436</p>
+</div>
+
+<script>
+    const supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
+    const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    const studioData = { 
+        bachok: ["Teniat 3", "Teniat 4"], 
+        kota: ["Studio Tari", "Studio Muzik", "Studio Gamelan"], 
+        jeli: ["Studio Kebudayaan"] 
+    };
+
+    // LOAD SLOT TERISI
+    async function loadOccupiedSlots() {
+        const container = document.getElementById('occupiedSlots');
+        const today = new Date().toISOString().split('T')[0];
+        const { data } = await _supabase.from('bookings').select('studio_name, start_date, end_date').eq('status', 'Lulus').gte('end_date', today);
+        
+        if (data && data.length > 0) {
+            container.innerHTML = '';
+            data.forEach(b => {
+                const tag = document.createElement('span'); tag.className = 'booking-tag';
+                tag.innerText = `${b.studio_name} (${b.start_date} hingga ${b.end_date})`;
+                container.appendChild(tag);
+            });
+        } else { container.innerHTML = '<span style="font-size: 0.8rem; color: #94a3b8;">Tiada tempahan aktif buat masa ini.</span>'; }
+    }
+
+    // UPDATE STUDIO DROP DOWN
+    document.getElementById("kampus").addEventListener("change", function() {
+        const s = document.getElementById("studio"); s.innerHTML = '<option value="">-- Pilih Studio --</option>';
+        if(this.value && studioData[this.value]) {
+            studioData[this.value].forEach(i => { let o = document.createElement("option"); o.value = i; o.text = i; s.add(o); });
+        }
+    });
+
+    // VALIDASI TARIKH (MAKS 3 HARI)
+    const tMula = document.getElementById("tarikh_mula"), tTamat = document.getElementById("tarikh_tamat"), dateErr = document.getElementById("dateError"), submitBtn = document.getElementById("submitBtn");
+    function validateDates() {
+        if(tMula.value && tTamat.value) {
+            const diff = ((new Date(tTamat.value) - new Date(tMula.value)) / 86400000) + 1;
+            if(diff > 3 || diff < 1) { dateErr.style.display="block"; submitBtn.disabled=true; }
+            else { dateErr.style.display="none"; submitBtn.disabled=false; }
+        }
+    }
+    tMula.onchange = validateDates; tTamat.onchange = validateDates;
+
+    // HANTAR DATA KE SUPABASE
+    document.getElementById("bookingForm").onsubmit = async function(e) {
+        e.preventDefault();
+        submitBtn.innerText = "MENGHANTAR PERMOHONAN..."; submitBtn.disabled = true;
+        const f = new FormData(this);
+        const d = {
+            full_name: f.get("nama"), ic_number: f.get("no_ic"), student_staff_id: f.get("no_id"), email: f.get("email"), phone: f.get("phone"),
+            category: f.get("kategori"), campus: f.get("kampus"), studio_name: f.get("studio"), start_date: f.get("tarikh_mula"), 
+            end_date: f.get("tarikh_tamat"), start_time: document.getElementById("masa_mula").value, end_time: document.getElementById("masa_tamat").value,
+            technical_requirements: f.get("teknikal"), status: "Menunggu"
+        };
+        const { error } = await _supabase.from('bookings').insert([d]);
+        if(error) alert("Ralat semasa menghantar: " + error.message);
+        else { alert("PERMOHONAN BERJAYA DIHANTAR! Sila tunggu kelulusan pihak admin."); this.reset(); loadOccupiedSlots(); }
+        submitBtn.innerText = "Hantar Permohonan"; submitBtn.disabled = false;
+    };
+
+    loadOccupiedSlots();
+</script>
+</body>
+</html>
