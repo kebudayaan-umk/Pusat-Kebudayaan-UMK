@@ -2,264 +2,108 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Sistem Tempahan Studio PKUMK</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
+    <title>Admin Dashboard PKUMK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <style>
-        :root {
-            --primary-color: #003366;
-            --accent-color: #d4af37;
-            --bg-color: #f0f2f5;
-            --text-dark: #1a202c;
-            --white: #ffffff;
-            --success: #2f855a;
-            --danger: #e53e3e;
-            --warning: #dd6b20;
-        }
-
-        body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            background-color: var(--bg-color); 
-            color: var(--text-dark); 
-        }
-
-        /* Navigasi */
-        nav {
-            background: var(--primary-color);
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 4px solid var(--accent-color);
-        }
-
-        nav h1 { margin: 0; font-size: 1.2rem; text-transform: uppercase; }
-
-        .container { 
-            max-width: 1200px; 
-            margin: 30px auto; 
-            padding: 0 20px; 
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        .stat-card h3 { margin: 0; color: #718096; font-size: 0.9rem; }
-        .stat-card p { margin: 10px 0 0; font-size: 1.8rem; font-weight: 800; color: var(--primary-color); }
-
-        /* Jadual */
-        .table-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        thead {
-            background: #edf2f7;
-            color: var(--primary-color);
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-        }
-
-        th, td { padding: 15px; border-bottom: 1px solid #e2e8f0; }
-
-        tr:hover { background-color: #f7fafc; }
-
-        .status-badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .status-menunggu { background: #feebc8; color: #9c4221; }
-        .status-lulus { background: #c6f6d5; color: #22543d; }
-        .status-tolak { background: #fed7d7; color: #822727; }
-
-        .action-btns { display: flex; gap: 5px; }
-
-        button {
-            cursor: pointer;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-weight: 600;
-            font-size: 0.7rem;
-            transition: 0.2s;
-        }
-
-        .btn-lulus { background: var(--success); color: white; }
-        .btn-tolak { background: var(--danger); color: white; }
-        .btn-lulus:hover { background: #276749; }
-        .btn-tolak:hover { background: #9b2c2c; }
-
-        #loading { text-align: center; padding: 20px; font-weight: bold; }
-
-        @media (max-width: 1000px) {
-            .table-container { overflow-x: auto; }
-        }
+        :root { --primary: #003366; --accent: #d4af37; --bg: #f4f7f9; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; }
+        .nav { background: var(--primary); color: white; padding: 20px 40px; border-bottom: 5px solid var(--accent); display: flex; justify-content: space-between; }
+        .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 4px solid var(--accent); }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .table-box { background: white; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #edf2f7; }
+        .badge { padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .bg-pending { background: #fff3cd; color: #856404; }
+        .bg-approved { background: #d4edda; color: #155724; }
+        .bg-rejected { background: #f8d7da; color: #721c24; }
+        .btn-action { padding: 6px 12px; border-radius: 4px; border: none; font-weight: 700; cursor: pointer; color: white; }
     </style>
 </head>
 <body>
-
-<nav>
-    <h1>Panel Pentadbir Studio PBS</h1>
-    <button onclick="fetchBookings()" style="background: var(--accent-color); color: var(--primary-color);">Refresh Data</button>
-</nav>
-
+<div class="nav"><h2>Dashboard Admin PKUMK</h2><button onclick="fetchAll()">KEMASKINI DATA</button></div>
 <div class="container">
     <div class="stats-grid">
-        <div class="stat-card">
-            <h3>Jumlah Tempahan</h3>
-            <p id="totalCount">0</p>
-        </div>
-        <div class="stat-card">
-            <h3>Menunggu</h3>
-            <p id="pendingCount" style="color: var(--warning);">0</p>
-        </div>
-        <div class="stat-card">
-            <h3>Diluluskan</h3>
-            <p id="approvedCount" style="color: var(--success);">0</p>
-        </div>
+        <div class="stat-card"><h3>Total</h3><p id="sTotal">0</p></div>
+        <div class="stat-card"><h3>Bachok</h3><p id="sBachok">0</p></div>
+        <div class="stat-card"><h3>Kota</h3><p id="sKota">0</p></div>
+        <div class="stat-card"><h3>Jeli</h3><p id="sJeli">0</p></div>
     </div>
-
-    <div class="table-container">
-        <div id="loading">Memuatkan data dari pangkalan data...</div>
-        <table id="adminTable" style="display: none;">
-            <thead>
-                <tr>
-                    <th>Nama Pemohon</th>
-                    <th>Studio & Kampus</th>
-                    <th>Tarikh (Mula - Tamat)</th>
-                    <th>Masa</th>
-                    <th>Status</th>
-                    <th>Tindakan</th>
-                </tr>
-            </thead>
-            <tbody id="bookingList">
-                </tbody>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="filter('all', this)">SEMUA</button>
+        <button class="tab-btn" onclick="filter('bachok', this)">BACHOK</button>
+        <button class="tab-btn" onclick="filter('kota', this)">KOTA</button>
+        <button class="tab-btn" onclick="filter('jeli', this)">JELI</button>
+    </div>
+    <div class="table-box">
+        <table>
+            <thead><tr><th>PEMOHON</th><th>STUDIO</th><th>TARIKH & MASA</th><th>STATUS</th><th>TINDAKAN</th></tr></thead>
+            <tbody id="list"></tbody>
         </table>
     </div>
 </div>
-
 <script>
-    // --- 1. KONFIGURASI SUPABASE (Sama seperti borang anda) ---
     const supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    let dataCache = [];
 
-    // --- 2. FUNGSI AMBIL DATA ---
-    async function fetchBookings() {
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('adminTable').style.display = 'none';
-
-        try {
-            const { data, error } = await _supabase
-                .from('bookings')
-                .select('*')
-                .order('created_at', { ascending: false });
-
-            if (error) throw error;
-
-            renderTable(data);
-            updateStats(data);
-        } catch (err) {
-            alert("Ralat memuatkan data: " + err.message);
-        } finally {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('adminTable').style.display = 'table';
-        }
+    async function fetchAll() {
+        const { data } = await _supabase.from('bookings').select('*').order('created_at', { ascending: false });
+        dataCache = data || [];
+        updateStats(); render(dataCache);
     }
 
-    // --- 3. PAPARKAN DATA DALAM JADUAL ---
-    function renderTable(bookings) {
-        const list = document.getElementById('bookingList');
-        list.innerHTML = '';
+    function updateStats() {
+        document.getElementById('sTotal').innerText = dataCache.length;
+        document.getElementById('sBachok').innerText = dataCache.filter(b => b.campus === 'bachok').length;
+        document.getElementById('sKota').innerText = dataCache.filter(b => b.campus === 'kota').length;
+        document.getElementById('sJeli').innerText = dataCache.filter(b => b.campus === 'jeli').length;
+    }
 
-        bookings.forEach(b => {
-            const row = document.createElement('tr');
-            
-            // Format Status Badge
-            let statusClass = 'status-menunggu';
-            if(b.status === 'Lulus') statusClass = 'status-lulus';
-            if(b.status === 'Tolak') statusClass = 'status-tolak';
-
-            row.innerHTML = `
+    function render(list) {
+        const tbody = document.getElementById('list'); tbody.innerHTML = '';
+        list.forEach(b => {
+            const statusColor = b.status === 'Lulus' ? 'bg-approved' : (b.status === 'Tolak' ? 'bg-rejected' : 'bg-pending');
+            const reasonText = (b.status === 'Tolak' && b.reason) ? `<br><small style="color:red">Sebab: ${b.reason}</small>` : '';
+            tbody.innerHTML += `<tr>
+                <td><strong>${b.full_name}</strong><br><small>${b.student_staff_id}</small></td>
+                <td>${b.studio_name}<br><small>${b.campus.toUpperCase()}</small></td>
+                <td>${b.start_date}<br><small>${b.start_time} - ${b.end_time}</small></td>
+                <td><span class="badge ${statusColor}">${b.status}</span>${reasonText}</td>
                 <td>
-                    <strong>${b.full_name}</strong><br>
-                    <small>${b.student_staff_id} (${b.category})</small>
-                </td>
-                <td>
-                    ${b.studio_name}<br>
-                    <small>${b.campus.toUpperCase()}</small>
-                </td>
-                <td>${b.start_date} <br> <small>sehingga</small> <br> ${b.end_date}</td>
-                <td>${b.start_time} - ${b.end_time}</td>
-                <td><span class="status-badge ${statusClass}">${b.status}</span></td>
-                <td class="action-btns">
                     ${b.status === 'Menunggu' ? `
-                        <button class="btn-lulus" onclick="updateStatus(${b.id}, 'Lulus')">Lulus</button>
-                        <button class="btn-tolak" onclick="updateStatus(${b.id}, 'Tolak')">Tolak</button>
-                    ` : `<small>Selesai</small>`}
+                        <button class="btn-action" style="background:green" onclick="updateStatus(${b.id}, 'Lulus')">LULUS</button>
+                        <button class="btn-action" style="background:red" onclick="updateStatus(${b.id}, 'Tolak')">TOLAK</button>
+                    ` : `<button onclick="updateStatus(${b.id}, 'Menunggu')" style="font-size:10px; cursor:pointer">Reset</button>`}
                 </td>
-            `;
-            list.appendChild(row);
+            </tr>`;
         });
     }
 
-    // --- 4. KEMASKINI STATUS ---
-    async function updateStatus(id, newStatus) {
-        if(!confirm(`Adakah anda pasti mahu set status ke ${newStatus}?`)) return;
-
-        try {
-            const { error } = await _supabase
-                .from('bookings')
-                .update({ status: newStatus })
-                .eq('id', id);
-
-            if (error) throw error;
-            alert("Status dikemaskini!");
-            fetchBookings(); // Refresh senarai
-        } catch (err) {
-            alert("Gagal mengemaskini: " + err.message);
+    async function updateStatus(id, s) {
+        let reasonInput = null;
+        if(s === 'Tolak') { 
+            reasonInput = prompt("Sila masukkan sebab penolakan:"); 
+            if(reasonInput === null) return;
+            if(!reasonInput.trim()) { alert("Sebab wajib diisi!"); return; }
         }
+        await _supabase.from('bookings').update({ status: s, reason: reasonInput }).eq('id', id);
+        fetchAll();
     }
 
-    // --- 5. KEMASKINI STATISTIK ---
-    function updateStats(data) {
-        document.getElementById('totalCount').innerText = data.length;
-        document.getElementById('pendingCount').innerText = data.filter(b => b.status === 'Menunggu').length;
-        document.getElementById('approvedCount').innerText = data.filter(b => b.status === 'Lulus').length;
+    function filter(c, btn) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render(c === 'all' ? dataCache : dataCache.filter(b => b.campus === c));
     }
 
-    // Jalankan semasa page dibuka
-    fetchBookings();
+    fetchAll();
 </script>
-
 </body>
 </html>
