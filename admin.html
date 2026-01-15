@@ -2,108 +2,189 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard PKUMK</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
-        :root { --primary: #003366; --accent: #d4af37; --bg: #f4f7f9; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; }
-        .nav { background: var(--primary); color: white; padding: 20px 40px; border-bottom: 5px solid var(--accent); display: flex; justify-content: space-between; }
+        :root {
+            --primary: #003366; --accent: #d4af37; --bg: #f4f7f9;
+            --white: #ffffff; --success: #276749; --danger: #9b2c2c;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: #333; }
+        
+        .admin-nav {
+            background: var(--primary); color: white; padding: 20px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 5px solid var(--accent);
+        }
+
         .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 4px solid var(--accent); }
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white; padding: 25px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;
+            border-top: 4px solid var(--accent);
+        }
+        .stat-card h3 { margin: 0; font-size: 0.8rem; color: #718096; text-transform: uppercase; }
+        .stat-card p { margin: 10px 0 0; font-size: 2rem; font-weight: 800; color: var(--primary); }
+
+        /* Campus Tabs */
+        .tabs {
+            display: flex; gap: 10px; margin-bottom: 20px; background: #e2e8f0;
+            padding: 8px; border-radius: 10px; width: fit-content;
+        }
+        .tab-btn {
+            padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: 700; background: transparent; color: #4a5568; transition: 0.3s;
+        }
         .tab-btn.active { background: var(--primary); color: white; }
-        .table-box { background: white; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); overflow: hidden; }
+
+        /* Table */
+        .table-box { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #edf2f7; }
-        .badge { padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
-        .bg-pending { background: #fff3cd; color: #856404; }
-        .bg-approved { background: #d4edda; color: #155724; }
-        .bg-rejected { background: #f8d7da; color: #721c24; }
-        .btn-action { padding: 6px 12px; border-radius: 4px; border: none; font-weight: 700; cursor: pointer; color: white; }
+        th { background: #f8fafc; padding: 18px; text-align: left; font-size: 0.8rem; color: var(--primary); }
+        td { padding: 18px; border-top: 1px solid #edf2f7; font-size: 0.9rem; }
+
+        .badge { padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        .Menunggu { background: #fff3cd; color: #856404; }
+        .Lulus { background: #d4edda; color: #155724; }
+        .Tolak { background: #f8d7da; color: #721c24; }
+
+        .btn-action {
+            padding: 8px 15px; border: none; border-radius: 6px; font-weight: 700;
+            cursor: pointer; font-size: 0.75rem; margin-right: 5px; color: white;
+        }
     </style>
 </head>
 <body>
-<div class="nav"><h2>Dashboard Admin PKUMK</h2><button onclick="fetchAll()">KEMASKINI DATA</button></div>
+
+<div class="admin-nav">
+    <div>
+        <h1 style="margin:0; font-size: 1.5rem;">Sistem Studio PKUMK</h1>
+        <small style="color: var(--accent);">Panel Pengurusan Pentadbir</small>
+    </div>
+    <button onclick="fetchData()" style="padding: 10px 20px; cursor:pointer; background: var(--accent); border:none; font-weight:800; border-radius:6px;">REFRESH DATA</button>
+</div>
+
 <div class="container">
     <div class="stats-grid">
-        <div class="stat-card"><h3>Total</h3><p id="sTotal">0</p></div>
-        <div class="stat-card"><h3>Bachok</h3><p id="sBachok">0</p></div>
-        <div class="stat-card"><h3>Kota</h3><p id="sKota">0</p></div>
-        <div class="stat-card"><h3>Jeli</h3><p id="sJeli">0</p></div>
+        <div class="stat-card"><h3>Keseluruhan</h3><p id="totalCount">0</p></div>
+        <div class="stat-card"><h3>Bachok</h3><p id="bachokCount">0</p></div>
+        <div class="stat-card"><h3>Kota</h3><p id="kotaCount">0</p></div>
+        <div class="stat-card"><h3>Jeli</h3><p id="jeliCount">0</p></div>
     </div>
+
     <div class="tabs">
-        <button class="tab-btn active" onclick="filter('all', this)">SEMUA</button>
-        <button class="tab-btn" onclick="filter('bachok', this)">BACHOK</button>
-        <button class="tab-btn" onclick="filter('kota', this)">KOTA</button>
-        <button class="tab-btn" onclick="filter('jeli', this)">JELI</button>
+        <button class="tab-btn active" onclick="filterByCampus('all', this)">SEMUA DATA</button>
+        <button class="tab-btn" onclick="filterByCampus('bachok', this)">BACHOK</button>
+        <button class="tab-btn" onclick="filterByCampus('kota', this)">KOTA</button>
+        <button class="tab-btn" onclick="filterByCampus('jeli', this)">JELI</button>
     </div>
+
     <div class="table-box">
         <table>
-            <thead><tr><th>PEMOHON</th><th>STUDIO</th><th>TARIKH & MASA</th><th>STATUS</th><th>TINDAKAN</th></tr></thead>
-            <tbody id="list"></tbody>
+            <thead>
+                <tr>
+                    <th>PEMOHON</th>
+                    <th>STUDIO / KAMPUS</th>
+                    <th>TARIKH & MASA</th>
+                    <th>STATUS</th>
+                    <th>TINDAKAN</th>
+                </tr>
+            </thead>
+            <tbody id="list-data"></tbody>
         </table>
     </div>
 </div>
+
 <script>
     const supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-    let dataCache = [];
 
-    async function fetchAll() {
-        const { data } = await _supabase.from('bookings').select('*').order('created_at', { ascending: false });
-        dataCache = data || [];
-        updateStats(); render(dataCache);
+    let allBookings = [];
+
+    async function fetchData() {
+        const { data, error } = await _supabase
+            .from('bookings')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            alert("Ralat mengambil data: " + error.message);
+        } else {
+            allBookings = data;
+            updateDashboard();
+            renderTable(allBookings);
+        }
     }
 
-    function updateStats() {
-        document.getElementById('sTotal').innerText = dataCache.length;
-        document.getElementById('sBachok').innerText = dataCache.filter(b => b.campus === 'bachok').length;
-        document.getElementById('sKota').innerText = dataCache.filter(b => b.campus === 'kota').length;
-        document.getElementById('sJeli').innerText = dataCache.filter(b => b.campus === 'jeli').length;
+    function updateDashboard() {
+        document.getElementById('totalCount').innerText = allBookings.length;
+        document.getElementById('bachokCount').innerText = allBookings.filter(b => b.campus === 'bachok').length;
+        document.getElementById('kotaCount').innerText = allBookings.filter(b => b.campus === 'kota').length;
+        document.getElementById('jeliCount').innerText = allBookings.filter(b => b.campus === 'jeli').length;
     }
 
-    function render(list) {
-        const tbody = document.getElementById('list'); tbody.innerHTML = '';
-        list.forEach(b => {
-            const statusColor = b.status === 'Lulus' ? 'bg-approved' : (b.status === 'Tolak' ? 'bg-rejected' : 'bg-pending');
-            const reasonText = (b.status === 'Tolak' && b.reason) ? `<br><small style="color:red">Sebab: ${b.reason}</small>` : '';
-            tbody.innerHTML += `<tr>
-                <td><strong>${b.full_name}</strong><br><small>${b.student_staff_id}</small></td>
-                <td>${b.studio_name}<br><small>${b.campus.toUpperCase()}</small></td>
-                <td>${b.start_date}<br><small>${b.start_time} - ${b.end_time}</small></td>
-                <td><span class="badge ${statusColor}">${b.status}</span>${reasonText}</td>
-                <td>
-                    ${b.status === 'Menunggu' ? `
-                        <button class="btn-action" style="background:green" onclick="updateStatus(${b.id}, 'Lulus')">LULUS</button>
-                        <button class="btn-action" style="background:red" onclick="updateStatus(${b.id}, 'Tolak')">TOLAK</button>
-                    ` : `<button onclick="updateStatus(${b.id}, 'Menunggu')" style="font-size:10px; cursor:pointer">Reset</button>`}
-                </td>
-            </tr>`;
+    function renderTable(dataList) {
+        const tbody = document.getElementById('list-data');
+        tbody.innerHTML = '';
+
+        dataList.forEach(b => {
+            const reasonSlot = (b.status === 'Tolak' && b.reason) ? `<br><small style="color:red">Sebab: ${b.reason}</small>` : '';
+            
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${b.full_name}</strong><br><small>${b.student_staff_id}</small></td>
+                    <td><strong>${b.studio_name}</strong><br><small>${b.campus.toUpperCase()}</small></td>
+                    <td>${b.start_date}<br><small>${b.start_time} - ${b.end_time}</small></td>
+                    <td>
+                        <span class="badge ${b.status}">${b.status}</span>
+                        ${reasonSlot}
+                    </td>
+                    <td>
+                        ${b.status === 'Menunggu' ? `
+                            <button class="btn-action" style="background:green" onclick="updateStatus(${b.id}, 'Lulus')">LULUS</button>
+                            <button class="btn-action" style="background:red" onclick="updateStatus(${b.id}, 'Tolak')">TOLAK</button>
+                        ` : `<button onclick="updateStatus(${b.id}, 'Menunggu')" style="font-size:10px; cursor:pointer">RESET</button>`}
+                    </td>
+                </tr>
+            `;
         });
     }
 
-    async function updateStatus(id, s) {
-        let reasonInput = null;
-        if(s === 'Tolak') { 
-            reasonInput = prompt("Sila masukkan sebab penolakan:"); 
-            if(reasonInput === null) return;
-            if(!reasonInput.trim()) { alert("Sebab wajib diisi!"); return; }
+    async function updateStatus(id, newStatus) {
+        let reason = null;
+
+        if (newStatus === 'Tolak') {
+            reason = prompt("Sila masukkan sebab penolakan:");
+            if (reason === null) return; // Batal jika tekan cancel
+            if (!reason.trim()) { alert("Sebab wajib diisi jika menolak!"); return; }
         }
-        await _supabase.from('bookings').update({ status: s, reason: reasonInput }).eq('id', id);
-        fetchAll();
+
+        const { error } = await _supabase
+            .from('bookings')
+            .update({ status: newStatus, reason: reason })
+            .eq('id', id);
+
+        if (error) alert("Gagal kemaskini: " + error.message);
+        else fetchData();
     }
 
-    function filter(c, btn) {
+    function filterByCampus(campus, btn) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        render(c === 'all' ? dataCache : dataCache.filter(b => b.campus === c));
+        renderTable(campus === 'all' ? allBookings : allBookings.filter(b => b.campus === campus));
     }
 
-    fetchAll();
+    fetchData();
 </script>
 </body>
 </html>
