@@ -3,73 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Tempahan Studio PKUMK</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Panel Admin - PKUMK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --primary: #003366; --accent: #d4af37; --bg: #f4f7f6; --success: #27ae60; --danger: #e74c3c; --warning: #f39c12; }
+        :root {
+            --primary: #003366;
+            --accent: #d4af37;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --bg: #f4f7f9;
+        }
+
         body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
-        .admin-container { max-width: 1300px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); padding-bottom: 20px; margin-bottom: 20px; }
-        h1 { color: var(--primary); margin: 0; font-size: 1.5rem; text-transform: uppercase; }
         
-        .filters { display: flex; gap: 10px; margin-bottom: 20px; }
-        select { padding: 10px; border-radius: 6px; border: 1px solid #ddd; font-family: inherit; }
+        .admin-header {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
 
-        .table-wrapper { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
-        th { background: var(--primary); color: white; padding: 15px; text-align: left; text-transform: uppercase; }
-        td { padding: 15px; border-bottom: 1px solid #eee; vertical-align: top; }
-        tr:hover { background: #f9f9f9; }
+        .admin-header h1 { margin: 0; font-size: 1.5rem; font-weight: 800; }
 
-        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; color: white; display: inline-block; margin-bottom: 5px; }
-        .status-menunggu { background: var(--warning); }
-        .status-lulus { background: var(--success); }
-        .status-ditolak { background: var(--danger); }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
-        .reason-text { color: var(--danger); font-style: italic; font-size: 0.8rem; display: block; margin-top: 5px; border-left: 2px solid var(--danger); padding-left: 5px; }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--accent);
+        }
 
-        .btn-action { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.7rem; margin-bottom: 5px; color: white; text-transform: uppercase; width: 100%; display: block; }
-        .btn-lulus { background: var(--success); }
-        .btn-tolak { background: var(--danger); }
-        .btn-delete { background: #666; }
+        .stat-card h3 { margin: 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; }
+        .stat-card p { margin: 10px 0 0; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
 
-        .loading { text-align: center; padding: 20px; font-weight: bold; color: var(--primary); }
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
+        th { background: #f8fafc; padding: 15px; color: var(--primary); font-weight: 700; border-bottom: 2px solid #edf2f7; }
+        td { padding: 15px; border-bottom: 1px solid #edf2f7; vertical-align: top; }
+        tr:hover { background: #fcfcfd; }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .status-menunggu { background: #fef3c7; color: #92400e; }
+        .status-lulus { background: #dcfce7; color: #166534; }
+        .status-tolak { background: #fee2e2; color: #991b1b; }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.7rem;
+            transition: 0.2s;
+            margin-right: 5px;
+        }
+        .btn-lulus { background: var(--success); color: white; }
+        .btn-tolak { background: var(--danger); color: white; }
+        .btn:hover { opacity: 0.8; transform: translateY(-1px); }
+
+        .info-contact { font-size: 0.75rem; color: #64748b; margin-top: 5px; }
+        .tech-note { 
+            font-style: italic; font-size: 0.75rem; color: #475569; 
+            max-width: 200px; display: block; margin-top: 5px; 
+            background: #f1f5f9; padding: 5px; border-radius: 4px;
+        }
     </style>
 </head>
 <body>
 
-<div class="admin-container">
-    <div class="admin-header">
+<div class="admin-header">
+    <div>
         <h1>Panel Pengurusan Tempahan Studio</h1>
-        <button onclick="fetchBookings()" class="btn-action btn-delete" style="width:auto; padding:10px 20px">Refresh Data</button>
+        <p style="margin: 5px 0 0; opacity: 0.8; font-size: 0.8rem;">Pusat Kebudayaan dan Kesenian (PBS) UMK</p>
     </div>
+    <button class="btn" onclick="location.reload()" style="background: rgba(255,255,255,0.2); color: white;">Refresh Data</button>
+</div>
 
-    <div class="filters">
-        <select id="filterStatus" onchange="renderTable()">
-            <option value="Semua">Semua Status</option>
-            <option value="Menunggu">Menunggu</option>
-            <option value="Lulus">Lulus</option>
-            <option value="Ditolak">Ditolak</option>
-        </select>
-    </div>
+<div class="stats-grid">
+    <div class="stat-card"><h3>Menunggu</h3><p id="stat-pending">0</p></div>
+    <div class="stat-card"><h3>Diluluskan</h3><p id="stat-approved">0</p></div>
+    <div class="stat-card"><h3>Jumlah Keseluruhan</h3><p id="stat-total">0</p></div>
+</div>
 
-    <div class="table-wrapper">
-        <table id="bookingTable">
-            <thead>
-                <tr>
-                    <th style="width: 20%;">Pemohon</th>
-                    <th style="width: 15%;">Studio</th>
-                    <th style="width: 20%;">Tarikh & Masa</th>
-                    <th style="width: 20%;">Teknikal / Catatan</th>
-                    <th style="width: 10%;">Status</th>
-                    <th style="width: 15%;">Tindakan</th>
-                </tr>
-            </thead>
-            <tbody id="bookingList"></tbody>
-        </table>
-        <div id="loader" class="loading">Memuatkan data tempahan...</div>
-    </div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Pemohon</th>
+                <th>Maklumat Hubungan</th>
+                <th>Studio & Kampus</th>
+                <th>Tarikh & Masa</th>
+                <th>Keperluan</th>
+                <th>Status</th>
+                <th>Tindakan</th>
+            </tr>
+        </thead>
+        <tbody id="bookingTableBody">
+            </tbody>
+    </table>
 </div>
 
 <script>
@@ -77,97 +134,80 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    let allBookings = [];
-
     async function fetchBookings() {
-        document.getElementById('loader').style.display = 'block';
         const { data, error } = await _supabase
             .from('bookings')
             .select('*')
             .order('created_at', { ascending: false });
 
-        if (error) alert("Ralat: " + error.message);
-        else {
-            allBookings = data;
-            renderTable();
+        if (error) {
+            console.error('Error:', error);
+            return;
         }
-        document.getElementById('loader').style.display = 'none';
+
+        renderTable(data);
+        updateStats(data);
     }
 
-    function renderTable() {
-        const filter = document.getElementById('filterStatus').value;
-        const list = document.getElementById('bookingList');
-        list.innerHTML = '';
+    function renderTable(bookings) {
+        const tbody = document.getElementById('bookingTableBody');
+        tbody.innerHTML = '';
 
-        const filteredData = filter === 'Semua' ? allBookings : allBookings.filter(b => b.status === filter);
-
-        filteredData.forEach(b => {
-            const reasonMarkup = b.reason ? `<span class="reason-text">Sebab: ${b.reason}</span>` : '';
+        bookings.forEach(b => {
+            const tr = document.createElement('tr');
             
-            const row = `
-                <tr>
-                    <td>
-                        <strong>${b.full_name}</strong><br>
-                        <small>ID: ${b.student_staff_id}<br>IC: ${b.ic_number}</small>
-                    </td>
-                    <td>
-                        <strong>${b.studio_name}</strong><br>
-                        <small>${b.campus.toUpperCase()}</small>
-                    </td>
-                    <td>
-                        ${b.start_date} - ${b.end_date}<br>
-                        <small>${b.start_time} hingga ${b.end_time}</small>
-                    </td>
-                    <td><small>${b.technical_requirements || '-'}</small></td>
-                    <td>
-                        <span class="status-badge status-${b.status.toLowerCase()}">${b.status}</span>
-                        ${reasonMarkup}
-                    </td>
-                    <td>
-                        ${b.status === 'Menunggu' ? `
-                            <button onclick="updateStatus('${b.id}', 'Lulus')" class="btn-action btn-lulus">Lulus</button>
-                            <button onclick="rejectBooking('${b.id}')" class="btn-action btn-tolak">Tolak</button>
-                        ` : `
-                            <button onclick="deleteBooking('${b.id}')" class="btn-action btn-delete">Padam</button>
-                        `}
-                    </td>
-                </tr>
+            tr.innerHTML = `
+                <td>
+                    <strong>${b.full_name}</strong><br>
+                    <small>${b.student_staff_id} (${b.category})</small><br>
+                    <small>${b.ic_number}</small>
+                </td>
+                <td>
+                    <div class="info-contact">📧 ${b.email}</div>
+                    <div class="info-contact">📞 ${b.phone}</div>
+                </td>
+                <td>
+                    <strong>${b.studio_name}</strong><br>
+                    <small>Kampus ${b.campus.toUpperCase()}</small>
+                </td>
+                <td>
+                    ${b.start_date} → ${b.end_date}<br>
+                    <small>${b.start_time} - ${b.end_time}</small>
+                </td>
+                <td>
+                    <span class="tech-note">${b.technical_requirements || 'Tiada keperluan khusus'}</span>
+                </td>
+                <td>
+                    <span class="status-badge status-${b.status.toLowerCase()}">${b.status}</span>
+                </td>
+                <td>
+                    ${b.status === 'Menunggu' ? `
+                        <button class="btn btn-lulus" onclick="updateStatus(${b.id}, 'Lulus')">Lulus</button>
+                        <button class="btn btn-tolak" onclick="updateStatus(${b.id}, 'Tolak')">Tolak</button>
+                    ` : `<small style="color:#94a3b8">Selesai</small>`}
+                </td>
             `;
-            list.innerHTML += row;
+            tbody.appendChild(tr);
         });
     }
 
-    async function updateStatus(id, newStatus, reason = null) {
-        const updateData = { status: newStatus };
-        if (reason) updateData.reason = reason;
-
+    async function updateStatus(id, newStatus) {
         const { error } = await _supabase
             .from('bookings')
-            .update(updateData)
+            .update({ status: newStatus })
             .eq('id', id);
 
-        if (error) alert("Gagal kemaskini: " + error.message);
+        if (error) alert('Gagal kemaskini status');
         else fetchBookings();
     }
 
-    function rejectBooking(id) {
-        const msg = prompt("Sila masukkan sebab penolakan (Wajib):");
-        if (msg === null) return; // Batal tekan butang
-        if (msg.trim() === "") {
-            alert("Anda mesti masukkan sebab untuk menolak!");
-            return;
-        }
-        updateStatus(id, 'Ditolak', msg);
+    function updateStats(bookings) {
+        document.getElementById('stat-pending').innerText = bookings.filter(b => b.status === 'Menunggu').length;
+        document.getElementById('stat-approved').innerText = bookings.filter(b => b.status === 'Lulus').length;
+        document.getElementById('stat-total').innerText = bookings.length;
     }
 
-    async function deleteBooking(id) {
-        if(confirm("Padam rekod ini secara kekal?")) {
-            const { error } = await _supabase.from('bookings').delete().eq('id', id);
-            if (error) alert("Gagal padam: " + error.message);
-            else fetchBookings();
-        }
-    }
-
+    // Jalankan fetch masa mula-mula load
     fetchBookings();
 </script>
 </body>
