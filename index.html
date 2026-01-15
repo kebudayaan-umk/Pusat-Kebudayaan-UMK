@@ -13,6 +13,7 @@
             --primary-color: #003366;
             --accent-color: #d4af37;
             --bg-color: #f0f2f5;
+            --text-dark: #1a202c;
             --white: #ffffff;
             --danger: #e53e3e;
         }
@@ -21,16 +22,26 @@
             font-family: 'Inter', sans-serif; 
             margin: 0; 
             background-color: var(--bg-color); 
+            color: var(--text-dark); 
             line-height: 1.6; 
         }
 
+        /* HEADER DENGAN LOGO & BACKGROUND */
         .header { 
-            background: #fff; 
-            padding: 40px 20px; 
+            position: relative; 
+            background: url("assets/bg-kebudayaan.jpg") center/cover no-repeat; 
+            padding: 60px 20px; 
             text-align: center; 
-            border-bottom: 4px solid var(--accent-color); 
+            border-bottom: 4px solid var(--accent-color);
         }
-        
+        .header::before { 
+            content: ""; 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(255, 255, 255, 0.9); 
+        }
+        .header-content { position: relative; z-index: 1; }
+        .logo-umk { height: 100px; margin-bottom: 10px; }
         .header h1 { 
             margin: 0; 
             font-size: 1.7rem; 
@@ -45,8 +56,9 @@
             padding: 40px; 
             border-radius: 12px; 
             margin: -30px auto 60px auto; 
-            box-shadow: 0 20px 25px rgba(0,0,0,0.1); 
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1); 
             position: relative; 
+            z-index: 2; 
         }
 
         .section-title {
@@ -58,7 +70,6 @@
             margin: 30px 0 20px 0;
             text-transform: uppercase;
         }
-        
         .section-title::after {
             content: "";
             flex: 1;
@@ -70,37 +81,57 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .full-width { grid-column: span 2; }
 
+        /* LOGIK FLIGHT DATE STYLE */
         .logistic-container {
             background-color: #f7fafc;
             border: 2px solid #e2e8f0;
             padding: 25px;
             border-radius: 10px;
         }
-
         .flight-date-container {
             display: flex;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             overflow: hidden;
             background: white;
+            margin-bottom: 10px;
         }
-        
         .date-slot {
             flex: 1;
             padding: 10px 15px;
             border-right: 1px solid #cbd5e1;
         }
-        
         .date-slot:last-child { border-right: none; }
+        .date-slot label { font-size: 0.7rem; color: #718096; text-transform: uppercase; font-weight: 800; }
+        .date-slot input { border: none; padding: 5px 0; width: 100%; font-weight: 700; font-size: 1rem; outline: none; }
 
         label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; color: #4a5568; }
-        
         input, select, textarea { 
             width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; 
             font-size: 1rem; box-sizing: border-box; 
         }
 
         .error-msg { color: var(--danger); font-size: 0.75rem; font-weight: 700; display: none; }
+
+        /* SYARAT & DENDA */
+        .syarat-box { 
+            background: #fffaf0; 
+            border: 1px solid #feebc8; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            font-size: 0.85rem; 
+        }
+        .amaran-denda { 
+            background: #fff5f5; 
+            color: var(--danger); 
+            padding: 12px; 
+            border-radius: 6px; 
+            text-align: center; 
+            font-weight: 800; 
+            margin-top: 15px; 
+            border: 1px solid #fed7d7; 
+        }
 
         button { 
             background: var(--primary-color); 
@@ -115,19 +146,23 @@
             margin-top: 30px; 
             text-transform: uppercase; 
         }
-        
-        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+        button:disabled { background: #cbd5e1; }
 
         @media (max-width: 600px) { 
             .form-grid { grid-template-columns: 1fr; } 
             .full-width { grid-column: span 1; } 
+            .flight-date-container { flex-direction: column; }
+            .date-slot { border-right: none; border-bottom: 1px solid #cbd5e1; }
         }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Pusat Kebudayaan dan Kesenian (PBS)<br>Universiti Malaysia Kelantan</h1>
+    <div class="header-content">
+        <img src="assets/logo-umk.png" class="logo-umk" alt="Logo UMK">
+        <h1>Pusat Kebudayaan dan Kesenian (PBS)<br>Universiti Malaysia Kelantan</h1>
+    </div>
 </div>
 
 <div class="container">
@@ -136,29 +171,16 @@
 
         <div class="section-title">1. Maklumat Peribadi</div>
         <div class="form-grid">
-            <div class="full-width">
-                <label>Nama Penuh</label>
-                <input type="text" name="nama" required>
-            </div>
-            <div>
-                <label>No. Kad Pengenalan</label>
-                <input type="text" name="no_ic" maxlength="12" required>
-            </div>
-            <div>
-                <label>No. Matrik / No. Staf</label>
-                <input type="text" name="no_id" required>
-            </div>
-            <div>
-                <label>Kategori</label>
+            <div class="full-width"><label>Nama Penuh</label><input type="text" name="nama" required></div>
+            <div><label>No. Kad Pengenalan</label><input type="text" name="no_ic" maxlength="12" required></div>
+            <div><label>No. Matrik / No. Staf</label><input type="text" name="no_id" required></div>
+            <div><label>Kategori</label>
                 <select name="kategori" required>
                     <option value="">-- Pilih --</option>
-                    <option>Pelajar</option>
-                    <option>Staf</option>
-                    <option>Orang Awam</option>
+                    <option>Pelajar</option><option>Staf</option><option>Orang Awam</option>
                 </select>
             </div>
-            <div>
-                <label>Kampus</label>
+            <div><label>Kampus</label>
                 <select id="kampus" name="kampus" required>
                     <option value="">-- Pilih --</option>
                     <option value="bachok">Bachok</option>
@@ -166,8 +188,7 @@
                     <option value="jeli">Kampus Jeli</option>
                 </select>
             </div>
-            <div class="full-width">
-                <label>Pilihan Studio</label>
+            <div class="full-width"><label>Pilihan Studio</label>
                 <select id="studio" name="studio" required>
                     <option value="">-- Sila Pilih Kampus Dahulu --</option>
                 </select>
@@ -177,42 +198,36 @@
         <div class="section-title">2. Tarikh & Masa</div>
         <div class="logistic-container">
             <div class="flight-date-container">
-                <div class="date-slot">
-                    <label>Tarikh Mula</label>
-                    <input type="date" id="tarikh_mula" name="tarikh_mula" required>
-                </div>
-                <div class="date-slot">
-                    <label>Tarikh Tamat</label>
-                    <input type="date" id="tarikh_tamat" name="tarikh_tamat" required>
-                </div>
+                <div class="date-slot"><label>Tarikh Mula</label><input type="date" id="tarikh_mula" name="tarikh_mula" required></div>
+                <div class="date-slot"><label>Tarikh Tamat</label><input type="date" id="tarikh_tamat" name="tarikh_tamat" required></div>
             </div>
             <div id="dateError" class="error-msg">Maksimum 3 hari sahaja!</div>
 
             <div class="form-grid" style="margin-top: 20px;">
-                <div>
-                    <label>Masa Mula</label>
+                <div><label>Masa Mula</label>
                     <select id="masa_mula" name="masa_mula" required>
                         <option value="">-- Pilih --</option>
-                        <option value="09:00">09:00 AM</option>
-                        <option value="14:00">02:00 PM</option>
-                        <option value="20:00">08:00 PM</option>
+                        <option value="09:00">09:00 AM</option><option value="14:00">02:00 PM</option><option value="20:00">08:00 PM</option>
                     </select>
                 </div>
-                <div>
-                    <label>Masa Tamat</label>
+                <div><label>Masa Tamat</label>
                     <select id="masa_tamat" name="masa_tamat" required>
                         <option value="">-- Pilih --</option>
-                        <option value="13:00">01:00 PM</option>
-                        <option value="17:00">05:00 PM</option>
-                        <option value="23:00">11:00 PM</option>
+                        <option value="13:00">01:00 PM</option><option value="17:00">05:00 PM</option><option value="23:00">11:00 PM</option>
                     </select>
                 </div>
             </div>
         </div>
 
-        <div class="full-width" style="margin-top: 20px;">
-            <label>Keperluan Teknikal</label>
-            <textarea name="teknikal" rows="3"></textarea>
+        <div class="full-width" style="margin-top: 20px;"><label>Keperluan Teknikal</label><textarea name="teknikal" rows="3"></textarea></div>
+
+        <div class="syarat-box">
+            <strong style="color: var(--primary-color);">Terma & Peraturan:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Permohonan mestilah dibuat sekurang-kurangnya 3 HARI sebelum tarikh penggunaan.</li>
+                <li>Tempahan maksimum hanya 3 HARI berturut-turut sahaja.</li>
+            </ul>
+            <div class="amaran-denda">PEMOHON HENDAKLAH MEMBAYAR DENDA TERHADAP SEBARANG KEROSAKAN.</div>
         </div>
 
         <button type="submit" id="submitBtn">Hantar Permohonan</button>
@@ -220,30 +235,17 @@
 </div>
 
 <script>
-    // 1. KONFIGURASI SUPABASE
     const supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // 2. LOGIK STUDIO (MENGINGKUT KAMPUS)
-    const studioData = {
-        bachok: ["Teniat 3", "Teniat 4"],
-        kota: ["Studio Tari", "Studio Muzik"],
-        jeli: ["Studio Kebudayaan"]
-    };
-
+    const studioData = { bachok: ["Teniat 3", "Teniat 4"], kota: ["Studio Tari", "Studio Muzik"], jeli: ["Studio Kebudayaan"] };
     document.getElementById("kampus").addEventListener("change", function() {
-        const s = document.getElementById("studio");
-        s.innerHTML = '<option value="">-- Pilih Studio --</option>';
-        if(this.value) {
-            studioData[this.value].forEach(item => {
-                let opt = document.createElement("option");
-                opt.value = item; opt.text = item; s.add(opt);
-            });
-        }
+        const s = document.getElementById("studio"); s.innerHTML = '<option value="">-- Pilih Studio --</option>';
+        if(this.value) studioData[this.value].forEach(i => { let o = document.createElement("option"); o.value=i; o.text=i; s.add(o); });
     });
 
-    // 3. LOGIK SYARAT 3 HARI (ASAL)
+    // SYARAT 3 HARI ASAL
     const tMula = document.getElementById("tarikh_mula");
     const tTamat = document.getElementById("tarikh_tamat");
     const dateErr = document.getElementById("dateError");
@@ -254,55 +256,28 @@
             const start = new Date(tMula.value);
             const end = new Date(tTamat.value);
             const diffDays = ((end - start) / (1000 * 60 * 60 * 24)) + 1;
-            
-            if(diffDays > 3 || diffDays < 1) {
-                dateErr.style.display = "block";
-                submitBtn.disabled = true;
-            } else {
-                dateErr.style.display = "none";
-                submitBtn.disabled = false;
-            }
+            if(diffDays > 3 || diffDays < 1) { dateErr.style.display = "block"; submitBtn.disabled = true; }
+            else { dateErr.style.display = "none"; submitBtn.disabled = false; }
         }
     }
     tMula.addEventListener("change", validateDates);
     tTamat.addEventListener("change", validateDates);
 
-    // 4. HANTAR DATA KE SUPABASE
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
         e.preventDefault();
-        
-        submitBtn.innerText = "MENANGHANTAR...";
-        submitBtn.disabled = true;
-
+        submitBtn.innerText = "MENANGHANTAR..."; submitBtn.disabled = true;
         const f = new FormData(this);
-        
-        // Ambil nilai terus dari ID untuk elakkan isu select
-        const dataToInsert = {
-            full_name: f.get("nama"),
-            ic_number: f.get("no_ic"),
-            student_staff_id: f.get("no_id"),
-            category: f.get("kategori"),
-            campus: f.get("kampus"),
-            studio_name: f.get("studio"),
-            start_date: f.get("tarikh_mula"),
-            end_date: f.get("tarikh_tamat"),
-            start_time: document.getElementById("masa_mula").value,
-            end_time: document.getElementById("masa_tamat").value,
-            technical_requirements: f.get("teknikal"),
-            status: "Menunggu"
+        const d = {
+            full_name: f.get("nama"), ic_number: f.get("no_ic"), student_staff_id: f.get("no_id"),
+            category: f.get("kategori"), campus: f.get("kampus"), studio_name: f.get("studio"),
+            start_date: f.get("tarikh_mula"), end_date: f.get("tarikh_tamat"),
+            start_time: document.getElementById("masa_mula").value, end_time: document.getElementById("masa_tamat").value,
+            technical_requirements: f.get("teknikal"), status: "Menunggu"
         };
-
-        const { error } = await _supabase.from('bookings').insert([dataToInsert]);
-
-        if (error) {
-            alert("GAGAL: " + error.message);
-        } else {
-            alert("PERMOHONAN BERJAYA DIHANTAR!");
-            this.reset();
-        }
-        
-        submitBtn.innerText = "Hantar Permohonan";
-        submitBtn.disabled = false;
+        const { error } = await _supabase.from('bookings').insert([d]);
+        if (error) alert("GAGAL: " + error.message);
+        else { alert("PERMOHONAN BERJAYA!"); this.reset(); }
+        submitBtn.innerText = "Hantar Permohonan"; submitBtn.disabled = false;
     });
 </script>
 </body>
