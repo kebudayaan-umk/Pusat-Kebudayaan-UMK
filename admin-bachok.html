@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BACHOK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+       (function(){
+          // MASUKKAN PUBLIC KEY EMAILJS ANDA DI SINI
+          emailjs.init("Tl9vKyr7pswPWFUw_");
+       })();
+    </script>
+
+    <style>
+        :root { --primary: #003366; --success: #28a745; --danger: #dc3545; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: #f4f7f9; }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; }
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        th { background: #f8fafc; padding: 15px; text-align: left; font-size: 0.8rem; color: #64748b; border-bottom: 2px solid #edf2f7; }
+        td { padding: 15px; border-bottom: 1px solid #edf2f7; font-size: 0.9rem; }
+        
+        .badge { padding: 4px 10px; border-radius: 5px; font-weight: 700; font-size: 0.75rem; }
+        .badge-menunggu { background: #fef3c7; color: #92400e; }
+        .badge-lulus { background: #dcfce7; color: #166534; }
+        .badge-tolak { background: #fee2e2; color: #991b1b; }
+
+        .btn { border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: white; font-weight: 600; transition: 0.2s; }
+        .btn-lulus { background: var(--success); margin-right: 5px; }
+        .btn-tolak { background: var(--danger); }
+        .btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PENGURUSAN TEMPAHAN - BACHOK</h1>
+</header>
+
+<div class="container">
+    <table id="adminTable">
+        <thead>
+            <tr>
+                <th>Pemohon</th>
+                <th>Studio</th>
+                <th>Tarikh</th>
+                <th>Status</th>
+                <th>Tindakan</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+</div>
+
+<script>
+    const supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
+    const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function fetchData() {
+        const { data, error } = await _supabase
+            .from('bookings')
+            .select('*')
+            .eq('campus', 'bachok')
+            .order('created_at', { ascending: false });
+
+        const tbody = document.querySelector("#adminTable tbody");
+        tbody.innerHTML = "";
+
+        data.forEach(row => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><strong>${row.full_name}</strong><br><small>${row.email}</small></td>
+                <td>${row.studio_name}</td>
+                <td>${row.start_date}</td>
+                <td><span class="badge badge-${row.status.toLowerCase()}">${row.status}</span></td>
+                <td>
+                    ${row.status === 'Menunggu' ? `
+                        <button class="btn btn-lulus" onclick="updateStatus('${row.id}', 'Lulus')">Lulus</button>
+                        <button class="btn btn-tolak" onclick="updateStatus('${row.id}', 'Tolak')">Tolak</button>
+                    ` : '<small>Tindakan Selesai</small>'}
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function updateStatus(id, newStatus) {
+        if(!confirm(`Adakah anda pasti untuk ${newStatus} permohonan ini?`)) return;
+
+        // Ambil data untuk email
+        const { data: b } = await _supabase.from('bookings').select('*').eq('id', id).single();
+
+        // Update database
+        const { error } = await _supabase.from('bookings').update({ status: newStatus }).eq('id', id);
+
+        if(!error) {
+            // HANTAR EMAIL MELALUI EMAILJS
+            const templateParams = {
+                to_name: b.full_name,
+                to_email: b.email,
+                status_tempahan: newStatus,
+                studio_name: b.studio_name,
+                tarikh: b.start_date
+            };
+
+            // GANTIKAN DENGAN ID ANDA
+            emailjs.send('service_p2zsg4l', 'template_w5zpeal', templateParams)
+                .then(() => {
+                    alert("Status dikemaskini & e-mel dihantar!");
+                    fetchData();
+                }, (err) => {
+                    alert("Status dikemaskini tetapi e-mel gagal: " + JSON.stringify(err));
+                    fetchData();
+                });
+        }
+    }
+
+    fetchData();
+</script>
+</body>
+</html>
