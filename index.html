@@ -17,24 +17,21 @@
 
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #f0f2f5; min-height: 100vh; }
 
-        /* HEADER & BACKGROUND - HANYA BAHAGIAN INI DIKEMASKINI */
-        ./* HEADER & BACKGROUND */
+        /* HEADER & BACKGROUND - KEMASKINI PENAMBAHBAIKAN */
         .main-wrapper {
-            /* 1. Warna fallback (jika gambar gagal) */
-            background-color: #003366; 
-            
-            /* 2. Gabungan Overlay & Gambar (Cuba pelbagai laluan) */
-            background: linear-gradient(135deg, rgba(0, 51, 102, 0.85) 0%, rgba(0, 26, 51, 0.7) 100%), 
-                        url('assets/bg-background.jpg'), /* Cuba dalam folder assets */
-                        url('bg-background.jpg');        /* Cuba jika fail terkeluar dari folder */
-            
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            position: relative;
             padding: 60px 20px 160px 20px;
             text-align: center;
             color: white;
-            position: relative;
+            /* Fallback warna jika gambar gagal loading */
+            background-color: var(--primary-color); 
+            /* Logik gambar background dengan overlay gelap agar teks jelas */
+            background-image: linear-gradient(135deg, rgba(0, 51, 102, 0.85) 0%, rgba(0, 26, 51, 0.7) 100%), 
+                              url('assets/bg-background.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
         .logo-umk { height: 120px; margin-bottom: 20px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
@@ -234,16 +231,17 @@
     async function loadOccupiedSlots() {
         const container = document.getElementById('occupiedSlots');
         const today = new Date().toISOString().split('T')[0];
-        const { data } = await _supabase.from('bookings').select('studio_name, start_date, end_date').eq('status', 'Lulus').gte('end_date', today);
-        
-        if (data && data.length > 0) {
-            container.innerHTML = '';
-            data.forEach(b => {
-                const tag = document.createElement('span'); tag.className = 'booking-tag';
-                tag.innerText = `${b.studio_name} (${b.start_date} hingga ${b.end_date})`;
-                container.appendChild(tag);
-            });
-        } else { container.innerHTML = '<span style="font-size: 0.8rem; color: #94a3b8;">Tiada tempahan aktif buat masa ini.</span>'; }
+        try {
+            const { data } = await _supabase.from('bookings').select('studio_name, start_date, end_date').eq('status', 'Lulus').gte('end_date', today);
+            if (data && data.length > 0) {
+                container.innerHTML = '';
+                data.forEach(b => {
+                    const tag = document.createElement('span'); tag.className = 'booking-tag';
+                    tag.innerText = `${b.studio_name} (${b.start_date} hingga ${b.end_date})`;
+                    container.appendChild(tag);
+                });
+            } else { container.innerHTML = '<span style="font-size: 0.8rem; color: #94a3b8;">Tiada tempahan aktif buat masa ini.</span>'; }
+        } catch (e) { container.innerHTML = 'Ralat memuatkan status.'; }
     }
 
     document.getElementById("kampus").addEventListener("change", function() {
@@ -283,4 +281,3 @@
 </script>
 </body>
 </html>
-
