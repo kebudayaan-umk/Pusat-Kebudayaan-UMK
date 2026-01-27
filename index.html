@@ -18,10 +18,18 @@
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #f0f2f5; min-height: 100vh; }
 
         /* HEADER & BACKGROUND - HANYA BAHAGIAN INI DIKEMASKINI */
+        ./* HEADER & BACKGROUND */
         .main-wrapper {
+            /* 1. Warna fallback (jika gambar gagal) */
+            background-color: #003366; 
+            
+            /* 2. Gabungan Overlay & Gambar (Cuba pelbagai laluan) */
             background: linear-gradient(135deg, rgba(0, 51, 102, 0.85) 0%, rgba(0, 26, 51, 0.7) 100%), 
-                        url('assets/bg-background.jpg') no-repeat center center;
+                        url('assets/bg-background.jpg'), /* Cuba dalam folder assets */
+                        url('bg-background.jpg');        /* Cuba jika fail terkeluar dari folder */
+            
             background-size: cover;
+            background-position: center;
             background-attachment: fixed;
             padding: 60px 20px 160px 20px;
             text-align: center;
@@ -275,3 +283,4 @@
 </script>
 </body>
 </html>
+
