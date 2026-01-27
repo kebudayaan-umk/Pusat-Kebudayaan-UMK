@@ -18,7 +18,7 @@
             --danger: #e53e3e; 
         }
 
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #f0f2f5; min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #f0f2f5; min-height: 100vh; overflow-x: hidden; }
 
         .main-wrapper {
             position: relative;
@@ -45,6 +45,17 @@
             max-width: 850px; background: var(--card-bg); padding: 50px; border-radius: 20px; 
             margin: -100px auto 50px auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
             position: relative; z-index: 10;
+            width: 90%;
+        }
+
+        /* RESPONSIVE BREAKPOINT UNTUK PHONE */
+        @media (max-width: 768px) {
+            .container { padding: 30px 15px; margin-top: -60px; width: 95%; }
+            .form-grid { grid-template-columns: 1fr !important; } /* Paksa jadi 1 kolum */
+            .full-width { grid-column: span 1 !important; }
+            h1 { font-size: 1.5rem; }
+            .logo-umk { height: 80px; }
+            .hubungi-pantas span { display: block; border: none; margin: 5px 0; }
         }
 
         .live-status-box {
@@ -75,11 +86,9 @@
             width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; 
             font-size: 0.95rem; background: #f8fafc; box-sizing: border-box; transition: 0.3s;
         }
-        input:focus, select:focus { border-color: var(--primary-color); outline: none; background: #fff; }
 
         .logistic-box { background: #f1f5f9; padding: 25px; border-radius: 15px; border: 1px solid #cbd5e1; }
         
-        /* Kalendar Range Style */
         .flight-input { 
             background: #fff url('https://cdn-icons-png.flaticon.com/512/2838/2838779.png') no-repeat 96% center;
             background-size: 18px;
@@ -87,6 +96,7 @@
             font-weight: 700;
         }
 
+        /* KOD ASAL SYARAT & DENDA */
         .syarat-box { background: #fffaf0; border: 1px solid #feebc8; padding: 25px; border-radius: 15px; margin-top: 35px; text-align: left; }
         .syarat-box li { margin-bottom: 10px; font-size: 0.9rem; color: #4a5568; line-height: 1.5; }
         .amaran-denda { 
@@ -158,7 +168,7 @@
         <div class="logistic-box">
             <div class="full-width" style="margin-bottom: 20px;">
                 <label>Pilih Julat Tarikh (Mula - Tamat) *</label>
-                <input type="text" id="rangeDate" class="flight-input" placeholder="Klik untuk pilih tarikh..." required>
+                <input type="text" id="rangeDate" class="flight-input" placeholder="Klik untuk pilih tarikh..." readonly required>
                 <input type="hidden" name="tarikh_mula" id="tarikh_mula">
                 <input type="hidden" name="tarikh_tamat" id="tarikh_tamat">
                 <div id="dateError" class="error-msg">Had tempahan maksimum adalah 3 hari sahaja!</div>
@@ -226,7 +236,6 @@
         jeli: ["Studio Kebudayaan"] 
     };
 
-    // Kalendar Range (Minimum 3 hari dari sekarang)
     flatpickr("#rangeDate", {
         mode: "range",
         minDate: new Date().fp_incr(3),
@@ -236,7 +245,6 @@
                 const diff = Math.ceil((selectedDates[1] - selectedDates[0]) / (1000 * 60 * 60 * 24)) + 1;
                 const err = document.getElementById("dateError");
                 const btn = document.getElementById("submitBtn");
-                
                 if (diff > 3) { err.style.display = "block"; btn.disabled = true; } 
                 else { 
                     err.style.display = "none"; btn.disabled = false;
@@ -270,8 +278,6 @@
 
     document.getElementById("bookingForm").onsubmit = async function(e) {
         e.preventDefault();
-        if (!document.getElementById("tarikh_mula").value) { alert("Sila pilih tarikh!"); return; }
-        
         const btn = document.getElementById("submitBtn");
         btn.innerText = "MENGHANTAR..."; btn.disabled = true;
         const f = new FormData(this);
