@@ -5,27 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Tempahan Studio PKUMK</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root { 
             --primary-color: #003366; 
             --accent-color: #d4af37; 
-            --bg-gradient: linear-gradient(135deg, #003366 0%, #001a33 100%);
             --card-bg: #ffffff;
             --danger: #e53e3e; 
         }
 
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #f0f2f5; min-height: 100vh; }
 
-        /* HEADER & BACKGROUND - KEMASKINI PENAMBAHBAIKAN */
         .main-wrapper {
             position: relative;
             padding: 60px 20px 160px 20px;
             text-align: center;
             color: white;
-            /* Fallback warna jika gambar gagal loading */
             background-color: var(--primary-color); 
-            /* Logik gambar background dengan overlay gelap agar teks jelas */
             background-image: linear-gradient(135deg, rgba(0, 51, 102, 0.85) 0%, rgba(0, 26, 51, 0.7) 100%), 
                               url('assets/bg-background.jpg');
             background-size: cover;
@@ -41,14 +41,12 @@
         .hubungi-pantas span { margin: 0 10px; border-right: 1px solid rgba(255,255,255,0.3); padding-right: 10px; }
         .hubungi-pantas span:last-child { border: none; }
 
-        /* CONTAINER BORANG */
         .container { 
             max-width: 850px; background: var(--card-bg); padding: 50px; border-radius: 20px; 
             margin: -100px auto 50px auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
             position: relative; z-index: 10;
         }
 
-        /* LIVE STATUS ALERT */
         .live-status-box {
             background: #fff; border: 2px solid var(--accent-color); border-radius: 12px;
             padding: 20px; margin-bottom: 30px; text-align: left;
@@ -63,7 +61,6 @@
             font-size: 0.75rem; color: #475569; font-weight: 600;
         }
 
-        /* STYLES BORANG */
         .section-title { 
             display: flex; align-items: center; font-size: 1.1rem; font-weight: 800; 
             color: var(--primary-color); margin: 35px 0 20px; text-transform: uppercase; 
@@ -81,15 +78,15 @@
         input:focus, select:focus { border-color: var(--primary-color); outline: none; background: #fff; }
 
         .logistic-box { background: #f1f5f9; padding: 25px; border-radius: 15px; border: 1px solid #cbd5e1; }
-        .date-row { 
-            display: flex; gap: 15px; background: white; padding: 15px; 
-            border-radius: 12px; margin-bottom: 20px; border: 1px solid #e2e8f0;
+        
+        /* Kalendar Range Style */
+        .flight-input { 
+            background: #fff url('https://cdn-icons-png.flaticon.com/512/2838/2838779.png') no-repeat 96% center;
+            background-size: 18px;
+            cursor: pointer;
+            font-weight: 700;
         }
-        .date-input-group { flex: 1; }
-        .date-input-group label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; }
-        .date-input-group input { border: none; background: transparent; font-weight: 700; width: 100%; outline: none; }
 
-        /* SYARAT & DENDA */
         .syarat-box { background: #fffaf0; border: 1px solid #feebc8; padding: 25px; border-radius: 15px; margin-top: 35px; text-align: left; }
         .syarat-box li { margin-bottom: 10px; font-size: 0.9rem; color: #4a5568; line-height: 1.5; }
         .amaran-denda { 
@@ -133,26 +130,24 @@
     <form id="bookingForm">
         <div class="section-title">1. Maklumat Peribadi</div>
         <div class="form-grid">
-            <div class="full-width"><label>Nama Penuh</label><input type="text" name="nama" placeholder="Sila masukkan nama penuh" required></div>
-            <div><label>No. Kad Pengenalan</label><input type="text" name="no_ic" maxlength="12" placeholder="Cth: 010203030501" required></div>
-            <div><label>No. Matrik / No. Staf</label><input type="text" name="no_id" required></div>
-            <div><label>Alamat Emel Peribadi</label><input type="email" name="email" placeholder="Cth: ali@siswa.umk.edu.my" required></div>
-            <div><label>No. Telefon / WhatsApp</label><input type="tel" name="phone" placeholder="Cth: 0123456789" required></div>
-            <div><label>Kategori</label>
+            <div class="full-width"><label>Nama Penuh *</label><input type="text" name="nama" placeholder="Sila masukkan nama penuh" required></div>
+            <div><label>No. Kad Pengenalan *</label><input type="text" name="no_ic" maxlength="12" placeholder="Cth: 010203030501" required></div>
+            <div><label>No. Matrik / No. Staf (Pilihan)</label><input type="text" name="no_id" placeholder="Hanya untuk Pelajar/Staf"></div>
+            <div><label>Alamat Emel Peribadi *</label><input type="email" name="email" placeholder="Cth: ali@siswa.umk.edu.my" required></div>
+            <div><label>No. Telefon / WhatsApp *</label><input type="tel" name="phone" placeholder="Cth: 0123456789" required></div>
+            <div><label>Kategori *</label>
                 <select name="kategori" required>
                     <option value="">-- Pilih --</option>
                     <option>Pelajar</option><option>Staf</option><option>Orang Awam</option>
                 </select>
             </div>
-            <div><label>Kampus</label>
+            <div><label>Kampus *</label>
                 <select id="kampus" name="kampus" required>
                     <option value="">-- Pilih --</option>
-                    <option value="bachok">Bachok</option>
-                    <option value="kota">Kampus Kota</option>
-                    <option value="jeli">Kampus Jeli</option>
+                    <option value="bachok">Bachok</option><option value="kota">Kampus Kota</option><option value="jeli">Kampus Jeli</option>
                 </select>
             </div>
-            <div class="full-width"><label>Pilihan Studio</label>
+            <div class="full-width"><label>Pilihan Studio *</label>
                 <select id="studio" name="studio" required>
                     <option value="">-- Sila Pilih Kampus Dahulu --</option>
                 </select>
@@ -161,13 +156,16 @@
 
         <div class="section-title">2. Tarikh & Masa Tempahan</div>
         <div class="logistic-box">
-            <div class="date-row">
-                <div class="date-input-group"><label>Tarikh Mula</label><input type="date" id="tarikh_mula" name="tarikh_mula" required></div>
-                <div class="date-input-group"><label>Tarikh Tamat</label><input type="date" id="tarikh_tamat" name="tarikh_tamat" required></div>
+            <div class="full-width" style="margin-bottom: 20px;">
+                <label>Pilih Julat Tarikh (Mula - Tamat) *</label>
+                <input type="text" id="rangeDate" class="flight-input" placeholder="Klik untuk pilih tarikh..." required>
+                <input type="hidden" name="tarikh_mula" id="tarikh_mula">
+                <input type="hidden" name="tarikh_tamat" id="tarikh_tamat">
+                <div id="dateError" class="error-msg">Had tempahan maksimum adalah 3 hari sahaja!</div>
             </div>
-            <div id="dateError" class="error-msg">Had tempahan maksimum adalah 3 hari sahaja!</div>
+
             <div class="form-grid">
-                <div><label>Masa Mula</label>
+                <div><label>Masa Mula *</label>
                     <select id="masa_mula" name="masa_mula" required>
                         <option value="">-- Pilih --</option>
                         <option value="09:00">09:00 AM</option><option value="10:00">10:00 AM</option>
@@ -179,7 +177,7 @@
                         <option value="21:00">09:00 PM</option><option value="22:00">10:00 PM</option>
                     </select>
                 </div>
-                <div><label>Masa Tamat</label>
+                <div><label>Masa Tamat *</label>
                     <select id="masa_tamat" name="masa_tamat" required>
                         <option value="">-- Pilih --</option>
                         <option value="10:00">10:00 AM</option><option value="11:00">11:00 AM</option>
@@ -194,7 +192,7 @@
             </div>
         </div>
 
-        <div class="full-width" style="margin-top:25px"><label>Keperluan Teknikal / Catatan</label><textarea name="teknikal" rows="3" placeholder="Contoh: PA Sistem, Kostum, Mikrofon..."></textarea></div>
+        <div class="full-width" style="margin-top:25px"><label>Keperluan Teknikal / Catatan (Pilihan)</label><textarea name="teknikal" rows="3" placeholder="Contoh: PA Sistem, Kostum, Mikrofon..."></textarea></div>
 
         <div class="syarat-box">
             <strong style="color: var(--primary-color)">Terma & Syarat Penggunaan Studio:</strong>
@@ -214,9 +212,9 @@
 
 <div class="footer-info">
     <p>© 2026 <strong>Pusat Kebudayaan dan Kesenian</strong> - Universiti Malaysia Kelantan</p>
-    <p>📧 kebudayaan@umk.edu.my | 📞 +6097797436</p>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     const supabaseUrl = 'https://gwiuqthmkkvbopapixwk.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3aXVxdGhta2t2Ym9wYXBpeHdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4NDgyMDUsImV4cCI6MjA4MzQyNDIwNX0.fulrwEdy3ngAGG5gp3Vw950wV1r3-wSWvtRsWmz0uEg';
@@ -228,21 +226,26 @@
         jeli: ["Studio Kebudayaan"] 
     };
 
-    async function loadOccupiedSlots() {
-        const container = document.getElementById('occupiedSlots');
-        const today = new Date().toISOString().split('T')[0];
-        try {
-            const { data } = await _supabase.from('bookings').select('studio_name, start_date, end_date').eq('status', 'Lulus').gte('end_date', today);
-            if (data && data.length > 0) {
-                container.innerHTML = '';
-                data.forEach(b => {
-                    const tag = document.createElement('span'); tag.className = 'booking-tag';
-                    tag.innerText = `${b.studio_name} (${b.start_date} hingga ${b.end_date})`;
-                    container.appendChild(tag);
-                });
-            } else { container.innerHTML = '<span style="font-size: 0.8rem; color: #94a3b8;">Tiada tempahan aktif buat masa ini.</span>'; }
-        } catch (e) { container.innerHTML = 'Ralat memuatkan status.'; }
-    }
+    // Kalendar Range (Minimum 3 hari dari sekarang)
+    flatpickr("#rangeDate", {
+        mode: "range",
+        minDate: new Date().fp_incr(3),
+        dateFormat: "Y-m-d",
+        onChange: function(selectedDates, dateStr, instance) {
+            if (selectedDates.length === 2) {
+                const diff = Math.ceil((selectedDates[1] - selectedDates[0]) / (1000 * 60 * 60 * 24)) + 1;
+                const err = document.getElementById("dateError");
+                const btn = document.getElementById("submitBtn");
+                
+                if (diff > 3) { err.style.display = "block"; btn.disabled = true; } 
+                else { 
+                    err.style.display = "none"; btn.disabled = false;
+                    document.getElementById("tarikh_mula").value = instance.formatDate(selectedDates[0], "Y-m-d");
+                    document.getElementById("tarikh_tamat").value = instance.formatDate(selectedDates[1], "Y-m-d");
+                }
+            }
+        }
+    });
 
     document.getElementById("kampus").addEventListener("change", function() {
         const s = document.getElementById("studio"); s.innerHTML = '<option value="">-- Pilih Studio --</option>';
@@ -251,30 +254,41 @@
         }
     });
 
-    const tMula = document.getElementById("tarikh_mula"), tTamat = document.getElementById("tarikh_tamat"), dateErr = document.getElementById("dateError"), submitBtn = document.getElementById("submitBtn");
-    function validateDates() {
-        if(tMula.value && tTamat.value) {
-            const diff = ((new Date(tTamat.value) - new Date(tMula.value)) / 86400000) + 1;
-            if(diff > 3 || diff < 1) { dateErr.style.display="block"; submitBtn.disabled=true; }
-            else { dateErr.style.display="none"; submitBtn.disabled=false; }
-        }
+    async function loadOccupiedSlots() {
+        const container = document.getElementById('occupiedSlots');
+        const today = new Date().toISOString().split('T')[0];
+        const { data } = await _supabase.from('bookings').select('studio_name, start_date, end_date').eq('status', 'Lulus').gte('end_date', today);
+        if (data && data.length > 0) {
+            container.innerHTML = '';
+            data.forEach(b => {
+                const tag = document.createElement('span'); tag.className = 'booking-tag';
+                tag.innerText = `${b.studio_name} (${b.start_date} - ${b.end_date})`;
+                container.appendChild(tag);
+            });
+        } else { container.innerHTML = '<span style="font-size: 0.8rem; color: #94a3b8;">Tiada tempahan aktif.</span>'; }
     }
-    tMula.onchange = validateDates; tTamat.onchange = validateDates;
 
     document.getElementById("bookingForm").onsubmit = async function(e) {
         e.preventDefault();
-        submitBtn.innerText = "MENGHANTAR PERMOHONAN..."; submitBtn.disabled = true;
+        if (!document.getElementById("tarikh_mula").value) { alert("Sila pilih tarikh!"); return; }
+        
+        const btn = document.getElementById("submitBtn");
+        btn.innerText = "MENGHANTAR..."; btn.disabled = true;
         const f = new FormData(this);
         const d = {
-            full_name: f.get("nama"), ic_number: f.get("no_ic"), student_staff_id: f.get("no_id"), email: f.get("email"), phone: f.get("phone"),
-            category: f.get("kategori"), campus: f.get("kampus"), studio_name: f.get("studio"), start_date: f.get("tarikh_mula"), 
-            end_date: f.get("tarikh_tamat"), start_time: document.getElementById("masa_mula").value, end_time: document.getElementById("masa_tamat").value,
-            technical_requirements: f.get("teknikal"), status: "Menunggu"
+            full_name: f.get("nama"), ic_number: f.get("no_ic"), 
+            student_staff_id: f.get("no_id") || "Orang Awam",
+            email: f.get("email"), phone: f.get("phone"), category: f.get("kategori"),
+            campus: f.get("kampus"), studio_name: f.get("studio"),
+            start_date: document.getElementById("tarikh_mula").value,
+            end_date: document.getElementById("tarikh_tamat").value,
+            start_time: f.get("masa_mula"), end_time: f.get("masa_tamat"),
+            technical_requirements: f.get("teknikal") || "Tiada", status: "Menunggu"
         };
         const { error } = await _supabase.from('bookings').insert([d]);
-        if(error) alert("Ralat semasa menghantar: " + error.message);
-        else { alert("PERMOHONAN BERJAYA DIHANTAR!"); this.reset(); loadOccupiedSlots(); }
-        submitBtn.innerText = "Hantar Permohonan"; submitBtn.disabled = false;
+        if(error) alert("Ralat: " + error.message);
+        else { alert("BERJAYA DIHANTAR!"); this.reset(); loadOccupiedSlots(); }
+        btn.innerText = "Hantar Permohonan"; btn.disabled = false;
     };
 
     loadOccupiedSlots();
